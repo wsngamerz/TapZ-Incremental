@@ -74,7 +74,7 @@ class Game {
     addListeners() {
         // Self explanitory function
         
-        const self = this; // Quick fix to allow functions inside addEventListener to clall this
+        const self = this; // Quick fix to allow functions inside addEventListener to clall "this"
 
         buyAdvancedSpoon.addEventListener("click", function() {
             self.buy("multipliers", "advancedSpoon");
@@ -125,6 +125,10 @@ class Game {
         zombieButton.addEventListener("click", this.zombieClick); 
     }
 
+    brainValue() {
+        return this.data.userData.brains * ((this.data.userData.upgrades.multipliers.brainEnrichment.level * 3) + 3);
+    }
+
     buy(category, item) {
         // BuyItem Returns updated UserData
         this.data.userData = this.shop.buyItem(category, item, this.data.userData);
@@ -143,9 +147,8 @@ class Game {
         const y = event.clientY - 40;
         const uniqueID = (new Date).getTime(); // use epoch as uid
         const damageSpan = document.createElement("span");
-        let damageValue = parseFloat(this.data.userData.damage);
+        let damageValue = this.clickDamage();
 
-        damageValue = +damageValue.toFixed(2);
         damageSpan.innerHTML = "-" + damageValue;
         damageSpan.id = uniqueID;
         damageSpan.classList.add("dmg")
@@ -176,6 +179,12 @@ class Game {
         }, 100);
     }
 
+    clickDamage() {
+        const sharpeningKitDamage = this.data.userData.upgrades.dpc.sharpeningKit.level * this.data.shopData.dpc.sharpeningKit.damage;
+        const gripUpgradeDamage = this.data.userData.upgrades.dpc.gripUpgrade.level * this.data.shopData.dpc.gripUpgrade.damage;
+        return 1 + sharpeningKitDamage + gripUpgradeDamage;
+    }
+
     load() {
         const savedata = localStorage.getItem("savedata");
         // check if not empty or undefined
@@ -183,9 +192,9 @@ class Game {
             let savedData = JSON.parse(savedata); // get saved data
             let templateData = this.data.userData;
             // merge saved data with base data to solve issues with old json
-            let mainData={};
-            for(var _obj in templateData) mainData[_obj ]=templateData[_obj];
-            for(var _obj in savedData) mainData[_obj ]=savedData[_obj];
+            let mainData = {};
+            for(var _obj in templateData) mainData[_obj ] = templateData[_obj];
+            for(var _obj in savedData) mainData[_obj ] = savedData[_obj];
             this.data.userData = mainData;
         }
     }
@@ -198,8 +207,8 @@ class Game {
 
     save() {
         localStorage.removeItem("savedata");
-        console.log("Saving: " + JSON.stringify(this.data.userData));        
         localStorage.setItem("savedata", JSON.stringify(this.data.userData));
+        console.log("saved!")
     }
 
     savedata() {
@@ -211,7 +220,7 @@ class Game {
                 function() {
                     self.save()
                 },
-                10000 // 10 seconds
+                30000 // 30 seconds
             );
         } else {
             alert("Your browser doesn't support LocalStorage so unfortunately, you will not be able to save any progress :(");
@@ -219,8 +228,8 @@ class Game {
     }
 
     sellBrains() {
-        let totalValue = this.data.userData.brains * this.data.userData.brainVal;
-        this.data.userData.money = this.data.userData.money + totalValue;
+        
+        this.data.userData.money = this.data.userData.money + this.brainValue();
         this.data.userData.brains = 0;
         this.updateUI();
     }
@@ -285,7 +294,7 @@ class Game {
         // Shop UI
         //
 
-        sellBrainsButton.innerHTML = "Sell " + this.data.userData.brains + " Brains for £" + (this.data.userData.brains * this.data.userData.brainVal)
+        sellBrainsButton.innerHTML = "Sell " + this.data.userData.brains + " Brains for £" + this.brainValue()
 
         const advSpnLvl = this.data.userData.upgrades.multipliers.advancedSpoon.level;
         advancedSpoonCost.innerHTML = "£" + this.shop.cost("multipliers", "advancedSpoon", advSpnLvl);
@@ -358,10 +367,10 @@ class Game {
 
     zombieClick() {
         this.data.userData.clicks++;
-        this.data.userData.zombie.current = this.data.userData.zombie.current - this.data.userData.damage;
+        this.data.userData.zombie.current = this.data.userData.zombie.current - this.clickDamage();
         if (this.data.userData.zombie.current < 0) {
             this.data.userData.kills++;
-            this.data.userData.brains = this.data.userData.brains + this.data.userData.brainsPerKill;
+            this.data.userData.brains = this.data.userData.brains + this.data.userData.upgrades.multipliers.advancedSpoon.level + 1;
             this.data.userData.zombie.current = this.data.userData.zombie.total;
         }
         this.updateUI();

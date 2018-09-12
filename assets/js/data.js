@@ -8,10 +8,7 @@ class Data {
     constructor() {
         this.userData = {
             brains: 0,
-            brainsPerKill: 1,
-            brainVal: 3,
             clicks: 0,
-            damage: 1,
             level: 1,
             levelKilled: 0,
             money: 0,
@@ -57,17 +54,17 @@ class Data {
             },
             dpc: {
                 sharpeningKit: {
-                    damage: 0.4,
+                    damage: 1,
                     description: "Now that your trusty shank is sharper than before, you can slice through the hoard with ease!",
                     initialPrice: 100,
                     limit: -1,
                     priceMultiplier: 1.2
                 },
                 gripUpgrade: {
-                    damage: 1,
+                    damage: 5,
                     description: "Oooo, a comfortable handle!",
                     initialPrice: 1000,
-                    limit: -1,
+                    limit: 10,
                     priceMultiplier: 1.3,
                 }
             },

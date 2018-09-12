@@ -13,14 +13,20 @@ class Shop {
         let balance = userData.money;
         let itemLevel = userData.upgrades[category][item].level;
         let itemCost = this.cost(category, item, itemLevel);
+        let itemMaxLevel = this.shopData[category][item].limit;
 
-        // TODO: Add level cap (-1 == infinite)
+        // -1 == infinity
+        if (itemMaxLevel == -1) { itemMaxLevel = Infinity }
 
-        if(balance > itemCost) {
-            userData.upgrades[category][item].level = itemLevel + 1;
-            userData.money = userData.money - itemCost;
+        if (itemLevel < itemMaxLevel) {
+            if (balance >= itemCost) {
+                userData.upgrades[category][item].level = itemLevel + 1;
+                userData.money = userData.money - itemCost;
+            } else {
+                console.log("Cannot afford " + item);
+            }
         } else {
-            console.log("Cannot afford " + item);
+            console.log("Max level reached for " + item)
         }
 
         return userData;
