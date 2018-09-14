@@ -62,6 +62,7 @@ class Game {
         this.settingsClick = this.settingsClick.bind(this);
         this.shopClick = this.shopClick.bind(this);
         this.zombieClick = this.zombieClick.bind(this);
+        this.zombieDead = this.zombieDead.bind(this);
 
         // Check for local storage support, loading and saving
         this.savedata();
@@ -371,12 +372,26 @@ class Game {
         this.data.userData.clicks++;
         this.data.userData.zombie.current = this.data.userData.zombie.current - this.clickDamage();
         if (this.data.userData.zombie.current < 0) {
-            this.data.userData.kills++;
-            this.data.userData.brains = this.data.userData.brains + this.data.userData.upgrades.multipliers.advancedSpoon.level + 1;
-            this.data.userData.zombie.current = this.data.userData.zombie.total;
+            this.zombieDead();
         }
         this.updateUI();
         this.clickAnimation();
+    }
+
+    zombieDead() {
+        // set kills and add correct num of brains to the users data
+        this.data.userData.kills++;
+        this.data.userData.brains = this.data.userData.brains + this.data.userData.upgrades.multipliers.advancedSpoon.level + 1;
+        
+        // level formula
+        const formula = Math.pow(this.data.userData.level, 3) + 20;
+        if (this.data.userData.kills > formula) {
+            this.data.userData.level++;
+            console.log(`LevelUp: ${this.data.userData.kills} > ${formula}`)
+            this.data.userData.zombie.total = Math.pow(this.data.userData.level, 3) + 20;
+        }
+
+        this.data.userData.zombie.current = this.data.userData.zombie.total;
     }
 }
 
