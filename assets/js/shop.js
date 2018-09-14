@@ -23,10 +23,10 @@ class Shop {
                 userData.upgrades[category][item].level = itemLevel + 1;
                 userData.money = userData.money - itemCost;
             } else {
-                console.log("Cannot afford " + item);
+                console.log(`Cannot afford ${item}`);
             }
         } else {
-            console.log("Max level reached for " + item)
+            console.log(`Max level reached for ${item}`)
         }
 
         return userData;

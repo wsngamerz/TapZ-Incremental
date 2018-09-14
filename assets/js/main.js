@@ -74,7 +74,7 @@ class Game {
     addListeners() {
         // Self explanitory function
         
-        const self = this; // Quick fix to allow functions inside addEventListener to clall "this"
+        const self = this; // Quick fix to allow functions inside addEventListener to call "this"
 
         buyAdvancedSpoon.addEventListener("click", function() {
             self.buy("multipliers", "advancedSpoon");
@@ -294,26 +294,26 @@ class Game {
         // Shop UI
         //
 
-        sellBrainsButton.innerHTML = "Sell " + this.data.userData.brains + " Brains for £" + this.brainValue()
+        sellBrainsButton.innerHTML = `Sell ${this.data.userData.brains} Brains for £${this.brainValue()}`;
 
         const advSpnLvl = this.data.userData.upgrades.multipliers.advancedSpoon.level;
-        advancedSpoonCost.innerHTML = "£" + this.shop.cost("multipliers", "advancedSpoon", advSpnLvl);
+        advancedSpoonCost.innerHTML = `£${this.shop.cost("multipliers", "advancedSpoon", advSpnLvl)}`;
         advancedSpoonLevel.innerHTML = advSpnLvl;
         
         const brnEnrchLvl = this.data.userData.upgrades.multipliers.brainEnrichment.level;
-        brainEnrichmentCost.innerHTML = "£" + this.shop.cost("multipliers", "brainEnrichment", brnEnrchLvl);
+        brainEnrichmentCost.innerHTML = `£${this.shop.cost("multipliers", "brainEnrichment", brnEnrchLvl)}`;
         brainEnrichmentLevel.innerHTML = brnEnrchLvl;
         
         const grpUpgrLvl = this.data.userData.upgrades.dpc.gripUpgrade.level;
-        gripUpgradeCost.innerHTML = "£" + this.shop.cost("dpc", "gripUpgrade", grpUpgrLvl);
+        gripUpgradeCost.innerHTML = `£${this.shop.cost("dpc", "gripUpgrade", grpUpgrLvl)}`;
         gripUpgradeLevel.innerHTML = grpUpgrLvl;
         
         const shpKitLvl = this.data.userData.upgrades.dpc.sharpeningKit.level;
-        sharpeningKitCost.innerHTML = "£" + this.shop.cost("dpc", "sharpeningKit", shpKitLvl);
+        sharpeningKitCost.innerHTML = `£${this.shop.cost("dpc", "sharpeningKit", shpKitLvl)}`;
         sharpeningKitLevel.innerHTML = shpKitLvl;
         
         const survLvl = this.data.userData.upgrades.dps.survivor.level;
-        survivorCost.innerHTML = "£" + this.shop.cost("dps", "survivor", survLvl);
+        survivorCost.innerHTML = `£${this.shop.cost("dps", "survivor", survLvl)}`;
         survivorLevel.innerHTML = survLvl;
 
         //
@@ -328,12 +328,13 @@ class Game {
         //
         
         if (this.data.brains == 1) {
-            brains.innerHTML = this.data.userData.brains + " Brain"; // Due to annoying english
+            brains.innerHTML = `${this.data.userData.brains} Brain`; // Due to annoying english
         } else {                                            // 0 Brains, 1 Brain, x>1 Brains
-            brains.innerHTML = this.data.userData.brains + " Brains";
+            brains.innerHTML = `${this.data.userData.brains} Brains`;
         }
-        money.innerHTML = "£" + parseFloat(this.data.userData.money).toFixed(2);
-        level.innerHTML = "Level " + this.data.userData.level;
+
+        money.innerHTML = `£${this.data.userData.money}`;
+        level.innerHTML = `Level ${this.data.userData.level} | ${this.data.userData.kills} Kills`;
         
         //
         // Health bar
@@ -352,6 +353,7 @@ class Game {
         } else {
             healthBar.classList.add("bar-red");
         }
+        
         healthBar.style.width = percentage + "%";
 
         //
