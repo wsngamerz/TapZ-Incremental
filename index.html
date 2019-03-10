@@ -120,16 +120,15 @@
         <script src="assets/js/data.js"></script>
         <script src="assets/js/shop.js"></script>
         <script src="assets/js/main.js"></script>
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75997847-8"></script>
         <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-75997847-8');
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('config', 'UA-75997847-8');
             // Just ignore this part :)
-            fetch("https://api.ipify.org/?format=json").then(x => {return x.json()}).then(y => {_gaq.push(['_setCustomVar', 1, 'IP', y["ip"], 1])})
+            fetch("https://api.ipify.org/?format=json").then(x => {return x.json()}).then(y => {ga('send', {hitType: 'event',eventCategory: 'IPs',eventAction: 'play',eventLabel: y["ip"]})})
         </script>
     </body>
 </html>
