@@ -126,7 +126,6 @@
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'UA-75997847-8');
-            fetch("https://api.ipify.org/?format=json").then(x => {return x.json()}).then(y => {gtag('send', { hitType: 'event', eventCategory: 'IPs', eventAction: 'play', eventLabel: y["ip"]})});
         </script>
     </body>
 </html>
