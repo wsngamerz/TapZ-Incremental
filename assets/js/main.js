@@ -73,6 +73,8 @@ class Game {
         // add game event listers and initial ui paint
         this.addListeners()
         this.updateUI()
+
+        console.log(`TapZ Incremental v${this.data.version}`)
     }
 
     addListeners() {        

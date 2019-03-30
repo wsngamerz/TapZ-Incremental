@@ -6,6 +6,8 @@
 
 class Data {
     constructor() {
+        this.version = "1.0.0 alpha 1"
+
         this.userData = {
             brains: 0,
             clicks: 0,
