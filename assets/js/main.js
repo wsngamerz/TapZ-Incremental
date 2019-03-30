@@ -396,7 +396,8 @@ class Game {
 }
 
 // Initialise Classes and pass them through to each other
-
-let data = new Data();
-let shop = new Shop(data.shopData);
-let game = new Game(data, shop);
+(() => {
+    let data = new Data();
+    let shop = new Shop(data.shopData);
+    let game = new Game(data, shop);
+})()
