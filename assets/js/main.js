@@ -189,9 +189,20 @@ class Game {
     }
 
 
+    checkJson(data) {
+        try{
+            JSON.parse(data)
+            return true
+        } catch(e) {
+            return false
+        }
+    }
+
+
     clickDamage() {
         const sharpeningKitDamage = this.data.userData.upgrades.dpc.sharpeningKit.level * this.data.shopData.dpc.sharpeningKit.damage
         const gripUpgradeDamage = this.data.userData.upgrades.dpc.gripUpgrade.level * this.data.shopData.dpc.gripUpgrade.damage
+
         return 1 + sharpeningKitDamage + gripUpgradeDamage
     }
 
@@ -200,12 +211,13 @@ class Game {
         let savedata = ""
         try {
             savedata = localStorage.getItem("savedata")
-            if (savedata == "" || savedata == null) {
+            if (this.checkJson(savedata)) {
                 savedata = "{}"
             } else {
                 savedata = atob(savedata)
             }
         } catch(error) {
+            console.log(error)
             this.resetSave()
         }
 
