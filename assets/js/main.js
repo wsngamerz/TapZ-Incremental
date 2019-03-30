@@ -180,6 +180,7 @@ class Game {
 
             if (element.dataset.itter <= 0) {
                 clearInterval(interval)
+
                 if (element != null) {
                     element.parentNode.removeChild(element)
                 }
@@ -196,12 +197,23 @@ class Game {
 
 
     load() {
-        const savedata = localStorage.getItem("savedata")
+        let savedata = ""
+        try {
+            savedata = localStorage.getItem("savedata")
+            if (savedata == "" || savedata == null) {
+                savedata = "{}"
+            } else {
+                savedata = atob(savedata)
+            }
+        } catch(error) {
+            this.resetSave()
+        }
 
         // check if not empty or undefined
         if (!(savedata == null) && !(savedata == "undefined")) {
             let savedData = JSON.parse(savedata) // get saved data
             let templateData = this.data.userData
+            
             // merge saved data with base data to solve issues with old json
             let mainData = {}
             for(var _obj in templateData) mainData[_obj ] = templateData[_obj]
@@ -220,7 +232,7 @@ class Game {
 
     save() {
         localStorage.removeItem("savedata")
-        localStorage.setItem("savedata", JSON.stringify(this.data.userData))
+        localStorage.setItem("savedata", btoa(JSON.stringify(this.data.userData)))
         console.log("saved!")
     }
 
@@ -394,7 +406,7 @@ class Game {
         if (this.data.userData.zombie.current < 0) {
             this.zombieDead()
         }
-        
+
         this.updateUI()
         this.clickAnimation()
     }
