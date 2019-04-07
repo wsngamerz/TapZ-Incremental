@@ -5,13 +5,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>TapZ Incremental</title>
+
+        <link rel="stylesheet" href="./assets/css/main.css">
     </head>
     <body>
-        
+        <!-- Main Content of the game -->
+        <section class="game">
+            <header class="header">
+                <h3 class="title">TapZ Incremental</h3>
+                
+                <section class="data">
+                    <span>0 Brains</span> | 
+                    <span>£0</span> | 
+                    <span>0 Kills</span> | 
+                    <span class="clicks">0 Clicks</span>
+                </section>
 
-        <script src="./assets/js/game.js"></script>
+                <section class="health">
+                    <span class="healthbar">
+                        <span class="currenthealth"></span>
+                    </span>
+                </section>
+            </header>
+
+            <main class="main">
+                <section class="zombie"></section>
+            </main>
+
+            <footer class="footer">
+                <button class="button button-left button-shop">Shop</button>
+                <button class="button button-right button-settings">Settings</button>
+            </footer>
+        </section>
+
+        <!-- The Shop Modal -->
+        <section class="modal modal-shop">
+
+        </section>
+
+        <!-- The Settings Modal -->
+        <section class="modal modal-settings">
+
+        </section>
+
         <script src="./assets/js/shop.js"></script>
-        <script src="./assets/js/save.js"></script>
+        <script src="./assets/js/savedata.js"></script>
         <script src="./assets/js/main.js"></script>
     </body>
 </html>

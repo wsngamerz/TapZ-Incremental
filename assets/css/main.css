@@ -1,0 +1,131 @@
+/* 
+    TapZ Incremental
+    main.css
+*/
+
+
+
+/* 
+    Default Reset and sitewide styles
+*/
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+/*
+    Modal Styles
+*/
+
+.modal {
+    display: none;
+    visibility: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-visible {
+    display: block;
+    visibility: visible;
+}
+
+
+
+/*
+    Button Styles
+*/
+
+.button {
+    padding: 1em;
+    margin: 0.5em;
+    border: none;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+.button:hover,
+.button:active {
+    background-color: #388E3C;
+}
+
+.button-left {
+    float: left;
+}
+
+.button-right {
+    float: right;
+}
+
+.button-left::after,
+.button-right::after {
+    content: "";
+    clear: both;
+}
+
+
+
+/* 
+    Main Section Styles
+*/
+
+.game {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    font-size: 1.5em;
+}
+
+.data {
+    display: block;
+    font-size: 1em;
+    font-weight: lighter;
+}
+
+.main {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.zombie {
+    width: 500px;
+    height: 433px;
+    background-image: url('../img/zombie-spritesheet.png');
+    background-position: -5px -5px;
+    background-repeat: no-repeat;
+    display: block;
+    cursor: pointer;
+}
+
+.footer {
+    width: 100%;
+}
