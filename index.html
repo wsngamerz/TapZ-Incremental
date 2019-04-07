@@ -2,134 +2,16 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="description" content="TapZ Incremental is a game where you fight zombies that are attacking you. To defend yourself, you need to kill them, harvest their brains and convert them into money to upgrade tools and helpers that you pick up along the way">
-        <meta name="keywords" content="TapZ,Incremental,Game,Idle">
-        <meta name="author" content="William Neild">
         <title>TapZ Incremental</title>
-        <link rel="stylesheet" href="assets/css/main.css">
     </head>
-    <body class="container">
-        <header>
-            <h1 class="title">TapZ Incremental</h1>
-            <section class="details">
-                <span id="money">£0</span> |
-                <span id="brains">0 Brains</span> | 
-                <span id="level">Level 1</span>
-            </section>
-            <section class="health-container">
-                <span class="health-bar" id="health-bar"></span>
-                <p class="health-details">
-                    <span id="health-current">0</span>/<span id="health-total">0</span>
-                </p>
-            </section>
-            <button class="btn-ui" id="btn-shop"></button>
-            <button class="btn-ui" id="btn-settings"></button>
-        </header>
-        <main>
-            <button class="zombie" id="zombie"></button>
-        </main>
-        <section class="shop-modal modal" id="modal-shop">
-            <h1>Shop</h1>
-            <button class="close" id="modal-shop-close"></button>
-            <button class="btn-sell" id="sell-brains-btn">Sell 0 Brains for £0</button>
+    <body>
+        
 
-            <button class="btn-tab active" id="btn-dps">Dps</button>
-            <button class="btn-tab" id="btn-dpc">Dpc</button>
-            <button class="btn-tab" id="btn-multiplier">Multipiers</button>
-
-            <article class="tab" id="tab-dps">
-                <h3>Damage Per Second</h3>
-                <div class="item-list">
-                    <div class="item">
-                        <img src="assets/img/survivor.png" alt="Survivor Icon">
-                        <h4 class="item-title">Survivor</p>
-                        <p>Level: <span id="survivor-level">0</span></p>
-                        <p>Cost: <span id="survivor-cost">£1,000</span></p>
-                        <button disabled id="buy-survivor">Buy</button>
-                    </div>
-                </div>
-            </article>
-
-            <article class="tab" id="tab-dpc">
-                <h3>Damage Per Click</h3>
-                <div class="item-list">
-                    <div class="item">
-                        <img src="assets/img/sharpening-kit.png" alt="Sharpening Kit Icon">
-                        <h4 class="item-title">Sharpening Kit</p>
-                        <p>Level: <span id="sharpening-kit-level">0</span></p>
-                        <p>Cost: <span id="sharpening-kit-cost">£100</span></p>
-                        <button id="buy-sharpening-kit">Buy</button>
-                    </div>
-
-                    <div class="item">
-                        <img src="assets/img/grip-upgrade.png" alt="Grip Upgrade Icon">
-                        <h4 class="item-title">Grip Upgrade</p>
-                        <p>Level: <span id="grip-upgrade-level">0</span>/10</p>
-                        <p>Cost: <span id="grip-upgrade-cost">£10,000</span></p>
-                        <button id="buy-grip-upgrade">Buy</button>
-                    </div>
-                </div>
-            </article>
-
-            <article class="tab" id="tab-multiplier">
-                <h3>Multipliers</h3>
-                <div class="item-list">
-                    <div class="item">
-                        <img src="assets/img/advanced-spoon.png" alt="Advanced Spoon Icon">
-                        <h4 class="item-title">Advanced Spoon</p>
-                        <p>Level: <span id="advanced-spoon-level">0</span>/100</p>
-                        <p>Cost: <span id="advanced-spoon-cost">£50</span></p>
-                        <button id="buy-advanced-spoon">Buy</button>
-                    </div>
-
-                    <div class="item">
-                        <img src="assets/img/brain-enrichment.png" alt="Brain Enrichment Icon">
-                        <h4 class="item-title">Brain Enrichment</p>
-                        <p>Level: <span id="brain-enrichment-level">0</span>/100</p>
-                        <p>Cost: <span id="brain-enrichment-cost">£100,000</span></p>
-                        <button id="buy-brain-enrichment">Buy</button>
-                    </div>
-                </div>
-            </article>
-        </section>
-
-        <section class="settings-modal modal" id="modal-settings">
-            <h1>Settings</h1>
-            <button class="close" id="modal-settings-close"></button>
-            <section class="settings-section" id="settings-save">
-                <h3>Save</h3>
-                <button class="btn-settings" id="settings-save-reset">Reset Savedata</button>
-                <button class="btn-settings" id="settings-save-save">Save Savedata</button>
-                <button class="btn-settings" id="settings-save-load">Load Savedata</button>
-            </section>
-            <section class="settings-section" id="settings-audio">
-                <h3>Audio</h3>
-                <button class="btn-settings settings-audio-music">Toggle Music (WIP)</button>
-                <button class="btn-settings settings-audio-sfx">Toggle SFX (WIP)</button>
-            </section>
-            <section class="settings-section" id="settings-about">
-                <h3>About</h3>
-                <p>
-                    TapZ Incremental was created by William Neild in pure HTML,
-                    CSS and JavaScript.
-
-                    Icons sourced from <a href="https://game-icons.net/">game-icons.net</a>.
-                </p>
-            </section>
-        </section>
-
-        <script src="assets/js/data.js"></script>
-        <script src="assets/js/shop.js"></script>
-        <script src="assets/js/main.js"></script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75997847-8"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-75997847-8');
-        </script>
+        <script src="./assets/js/game.js"></script>
+        <script src="./assets/js/shop.js"></script>
+        <script src="./assets/js/save.js"></script>
+        <script src="./assets/js/main.js"></script>
     </body>
 </html>
