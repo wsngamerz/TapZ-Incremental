@@ -3,14 +3,11 @@
     main.css
 */
 
-
-
 /* 
     Default Reset and sitewide styles
 */
 
-html,
-body {
+html, body {
     width: 100vw;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
@@ -18,15 +15,11 @@ body {
     margin: 0;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
-
-
 
 /*
     Modal Styles
@@ -44,8 +37,6 @@ body {
     visibility: visible;
 }
 
-
-
 /*
     Button Styles
 */
@@ -61,8 +52,7 @@ body {
     font-size: 1em;
 }
 
-.button:hover,
-.button:active {
+.button:hover, .button:active {
     background-color: #388E3C;
 }
 
@@ -74,13 +64,10 @@ body {
     float: right;
 }
 
-.button-left::after,
-.button-right::after {
+.button-left::after, .button-right::after {
     content: "";
     clear: both;
 }
-
-
 
 /* 
     Main Section Styles
@@ -119,11 +106,16 @@ body {
 .zombie {
     width: 500px;
     height: 433px;
-    background-image: url('../img/zombie-spritesheet.png');
+    background-image: url('../img/zombie-idle.gif');
     background-position: -5px -5px;
     background-repeat: no-repeat;
     display: block;
     cursor: pointer;
+    image-rendering: high-quality;
+}
+
+.zombie-hurt {
+    background-image: url('../img/zombie-hurt.gif');
 }
 
 .footer {

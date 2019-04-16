@@ -14,7 +14,7 @@ class TapZ {
         this.addEventListeners = this.addEventListeners.bind(this)
         this.click = this.click.bind(this)
         this.update = this.update.bind(this)
-        
+
         this.addEventListeners()
     }
 
@@ -24,6 +24,9 @@ class TapZ {
 
     click(event) {
         this.saveData.userData.clicks++
+
+        Zombie.classList.add("zombie-hurt")
+        setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
 
         this.update()
     }
