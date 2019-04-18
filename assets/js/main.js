@@ -58,7 +58,7 @@ class TapZ {
                 if (damageElement.dataset.itter <= 0) {
                     clearInterval(interval)
 
-                    if (!damageElement) {
+                    if (damageElement != null) {
                         damageElement.parentNode.removeChild(damageElement)
                     }
                 }
