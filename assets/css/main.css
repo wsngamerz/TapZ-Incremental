@@ -10,7 +10,8 @@
 html, body {
     width: 100vw;
     height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Acme", Arial, Helvetica, sans-serif;
+    font-size: 24px;
     padding: 0;
     margin: 0;
 }
@@ -42,14 +43,15 @@ html, body {
 */
 
 .button {
-    padding: 1em;
+    padding: 1em 2em;
     margin: 0.5em;
     border: none;
     background-color: #4CAF50;
     color: #fff;
     cursor: pointer;
     border-radius: 3px;
-    font-size: 1em;
+    font-size: .75em;
+    user-select: none;
 }
 
 .button:hover, .button:active {
@@ -95,12 +97,44 @@ html, body {
     font-weight: lighter;
 }
 
+.health {
+    width: 70vw;
+    height: 10px;
+    margin: 0 auto;
+}
+
+.healthbar {
+    background-color: #EEEEEE;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.currenthealth {
+    background-color: #4CAF50;
+    display: block;
+    width: 50%;
+    height: 100%;
+}
+
 .main {
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
+}
+
+.damage-indicator {
+    display: block;
+    position: absolute;
+    user-select: none;
+    font-weight: bold;
+    font-size: 2em;
+    transition: all .2s linear;
+    z-index: 100;
 }
 
 .zombie {
@@ -112,6 +146,7 @@ html, body {
     display: block;
     cursor: pointer;
     image-rendering: high-quality;
+    user-select: none;
 }
 
 .zombie-hurt {

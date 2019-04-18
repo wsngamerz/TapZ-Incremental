@@ -28,6 +28,44 @@ class TapZ {
         Zombie.classList.add("zombie-hurt")
         setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
 
+        // If called by a click
+        if (event) {
+            const clickX = event.clientX + 40
+            const clickY = event.clientY - 40
+            const uid = (new Date).getTime()
+            const damageElement = document.createElement("span")
+
+            damageElement.innerHTML = "-1"
+            damageElement.id = uid
+            damageElement.classList.add("damage-indicator")
+            damageElement.dataset.itter = 10
+            damageElement.dataset.uid = uid
+            damageElement.dataset.x = clickX
+            damageElement.dataset.y = clickY
+            damageElement.style.top = `${ clickY }px`
+            damageElement.style.left = `${ clickX }px`
+
+            document.body.appendChild(damageElement)
+
+            const interval = setInterval(() => {
+                damageElement.dataset.itter--
+                damageElement.dataset.x = parseInt(damageElement.dataset.x) + 25
+                damageElement.dataset.y = parseInt(damageElement.dataset.y) - 75
+                damageElement.style.top = `${ damageElement.dataset.y }px`
+                damageElement.style.left = `${ damageElement.dataset.x }px`
+                damageElement.style.opacity = damageElement.dataset.itter / 10
+
+                if (damageElement.dataset.itter <= 0) {
+                    clearInterval(interval)
+
+                    if (!damageElement) {
+                        damageElement.parentNode.removeChild(damageElement)
+                    }
+                }
+
+            }, 100)
+        }
+
         this.update()
     }
 
