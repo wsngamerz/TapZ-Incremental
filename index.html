@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    
     <link rel="preload" href="./assets/img/zombie-idle.gif" as="image" type="image/gif">
     <link rel="preload" href="./assets/img/zombie-hurt.gif" as="image" type="image/gif">
 </head>
@@ -20,15 +21,20 @@
             <h3 class="title">TapZ Incremental</h3>
 
             <section class="data">
-                <span>0 Brains</span> |
-                <span>£0</span> |
-                <span>0 Kills</span> |
-                <span class="clicks">0 Clicks</span>
+                <span class="brains">0 Brains</span> |
+                <span class="money">£0</span> |
+                <span class="kills">0 Kills</span> |
+                <span class="clicks">0 Clicks</span> |
+                <span>
+                    Zombie Health:
+                    <span class="zombie-current-health">10</span> / 
+                    <span class="zombie-total-health">10</span>
+                </span>
             </section>
 
             <section class="health">
                 <span class="healthbar">
-                    <span class="currenthealth"></span>
+                    <span class="current-health"></span>
                 </span>
             </section>
         </header>
