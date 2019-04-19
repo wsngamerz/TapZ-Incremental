@@ -119,6 +119,18 @@ html, body {
     height: 100%;
 }
 
+.health-green {
+    background-color: #4CAF50;
+}
+
+.health-amber {
+    background-color: #FFC107;
+}
+
+.health-red {
+    background-color: #f44336;
+}
+
 .main {
     width: 100vw;
     display: flex;

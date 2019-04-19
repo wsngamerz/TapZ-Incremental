@@ -111,6 +111,19 @@ class TapZ {
     updateHealth() {
         const percentage = ( this.saveData.userData.zombie.currentHealth / this.saveData.userData.zombie.totalHealth ) * 100
 
+        console.log(percentage)
+
+        if(percentage > 50) {
+            HealthBarCurrent.classList.remove("health-amber", "health-red")
+            HealthBarCurrent.classList.add("health-green")
+        } else if (percentage > 25) {
+            HealthBarCurrent.classList.remove("health-green", "health-red")
+            HealthBarCurrent.classList.add("health-amber")
+        } else {
+            HealthBarCurrent.classList.remove("health-green", "health-amber")
+            HealthBarCurrent.classList.add("health-red")
+        }
+
         HealthBarCurrent.style.width = `${ percentage }%`
     }
 }
