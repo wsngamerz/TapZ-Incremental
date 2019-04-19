@@ -16,5 +16,9 @@ class Save {
                 totalHealth: 10
             }
         }
+        
+        this.gameData = {
+            version: "1.0.1 ALPHA"
+        }
     }
 }

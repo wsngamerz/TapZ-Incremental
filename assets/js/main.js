@@ -26,6 +26,9 @@ class TapZ {
         this.updateHealth = this.updateHealth.bind(this)
 
         this.addEventListeners()
+
+        console.log("TapZ Incremental")
+        console.log(`v${ this.saveData.gameData.version }`)
     }
 
 
@@ -110,8 +113,6 @@ class TapZ {
 
     updateHealth() {
         const percentage = ( this.saveData.userData.zombie.currentHealth / this.saveData.userData.zombie.totalHealth ) * 100
-
-        console.log(percentage)
 
         if(percentage > 50) {
             HealthBarCurrent.classList.remove("health-amber", "health-red")
