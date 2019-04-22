@@ -3,10 +3,16 @@
 // main.js
 // 
 
+
 const BrainsSpan = document.getElementsByClassName("brains")[0]
 const ClickSpan = document.getElementsByClassName("clicks")[0]
 const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
 const KillsSpan = document.getElementsByClassName("kills")[0]
+const Modal = document.getElementsByClassName("modal")
+const SettingsButton = document.getElementsByClassName("button-settings")[0]
+const SettingsModal = document.getElementsByClassName("modal-settings")[0]
+const ShopButton = document.getElementsByClassName("button-shop")[0]
+const ShopModal = document.getElementsByClassName("modal-shop")[0]
 const Zombie = document.getElementsByClassName("zombie")[0]
 const ZombieHealthCurrent = document.getElementsByClassName("zombie-current-health")[0]
 const ZombieHealthTotal = document.getElementsByClassName("zombie-total-health")[0]
@@ -21,6 +27,7 @@ class TapZ {
         // Bind this to functions
         this.addEventListeners = this.addEventListeners.bind(this)
         this.click = this.click.bind(this)
+        this.toggleModal = this.toggleModal.bind(this)
         this.killZombie = this.killZombie.bind(this)
         this.update = this.update.bind(this)
         this.updateHealth = this.updateHealth.bind(this)
@@ -33,6 +40,21 @@ class TapZ {
 
 
     addEventListeners() {
+        // Apply to every modal
+        Array.from(Modal).forEach(element => {
+            element.addEventListener("click", (event) => {
+                // Add check to ensure modal will only close on the background click
+                // of the modal, not the children elements such as the actual content
+                if (event.currentTarget !== event.target) {
+                    return
+                }
+
+                this.toggleModal("")
+            })  
+        })
+
+        SettingsButton.addEventListener("click", () => this.toggleModal("settings"))
+        ShopButton.addEventListener("click", () => this.toggleModal("shop"))
         Zombie.addEventListener("click", this.click)
     }
 
@@ -94,11 +116,41 @@ class TapZ {
         this.update()
     }
 
+
     killZombie() {
         this.saveData.userData.kills++
         this.saveData.userData.brains += this.saveData.userData.bpk
         this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.totalHealth
     }
+
+
+    toggleModal(modal) {
+        if (this.saveData.gameData.modalOpen) {
+            // Close the modal
+            SettingsModal.classList.remove("modal-visible")
+            ShopModal.classList.remove("modal-visible")
+
+            this.saveData.gameData.modalOpen = false
+        } else {
+            // Open the modal
+            switch(modal) {
+                case "shop":
+                    ShopModal.classList.add("modal-visible")
+                    break
+                case "settings":
+                    SettingsModal.classList.add("modal-visible")
+                    break
+                case "":
+                    // Handle for the click off modal
+                    break
+                default:
+                    console.log(`Error, unknown modal: ${ modal }`)
+            }
+
+            this.saveData.gameData.modalOpen = true
+        }
+    }
+
 
     update() {
         this.updateHealth()
@@ -114,7 +166,7 @@ class TapZ {
     updateHealth() {
         const percentage = ( this.saveData.userData.zombie.currentHealth / this.saveData.userData.zombie.totalHealth ) * 100
 
-        if(percentage > 50) {
+        if (percentage > 50) {
             HealthBarCurrent.classList.remove("health-amber", "health-red")
             HealthBarCurrent.classList.add("health-green")
         } else if (percentage > 25) {

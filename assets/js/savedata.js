@@ -18,7 +18,8 @@ class Save {
         }
         
         this.gameData = {
-            version: "1.0.1 ALPHA"
+            version: "1.0.1 ALPHA",
+            modalOpen: false
         }
     }
 }
