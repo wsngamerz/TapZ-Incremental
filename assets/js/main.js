@@ -4,11 +4,14 @@
 // 
 
 
-const BrainsSpan = document.getElementsByClassName("brains")[0]
+const BrainsSellSpan = document.getElementsByClassName("brains-sell")[0]
+const BrainsSpan = document.getElementsByClassName("brains")
 const ClickSpan = document.getElementsByClassName("clicks")[0]
 const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
 const KillsSpan = document.getElementsByClassName("kills")[0]
 const Modal = document.getElementsByClassName("modal")
+const MoneySpan = document.getElementsByClassName("money")[0]
+const SellBrainsButton = document.getElementsByClassName("button-sellbrains")[0]
 const SettingsButton = document.getElementsByClassName("button-settings")[0]
 const SettingsModal = document.getElementsByClassName("modal-settings")[0]
 const ShopButton = document.getElementsByClassName("button-shop")[0]
@@ -53,6 +56,10 @@ class TapZ {
             })  
         })
 
+        SellBrainsButton.addEventListener("click", () => {
+            this.shop.sellBrains()
+            this.update()
+        })
         SettingsButton.addEventListener("click", () => this.toggleModal("settings"))
         ShopButton.addEventListener("click", () => this.toggleModal("shop"))
         Zombie.addEventListener("click", this.click)
@@ -155,9 +162,16 @@ class TapZ {
     update() {
         this.updateHealth()
 
-        BrainsSpan.innerHTML = `${ this.saveData.userData.brains } Brains`
+        BrainsSellSpan.innerHTML = `£${ this.shop.sellBrainsCost() }`
+                
+        Array.from(BrainsSpan).forEach(element => {
+            // Update all elements which have the class of brains
+            element.innerHTML = `${ this.saveData.userData.brains } Brains`
+        })
+
         ClickSpan.innerHTML = `${ this.saveData.userData.clicks } Clicks`
         KillsSpan.innerHTML = `${ this.saveData.userData.kills } Kills`
+        MoneySpan.innerHTML = `£${ this.saveData.userData.money }`
         ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
         ZombieHealthTotal.innerHTML = this.saveData.userData.zombie.totalHealth
     }
