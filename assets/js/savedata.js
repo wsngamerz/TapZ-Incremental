@@ -9,6 +9,7 @@ class Save {
             brains: 0,
             clicks: 0,
             kills: 0,
+            money: 0,
             bpk: 1, // Brains Per Kill
             mpb: 5, // Money Per Brain
             zombie: {

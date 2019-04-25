@@ -22,7 +22,7 @@ const ZombieHealthTotal = document.getElementsByClassName("zombie-total-health")
 class TapZ {
     constructor() {
         this.saveData = new Save()
-        this.shop = new Shop()
+        this.shop = new Shop(this.saveData)
 
         // Bind this to functions
         this.addEventListeners = this.addEventListeners.bind(this)
