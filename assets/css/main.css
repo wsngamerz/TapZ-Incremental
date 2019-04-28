@@ -3,6 +3,8 @@
     main.css
 */
 
+
+
 /* 
     Default Reset and sitewide styles
 */
@@ -21,6 +23,8 @@ html, body {
     padding: 0;
     margin: 0;
 }
+
+
 
 /*
     Modal Styles
@@ -54,20 +58,23 @@ html, body {
     visibility: visible;
 }
 
+
+
 /*
     Button Styles
 */
 
 .button {
-    padding: 1em 2em;
+    padding: .5em 1em;
     margin: 0.5em;
     border: none;
     background-color: #4CAF50;
     color: #fff;
     cursor: pointer;
-    border-radius: 3px;
-    font-size: .75em;
+    border-radius: 4px;
+    font-size: 1em;
     user-select: none;
+    outline: none;
 }
 
 .button:hover, .button:active {
@@ -86,6 +93,8 @@ html, body {
     content: "";
     clear: both;
 }
+
+
 
 /* 
     Main Section Styles
@@ -190,7 +199,9 @@ html, body {
     width: 100%;
 }
 
-/* Shop Styles */
+
+
+/* Tab Styles */
 
 .tabs {
     display: flex;
@@ -212,6 +223,7 @@ html, body {
     font-size: .75em;
     color: #616161;
     cursor: pointer;
+    outline: none;
 }
 
 .tab-btn-active {
@@ -231,18 +243,40 @@ html, body {
     flex: 1;
 }
 
-.sell-brains {
+
+
+/* Shop Styles */
+
+.shop-footer {
+    display: flex;
+    align-items: center;
     width: 100%;
-    text-align: center;
 }
 
-.sell-brains button {
+.shop-money {
+    margin: 0 1em;
+}
+
+.button-sellbrains {
     background-color: #2196F3;
-    color: #FAFAFA;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    padding: .5em 4em;
-    margin: 0.5em;
-    cursor: pointer;
+    margin-left: auto;
+}
+
+.button-sellbrains:hover {
+    background-color: #1976D2;
+}
+
+.button-closemodal {
+    padding: 1.1em;
+    margin-left: 0;
+    background-color: #f44336;
+    background-image: url('../img/cancel.svg');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    float: right;
+}
+
+.button-closemodal:hover {
+    background-color: #d32f2f;
 }

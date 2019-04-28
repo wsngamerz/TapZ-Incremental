@@ -4,18 +4,37 @@
 // 
 
 
+// Data Elements
 const BrainsSellSpan = document.getElementsByClassName("brains-sell")[0]
-const BrainsSpan = document.getElementsByClassName("brains")
+const BrainSpans = document.getElementsByClassName("brains")
 const ClickSpan = document.getElementsByClassName("clicks")[0]
-const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
 const KillsSpan = document.getElementsByClassName("kills")[0]
-const Modal = document.getElementsByClassName("modal")
-const MoneySpan = document.getElementsByClassName("money")[0]
+const MoneySpans = document.getElementsByClassName("money")
+
+// Modal Elements
+const Modals = document.getElementsByClassName("modal")
+const SettingsModal = document.getElementsByClassName("modal-settings")[0]
+const ShopModal = document.getElementsByClassName("modal-shop")[0]
+
+// Tab Elements
+const Tabs = document.getElementsByClassName("tab")
+const DpcTab = document.getElementsByClassName("tab-dpc")[0]
+const DpsTab = document.getElementsByClassName("tab-dps")[0]
+const MultipliersTab = document.getElementsByClassName("tab-multipliers")[0]
+
+const TabButtons = document.getElementsByClassName("tab-btn")
+const DpsTabButton = document.getElementsByClassName("tab-btn-dps")[0]
+const DpcTabButton = document.getElementsByClassName("tab-btn-dpc")[0]
+const MultipliersTabButton = document.getElementsByClassName("tab-btn-multipliers")[0]
+
+// Button Elements
 const SellBrainsButton = document.getElementsByClassName("button-sellbrains")[0]
 const SettingsButton = document.getElementsByClassName("button-settings")[0]
-const SettingsModal = document.getElementsByClassName("modal-settings")[0]
 const ShopButton = document.getElementsByClassName("button-shop")[0]
-const ShopModal = document.getElementsByClassName("modal-shop")[0]
+const CloseModalButtons = document.getElementsByClassName("button-closemodal")
+
+// Misc Elements
+const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
 const Zombie = document.getElementsByClassName("zombie")[0]
 const ZombieHealthCurrent = document.getElementsByClassName("zombie-current-health")[0]
 const ZombieHealthTotal = document.getElementsByClassName("zombie-total-health")[0]
@@ -35,6 +54,7 @@ class TapZ {
         this.update = this.update.bind(this)
         this.updateHealth = this.updateHealth.bind(this)
 
+        // Do I really need to say what this does?
         this.addEventListeners()
 
         console.log("TapZ Incremental")
@@ -44,7 +64,7 @@ class TapZ {
 
     addEventListeners() {
         // Apply to every modal
-        Array.from(Modal).forEach(element => {
+        Array.from(Modals).forEach(element => {
             element.addEventListener("click", (event) => {
                 // Add check to ensure modal will only close on the background click
                 // of the modal, not the children elements such as the actual content
@@ -56,12 +76,24 @@ class TapZ {
             })  
         })
 
+        // Close Modals when close modal button clicked
+        Array.from(CloseModalButtons).forEach(button => button.addEventListener("click", () => this.toggleModal("")))
+
         SellBrainsButton.addEventListener("click", () => {
             this.shop.sellBrains()
             this.update()
         })
+
+        // Modal Opening Buttons
         SettingsButton.addEventListener("click", () => this.toggleModal("settings"))
         ShopButton.addEventListener("click", () => this.toggleModal("shop"))
+
+        // Tab Changing Buttons
+        DpcTabButton.addEventListener("click", () => this.toggleTab("dpc"))
+        DpsTabButton.addEventListener("click", () => this.toggleTab("dps"))
+        MultipliersTabButton.addEventListener("click", () => this.toggleTab("multipliers"))
+
+        // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
     }
 
@@ -133,9 +165,8 @@ class TapZ {
 
     toggleModal(modal) {
         if (this.saveData.gameData.modalOpen) {
-            // Close the modal
-            SettingsModal.classList.remove("modal-visible")
-            ShopModal.classList.remove("modal-visible")
+            // Close the modals
+            Array.from(Modals).forEach(modal => modal.classList.remove("modal-visible"))
 
             this.saveData.gameData.modalOpen = false
         } else {
@@ -144,12 +175,15 @@ class TapZ {
                 case "shop":
                     ShopModal.classList.add("modal-visible")
                     break
+                
                 case "settings":
                     SettingsModal.classList.add("modal-visible")
                     break
+                
                 case "":
                     // Handle for the click off modal
                     break
+                
                 default:
                     console.log(`Error, unknown modal: ${ modal }`)
             }
@@ -159,19 +193,44 @@ class TapZ {
     }
 
 
+    toggleTab(tab) {
+        // Remove active and visible from all tabs and their corresponding buttons
+        Array.from(TabButtons).forEach(button => button.classList.remove("tab-btn-active"))
+        Array.from(Tabs).forEach(tab => tab.classList.remove("tab-visible"))
+
+        switch(tab) {
+            case "dpc":
+                DpcTabButton.classList.add("tab-btn-active")
+                DpcTab.classList.add("tab-visible")
+                break
+            
+            case "dps":
+                DpsTabButton.classList.add("tab-btn-active")
+                DpsTab.classList.add("tab-visible")
+                break
+            
+            case "multipliers":
+                MultipliersTabButton.classList.add("tab-btn-active")
+                MultipliersTab.classList.add("tab-visible")
+                break
+            
+            default:
+                console.log(`Unknown Tab: ${ tab }`)
+        }
+    }
+
+
     update() {
         this.updateHealth()
 
         BrainsSellSpan.innerHTML = `£${ this.shop.sellBrainsCost() }`
-                
-        Array.from(BrainsSpan).forEach(element => {
-            // Update all elements which have the class of brains
-            element.innerHTML = `${ this.saveData.userData.brains } Brains`
-        })
+        
+        // Update all of the brain and money elements
+        Array.from(BrainSpans).forEach(element => element.innerHTML = `${ this.saveData.userData.brains } Brains`)
+        Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ this.saveData.userData.money }`)
 
         ClickSpan.innerHTML = `${ this.saveData.userData.clicks } Clicks`
         KillsSpan.innerHTML = `${ this.saveData.userData.kills } Kills`
-        MoneySpan.innerHTML = `£${ this.saveData.userData.money }`
         ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
         ZombieHealthTotal.innerHTML = this.saveData.userData.zombie.totalHealth
     }
