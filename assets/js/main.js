@@ -51,6 +51,13 @@ class TapZ {
 
         console.log("TapZ Incremental")
         console.log(`v${ this.saveData.gameData.version }`)
+
+        this.saveData.load()
+        this.update()
+
+        setInterval(() => {
+            this.saveData.save()
+        }, 10000);
     }
 
 

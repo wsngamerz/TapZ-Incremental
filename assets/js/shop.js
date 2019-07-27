@@ -32,7 +32,7 @@ class Shop {
         })
 
         // Get Shop Data Language
-        fetch(`/assets/data/${ this.saveData.userData.language }/shop.json`).then((response) => {
+        fetch(`/assets/data/${ this.saveData.userData.options.language }/shop.json`).then((response) => {
             return response.json()
         }).then((response) => {
             this.shopLangData = response
