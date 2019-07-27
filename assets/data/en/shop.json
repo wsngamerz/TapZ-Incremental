@@ -1,0 +1,22 @@
+{
+    "sharpeningKit": {
+        "name": "Sharpening Kit",
+        "description": "A sharper blade means more damage, right?"
+    },
+    "gripUpgrade": {
+        "name": "Grip Upgrade",
+        "description": "A more comfortable handle makes the slayin' easier."
+    },
+    "survivor": {
+        "name": "Survivor",
+        "description": "A regular citizen who has pledged their life to you."
+    },
+    "advancedSpoon": {
+        "name": "Advanced Spoon",
+        "description": "Only an advanced spoon can extract the goodies of a zombies brain!"
+    },
+    "brainEnrichment": {
+        "name": "Brain Enrichment",
+        "description": "A zap a day keeps the banks at bay."
+    }
+}

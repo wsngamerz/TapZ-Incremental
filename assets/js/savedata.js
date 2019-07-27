@@ -9,6 +9,7 @@ class Save {
             brains: 0,
             clicks: 0,
             kills: 0,
+            language: "en",
             money: 0,
             bpk: 1, // Brains Per Kill
             mpb: 5, // Money Per Brain
@@ -19,7 +20,7 @@ class Save {
         }
         
         this.gameData = {
-            version: "1.0.1 ALPHA",
+            version: "0.0.2 ALPHA",
             modalOpen: false
         }
     }

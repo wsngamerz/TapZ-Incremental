@@ -46,15 +46,7 @@ class TapZ {
         this.saveData = new Save()
         this.shop = new Shop(this.saveData)
 
-        // Bind this to functions
-        this.addEventListeners = this.addEventListeners.bind(this)
-        this.click = this.click.bind(this)
-        this.toggleModal = this.toggleModal.bind(this)
-        this.killZombie = this.killZombie.bind(this)
-        this.update = this.update.bind(this)
-        this.updateHealth = this.updateHealth.bind(this)
-
-        // Do I really need to say what this does?
+        // Do I really need to say what these do?
         this.addEventListeners()
 
         console.log("TapZ Incremental")
@@ -62,7 +54,7 @@ class TapZ {
     }
 
 
-    addEventListeners() {
+    addEventListeners = () => {
         // Apply to every modal
         Array.from(Modals).forEach(element => {
             element.addEventListener("click", (event) => {
@@ -98,7 +90,7 @@ class TapZ {
     }
 
 
-    click(event) {
+    click = (event) => {
         this.saveData.userData.clicks++
         this.saveData.userData.zombie.currentHealth -= 1
 
@@ -156,14 +148,14 @@ class TapZ {
     }
 
 
-    killZombie() {
+    killZombie = () => {
         this.saveData.userData.kills++
         this.saveData.userData.brains += this.saveData.userData.bpk
         this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.totalHealth
     }
 
 
-    toggleModal(modal) {
+    toggleModal = (modal) => {
         if (this.saveData.gameData.modalOpen) {
             // Close the modals
             Array.from(Modals).forEach(modal => modal.classList.remove("modal-visible"))
@@ -193,7 +185,7 @@ class TapZ {
     }
 
 
-    toggleTab(tab) {
+    toggleTab = (tab) => {
         // Remove active and visible from all tabs and their corresponding buttons
         Array.from(TabButtons).forEach(button => button.classList.remove("tab-btn-active"))
         Array.from(Tabs).forEach(tab => tab.classList.remove("tab-visible"))
@@ -220,7 +212,7 @@ class TapZ {
     }
 
 
-    update() {
+    update = () => {
         this.updateHealth()
 
         BrainsSellSpan.innerHTML = `£${ this.shop.sellBrainsCost() }`
@@ -236,7 +228,7 @@ class TapZ {
     }
 
 
-    updateHealth() {
+    updateHealth = () => {
         const percentage = ( this.saveData.userData.zombie.currentHealth / this.saveData.userData.zombie.totalHealth ) * 100
 
         if (percentage > 50) {

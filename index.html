@@ -1,96 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TapZ Incremental</title>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>TapZ Incremental</title>
 
-    <link rel="stylesheet" href="./assets/css/main.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
-    
-    <link rel="preload" href="./assets/img/zombie-idle.gif" as="image" type="image/gif">
-    <link rel="preload" href="./assets/img/zombie-hurt.gif" as="image" type="image/gif">
-</head>
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+        
+        <link rel="preload" href="./assets/img/zombie-idle.gif" as="image" type="image/gif">
+        <link rel="preload" href="./assets/img/zombie-hurt.gif" as="image" type="image/gif">
+    </head>
 
-<body>
-    <!-- Main Content of the game -->
-    <section class="game">
-        <header class="header">
-            <h3 class="title">TapZ Incremental</h3>
+    <body>
+        <!-- Main Content of the game -->
+        <section class="game">
+            <header class="header">
+                <h3 class="title">TapZ Incremental</h3>
 
-            <section class="data">
-                <span class="brains">0 Brains</span> |
-                <span class="money">£0</span> |
-                <span class="kills">0 Kills</span> |
-                <span class="clicks">0 Clicks</span> |
-                <span>
-                    Zombie Health:
-                    <span class="zombie-current-health">10</span> / 
-                    <span class="zombie-total-health">10</span>
-                </span>
-            </section>
-
-            <section class="health">
-                <span class="healthbar">
-                    <span class="current-health"></span>
-                </span>
-            </section>
-        </header>
-
-        <main class="main">
-            <section class="zombie"></section>
-        </main>
-
-        <footer class="footer">
-            <button class="button button-left button-shop">Shop</button>
-            <button class="button button-right button-settings">Settings</button>
-        </footer>
-    </section>
-
-    <!-- The Shop Modal -->
-    <section class="modal modal-shop">
-        <section class="modal-content">
-            <section class="tabs">
-
-                <section class="tab-buttons">
-                    <button class="tab-btn tab-btn-dpc tab-btn-active">DPC</button>
-                    <button class="tab-btn tab-btn-dps">DPS</button>
-                    <button class="tab-btn tab-btn-multipliers">Multipliers</button>
+                <section class="data">
+                    <span class="brains">0 Brains</span> |
+                    <span class="money">£0</span> |
+                    <span class="kills">0 Kills</span> |
+                    <span class="clicks">0 Clicks</span> |
+                    <span>
+                        Zombie Health:
+                        <span class="zombie-current-health">10</span> / 
+                        <span class="zombie-total-health">10</span>
+                    </span>
                 </section>
 
-                <section class="tab tab-dpc tab-visible">
-                    <p>Damage that will be dealt to the zombie by your painful clicking attempts</p>
+                <section class="health">
+                    <span class="healthbar">
+                        <span class="current-health"></span>
+                    </span>
                 </section>
-    
-                <section class="tab tab-dps">
-                    <p>Damage that will be dealt to the zombie by the plathora of processing power which have been enslaved by us developers</p>
-                </section>
-                
-                <section class="tab tab-multipliers">
-                    <p>Stuff which multiplies stuff to make other stuff do stuff quicker</p>
-                </section>
+            </header>
 
-                <section class="shop-footer">
-                    <span class="shop-money">You Own: <span class="money">£0</span></span>
-                    <button class="button button-sellbrains">Sell <span class="brains">0 Brains</span> for <span class="brains-sell">£0</span></button>
-                    <button class="button button-closemodal"></button>
-                </section>
+            <main class="main">
+                <section class="zombie"></section>
+            </main>
 
+            <footer class="footer">
+                <button class="button button-left button-shop">Shop</button>
+                <button class="button button-right button-settings">Settings</button>
+            </footer>
+        </section>
+
+        <!-- The Shop Modal -->
+        <section class="modal modal-shop">
+            <section class="modal-content">
+                <section class="tabs">
+
+                    <section class="tab-buttons">
+                        <button class="tab-btn tab-btn-dpc tab-btn-active">DPC</button>
+                        <button class="tab-btn tab-btn-dps">DPS</button>
+                        <button class="tab-btn tab-btn-multipliers">Multipliers</button>
+                    </section>
+
+                    <section class="tab tab-dpc tab-visible">
+                        <section class="items"></section>
+                    </section>
+        
+                    <section class="tab tab-dps">
+                        <section class="items"></section>
+                    </section>
+                    
+                    <section class="tab tab-multipliers">
+                        <section class="items"></section>
+                    </section>
+
+                    <section class="shop-footer">
+                        <span class="shop-money">You Own: <span class="money">£0</span></span>
+                        <button class="button button-sellbrains">Sell <span class="brains">0 Brains</span> for <span class="brains-sell">£0</span></button>
+                        <button class="button button-closemodal"></button>
+                    </section>
+
+                </section>
             </section>
         </section>
-    </section>
 
-    <!-- The Settings Modal -->
-    <section class="modal modal-settings">
+        <!-- The Settings Modal -->
+        <section class="modal modal-settings">
 
-    </section>
+        </section>
 
-    <script src="./assets/js/shop.js"></script>
-    <script src="./assets/js/savedata.js"></script>
-    <script src="./assets/js/main.js"></script>
-</body>
+        <script src="./assets/js/shop.js"></script>
+        <script src="./assets/js/savedata.js"></script>
+        <script src="./assets/js/main.js"></script>
+    </body>
 
 </html>
