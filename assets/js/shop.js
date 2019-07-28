@@ -20,6 +20,39 @@ class Shop {
     }
 
 
+    checkUserData = () => {
+        // DPC
+        this.shopData.dpc.forEach((itemData) => {
+            const test = this.saveData.userData.upgrades[itemData.id]
+            if (!test) {
+                this.saveData.userData.upgrades[itemData.id] = {
+                    level: 0
+                }
+            }
+        })
+
+        // DPS
+        this.shopData.dps.forEach((itemData) => {
+            const test = this.saveData.userData.upgrades[itemData.id]
+            if (!test) {
+                this.saveData.userData.upgrades[itemData.id] = {
+                    level: 0
+                }
+            }
+        })
+
+        // Multipliers
+        this.shopData.multipliers.forEach((itemData) => {
+            const test = this.saveData.userData.upgrades[itemData.id]
+            if (!test) {
+                this.saveData.userData.upgrades[itemData.id] = {
+                    level: 0
+                }
+            }
+        })
+    }
+
+
     loadShopData = () => {
         // Get Shop Data
         fetch("/assets/data/shop_items.json").then((response) => {
@@ -48,6 +81,9 @@ class Shop {
             // only start to load elements once both the data and the
             // language files have been loaded
 
+            // Ensure that the upgrades are in the userdata
+            this.checkUserData()
+
             // Handle DPC
             this.shopData.dpc.forEach((itemData) => {
                 const newShopItem = this.createShopItem(itemData)
@@ -66,8 +102,6 @@ class Shop {
                 MultiplierTab.firstElementChild.appendChild(newShopItem)
             })
 
-        } else {
-            console.debug("Not Yet Loaded")
         }
     }
 
@@ -94,24 +128,29 @@ class Shop {
 
         const shopItemName = document.createElement("p")
         shopItemName.classList.add("shop-item-name")
-        const shopItemNameText = document.createTextNode(this.shopLangData[itemData.id].name)
-        shopItemName.appendChild(shopItemNameText)
+        shopItemName.innerText = this.shopLangData[itemData.id].name
 
         const shopItemDescription = document.createElement("p")
         shopItemDescription.classList.add("shop-item-description")
-        const shopItemDescriptionText = document.createTextNode(this.shopLangData[itemData.id].description)
-        shopItemDescription.appendChild(shopItemDescriptionText)
+        shopItemDescription.innerText = this.shopLangData[itemData.id].description
+
+        const shopItemLevel = document.createElement("p")
+        shopItemLevel.classList.add("shop-item-level")
+        shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[itemData.id].level }`
 
         shopItemText.appendChild(shopItemName)
         shopItemText.appendChild(shopItemDescription)
+        shopItemText.appendChild(shopItemLevel)
         
         shopItemInformation.appendChild(shopItemIcon)
         shopItemInformation.appendChild(shopItemText)
 
         const shopItemButton = document.createElement("button")
         shopItemButton.classList.add("shop-item-button")
-        const shopItemButtonText = document.createTextNode(`Buy x1 ${ this.shopLangData[itemData.id].name } for £0.00`)
-        shopItemButton.appendChild(shopItemButtonText)
+        shopItemButton.classList.add("button")
+        shopItemButton.classList.add("button-primary")
+        shopItemButton.classList.add("button-block")
+        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £0.00`
 
         shopItem.appendChild(shopItemInformation)
         shopItem.appendChild(shopItemButton)

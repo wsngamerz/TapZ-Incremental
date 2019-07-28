@@ -19,7 +19,8 @@ class Save {
             options: {
                 language: "en",
                 showDamage: true
-            }
+            },
+            upgrades: {} // should be auto filled by the shop
         }
         
         this.gameData = {
@@ -38,12 +39,12 @@ class Save {
 
 
     load = () => {
-        console.log("Attempting to Load Save")
         const saveData = localStorage.getItem("savedata")
         if (saveData) {
-            this.userData = JSON.parse(atob(saveData))
+            this.userData = { ...this.blankUserData, ...JSON.parse(atob(saveData)) }
+            console.log("Loaded existing savedata!")
         } else {
-            console.log("Existing save doesnt exist")
+            console.log("Existing savedata doesn't exist!")
         }
     }
 

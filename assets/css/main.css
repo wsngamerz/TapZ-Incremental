@@ -65,20 +65,16 @@ html, body {
 */
 
 .button {
-    padding: .5em 1em;
     margin: 0.5em;
     border: none;
-    background-color: #4CAF50;
-    color: #fff;
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 1em;
     user-select: none;
     outline: none;
-}
-
-.button:hover, .button:active {
-    background-color: #388E3C;
+    display: inline-block;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
 }
 
 .button-left {
@@ -94,7 +90,28 @@ html, body {
     clear: both;
 }
 
+.button-block {
+    display: block;
+    width: 100%;
+}
 
+.button-primary {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.button-primary:hover, .button-primary:active {
+    background-color: #388E3C;
+}
+
+.button-secondary {
+    background-color: #2196F3;
+    color: #fff;
+}
+
+.button-secondary:hover, .button-secondary:active {
+    background-color: #1976D2;
+}
 
 /* 
     Main Section Styles
@@ -256,26 +273,24 @@ html, body {
 
 .shop-money {
     margin: 0 1em;
+    font-size: 0.9rem;
+    order: 1;
 }
 
 .button-sellbrains {
-    background-color: #2196F3;
-    margin-left: auto;
-}
-
-.button-sellbrains:hover {
-    background-color: #1976D2;
+    order: 2;
+    flex-grow: 1;
 }
 
 .button-closemodal {
-    padding: 1.1em;
+    order: 3;
+    padding: 1.3em;
     margin-left: 0;
     background-color: #f44336;
     background-image: url('../img/cancel.svg');
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
-    float: right;
 }
 
 .button-closemodal:hover {
@@ -325,16 +340,10 @@ html, body {
     font-weight: lighter;
 }
 
-.shop-item-button {
-    display: block;
-    width: 100%;
-    margin-top: 0.5rem;
-    background-color: #2196F3;
-    border: 1px solid #2196F3;
-    color: #fff;
+.shop-item-level {
     font-size: 0.75rem;
-    cursor: pointer;
-    text-align: center;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
+}
+
+.shop-item-button {
+    margin: 0.5rem 0 0 0;
 }

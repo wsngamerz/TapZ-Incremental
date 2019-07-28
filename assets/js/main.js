@@ -109,8 +109,8 @@ class TapZ {
         Zombie.classList.add("zombie-hurt")
         setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
 
-        // If called by a click
-        if (event) {
+        // If called by a trusted click
+        if (event.isTrusted) {
             // Create a damage indicator
             const clickX = event.clientX + 40
             const clickY = event.clientY - 40
@@ -228,8 +228,6 @@ class TapZ {
         Array.from(BrainSpans).forEach(element => element.innerHTML = `${ this.saveData.userData.brains } Brains`)
         Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ this.saveData.userData.money }`)
 
-        ClickSpan.innerHTML = `${ this.saveData.userData.clicks } Clicks`
-        KillsSpan.innerHTML = `${ this.saveData.userData.kills } Kills`
         ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
         ZombieHealthTotal.innerHTML = this.saveData.userData.zombie.totalHealth
     }
