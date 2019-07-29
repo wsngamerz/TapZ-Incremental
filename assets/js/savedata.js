@@ -24,7 +24,7 @@ class Save {
         }
         
         this.gameData = {
-            version: "0.0.2 ALPHA",
+            version: "0.0.3 ALPHA",
             modalOpen: false
         }
 
@@ -51,5 +51,7 @@ class Save {
 
     reset = () => {
         this.userData = this.blankUserData
+        this.save()
+        location.reload()
     }
 }

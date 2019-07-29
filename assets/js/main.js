@@ -7,8 +7,6 @@
 // Data Elements
 const BrainsSellSpan = document.getElementsByClassName("brains-sell")[0]
 const BrainSpans = document.getElementsByClassName("brains")
-const ClickSpan = document.getElementsByClassName("clicks")[0]
-const KillsSpan = document.getElementsByClassName("kills")[0]
 const MoneySpans = document.getElementsByClassName("money")
 
 // Modal Elements
@@ -32,6 +30,12 @@ const SellBrainsButton = document.getElementsByClassName("button-sellbrains")[0]
 const SettingsButton = document.getElementsByClassName("button-settings")[0]
 const ShopButton = document.getElementsByClassName("button-shop")[0]
 const CloseModalButtons = document.getElementsByClassName("button-closemodal")
+
+// Settings Buttons
+const DamageIndicatorToggle = document.getElementsByClassName("settings-button-damageindicator")[0]
+const SaveButton = document.getElementsByClassName("settings-button-save")[0]
+const LoadButton = document.getElementsByClassName("settings-button-load")[0]
+const ResetButton = document.getElementsByClassName("settings-button-reset")[0]
 
 // Misc Elements
 const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
@@ -92,8 +96,32 @@ class TapZ {
         DpsTabButton.addEventListener("click", () => this.toggleTab("dps"))
         MultipliersTabButton.addEventListener("click", () => this.toggleTab("multipliers"))
 
+        // Settings
+        DamageIndicatorToggle.addEventListener("click", () => this.editSettings("showDamage"))
+        SaveButton.addEventListener("click", () => this.saveData.save())
+        LoadButton.addEventListener("click", () => this.saveData.load())
+        ResetButton.addEventListener("click", () => this.saveData.reset())
+
         // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
+        Zombie.addEventListener("touchstart", this.multiTouch)
+    }
+
+
+    multiTouch = (event) => {
+        // Hopefully prevent click event so no double-calling
+        event.preventDefault()
+
+        // get only the most recent touch
+        const lastTouch = event.touches[event.touches.length - 1]
+
+        // Fake a click event and send that to the onclick function
+        const clickEvent = new MouseEvent("click", {
+            clientX: lastTouch.clientX,
+            clientY: lastTouch.clientY
+        })
+
+        this.click(clickEvent)
     }
 
 
@@ -109,11 +137,21 @@ class TapZ {
         Zombie.classList.add("zombie-hurt")
         setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
 
-        // If called by a trusted click
-        if (event.isTrusted) {
+        // Allows for people to turn off damage indicators if it causes performance issues 
+        // and/or gets in the way of taps on mobile for example
+        if (this.saveData.userData.options.showDamage) {
+            this.damageIndicator(event.x, event.y)
+        }
+
+        // Update after click
+        this.update()
+    }
+
+
+    damageIndicator = (clickX, clickY) => {
+        // If x and y exists
+        if ((clickX != 0) && (clickY != 0)) {
             // Create a damage indicator
-            const clickX = event.clientX + 40
-            const clickY = event.clientY - 40
             const uid = (new Date).getTime() // Use the time in ms as a unique id
             const damageElement = document.createElement("span")
 
@@ -149,8 +187,24 @@ class TapZ {
 
             }, 100)
         }
+    }
 
-        // Update after click
+
+    editSettings = (setting, value) => {
+        const currentValue = this.saveData.userData.options[setting]
+
+        if (typeof(currentValue) == "boolean") {
+            // If the value is a boolean, it must be a toggle
+            if (currentValue) {
+                this.saveData.userData.options[setting] = false
+            } else {
+                this.saveData.userData.options[setting] = true
+            }
+        } else {
+            // otherwise just set the value
+            this.saveData.userData.options[setting] = value
+        }
+        
         this.update()
     }
 
@@ -227,6 +281,9 @@ class TapZ {
         // Update all of the brain and money elements
         Array.from(BrainSpans).forEach(element => element.innerHTML = `${ this.saveData.userData.brains } Brains`)
         Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ this.saveData.userData.money }`)
+
+        // Update Settings Buttons
+        DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
 
         ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
         ZombieHealthTotal.innerHTML = this.saveData.userData.zombie.totalHealth
