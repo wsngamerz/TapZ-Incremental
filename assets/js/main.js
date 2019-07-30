@@ -43,6 +43,7 @@ const ResetButton = document.getElementsByClassName("settings-button-reset")[0]
 
 // Misc Elements
 const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
+const VersionSpan = document.getElementById("version")
 const Zombie = document.getElementsByClassName("zombie")[0]
 const ZombieHealthCurrent = document.getElementsByClassName("zombie-current-health")[0]
 const ZombieHealthTotal = document.getElementsByClassName("zombie-total-health")[0]
@@ -67,6 +68,7 @@ class TapZ {
 
         console.log("TapZ Incremental")
         console.log(`v${ this.saveData.gameData.version }`)
+        VersionSpan.innerText = `v${ this.saveData.gameData.version }`
 
         this.saveData.load()
         this.update()
@@ -78,6 +80,7 @@ class TapZ {
         setInterval(() => {
             this.handleDPS()
         }, 1000)
+
     }
 
 

@@ -117,6 +117,22 @@ html, body {
     Main Section Styles
 */
 
+#version {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 30%;
+    width: 40%;
+    text-align: center;
+    background-color: lightgray;
+    padding: 0.2rem;
+    border-radius: .2rem; 
+    margin: .5rem;
+    opacity: 0.5;
+    font-size: 0.75rem;
+    user-select: none;
+    z-index: -10000;
+}
+
 .game {
     width: 100vw;
     height: 100%;
