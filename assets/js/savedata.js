@@ -7,9 +7,9 @@ class Save {
     constructor() {
         this.userData = {
             brains: 0,
-            clicks: 0,
-            kills: 0,
             money: 0,
+            dps: 0,
+            dpc: 1,
             bpk: 1, // Brains Per Kill
             mpb: 5, // Money Per Brain
             zombie: {
@@ -19,6 +19,10 @@ class Save {
             options: {
                 language: "en",
                 showDamage: true
+            },
+            statistics: {
+                clicks: 0,
+                kills: 0
             },
             upgrades: {} // should be auto filled by the shop
         }
@@ -35,6 +39,7 @@ class Save {
     save = () => {
         console.log("Attempting to save")
         localStorage.setItem("savedata", btoa(JSON.stringify(this.userData)))
+        console.log(this.userData)
     }
 
 

@@ -69,6 +69,8 @@
                     
                     <section class="tab tab-multipliers">
                         <section class="items"></section>
+                        <!-- Temporary Notice for Multipliers -->
+                        <span style="position:absolute;background:red;color:white;border-radius:5px;padding:1em;opacity:0.8;position:absolute;left:30%;top:50%;">Not Yet Implemented!</span>
                     </section>
 
                     <section class="shop-footer">
@@ -84,10 +86,21 @@
         <!-- The Settings Modal -->
         <section class="modal modal-settings">
             <section class="modal-content">
+                <h2>Settings</h2>
                 <button class="button button-secondary settings-button-damageindicator">Damage Indicators: ON</button>
                 <button class="button button-secondary settings-button-save">Save</button>
                 <button class="button button-secondary settings-button-load">Load</button>
                 <button class="button button-secondary settings-button-reset">Reset</button>
+                
+                <h2>Stats</h2>
+                <p>DPC: <span id="statistics-dpc">0</span></p>
+                <p>DPS: <span id="statistics-dps">0</span></p>
+                <p>Kills: <span id="statistics-kills">0</span></p>
+                <p>Clicks: <span id="statistics-clicks">0</span></p>
+                <p>Level: <span id="statistics-level">0</span></p>
+                <p>Brains Per kill: <span id="statistics-bpk">0</span></p>
+                <p>Brain value: <span id="statistics-mpb">0</span></p>
+                <button class="button button-closemodal"></button>
             </section>
         </section>
 

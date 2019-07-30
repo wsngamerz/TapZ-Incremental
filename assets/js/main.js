@@ -31,6 +31,10 @@ const SettingsButton = document.getElementsByClassName("button-settings")[0]
 const ShopButton = document.getElementsByClassName("button-shop")[0]
 const CloseModalButtons = document.getElementsByClassName("button-closemodal")
 
+// Shop Elements
+const BuyShopItemButtons = document.getElementsByClassName("shop-item-button")
+const ShopItemLevels = document.getElementsByClassName("shop-item-level")
+
 // Settings Buttons
 const DamageIndicatorToggle = document.getElementsByClassName("settings-button-damageindicator")[0]
 const SaveButton = document.getElementsByClassName("settings-button-save")[0]
@@ -43,12 +47,20 @@ const Zombie = document.getElementsByClassName("zombie")[0]
 const ZombieHealthCurrent = document.getElementsByClassName("zombie-current-health")[0]
 const ZombieHealthTotal = document.getElementsByClassName("zombie-total-health")[0]
 
+// Statistic Elements
+const StatisticDPC = document.getElementById("statistics-dpc")
+const StatisticDPS = document.getElementById("statistics-dps")
+const StatisticKills = document.getElementById("statistics-kills")
+const StatisticClicks = document.getElementById("statistics-clicks")
+const StatisticLevel = document.getElementById("statistics-level")
+const StatisticBPK = document.getElementById("statistics-bpk")
+const StatisticMPB = document.getElementById("statistics-mpb")
 
 
 class TapZ {
     constructor() {
         this.saveData = new Save()
-        this.shop = new Shop(this.saveData)
+        this.shop = new Shop(this.saveData, this.update)
 
         // Do I really need to say what these do?
         this.addEventListeners()
@@ -62,6 +74,10 @@ class TapZ {
         setInterval(() => {
             this.saveData.save()
         }, 10000);
+
+        setInterval(() => {
+            this.handleDPS()
+        }, 1000)
     }
 
 
@@ -101,7 +117,7 @@ class TapZ {
         SaveButton.addEventListener("click", () => this.saveData.save())
         LoadButton.addEventListener("click", () => this.saveData.load())
         ResetButton.addEventListener("click", () => this.saveData.reset())
-
+        
         // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
         Zombie.addEventListener("touchstart", this.multiTouch)
@@ -126,16 +142,9 @@ class TapZ {
 
 
     click = (event) => {
-        this.saveData.userData.clicks++
-        this.saveData.userData.zombie.currentHealth -= 1
-
-        if (this.saveData.userData.zombie.currentHealth <= 0) {
-            this.killZombie()
-        }
-
-        // Switch to a different animation (gif) and switch back after 300ms
-        Zombie.classList.add("zombie-hurt")
-        setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
+        this.saveData.userData.statistics.clicks++
+        
+        this.injureZombie(this.saveData.userData.dpc)
 
         // Allows for people to turn off damage indicators if it causes performance issues 
         // and/or gets in the way of taps on mobile for example
@@ -156,15 +165,15 @@ class TapZ {
             const damageElement = document.createElement("span")
 
             // Set the damage indicators data and styles
-            damageElement.innerHTML = "-1"
+            damageElement.innerHTML = `-${ this.saveData.userData.dpc }`
             damageElement.id = uid
             damageElement.classList.add("damage-indicator")
             damageElement.dataset.itter = 10
             damageElement.dataset.uid = uid
             damageElement.dataset.x = clickX
             damageElement.dataset.y = clickY
-            damageElement.style.top = `${ clickY }px`
-            damageElement.style.left = `${ clickX }px`
+            damageElement.style.top = `${ clickY - 40 }px`
+            damageElement.style.left = `${ clickX + 20 }px`
 
             document.body.appendChild(damageElement)
 
@@ -209,8 +218,30 @@ class TapZ {
     }
 
 
+    handleDPS = () => {
+        this.injureZombie(this.saveData.userData.dps)
+        this.update()
+    }
+
+
+    injureZombie = (damage) => {
+        this.saveData.userData.zombie.currentHealth -= damage
+
+        if (this.saveData.userData.zombie.currentHealth <= 0) {
+            this.killZombie()
+        }
+
+        if (damage > 0) {
+            // Switch to a different animation (gif) and switch back after 300ms
+            Zombie.classList.add("zombie-hurt")
+            setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
+        }
+
+    }
+
+
     killZombie = () => {
-        this.saveData.userData.kills++
+        this.saveData.userData.statistics.kills++
         this.saveData.userData.brains += this.saveData.userData.bpk
         this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.totalHealth
     }
@@ -280,11 +311,32 @@ class TapZ {
         
         // Update all of the brain and money elements
         Array.from(BrainSpans).forEach(element => element.innerHTML = `${ this.saveData.userData.brains } Brains`)
-        Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ this.saveData.userData.money }`)
+        Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ Math.round(this.saveData.userData.money) }`)
 
         // Update Settings Buttons
         DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
 
+        // Update shop buttons
+        Array.from(BuyShopItemButtons).forEach(element => {
+            const itemData = this.shop.getItem(element.getAttribute("data-id"))
+            element.innerText = `Buy x1 ${ itemData.text.name } for £${ this.shop.getItemCost(itemData) }`
+        })
+
+        // Update Shop Levels
+        Array.from(ShopItemLevels).forEach(shopItemLevel => {
+            shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-id")].level }`
+        })
+
+        // Statistics
+        StatisticClicks.innerText = this.saveData.userData.statistics.clicks
+        StatisticDPC.innerText = this.saveData.userData.dpc
+        StatisticDPS.innerText = this.saveData.userData.dps
+        StatisticKills.innerText = this.saveData.userData.statistics.kills
+        StatisticLevel.innerText = 0
+        StatisticBPK.innerText = this.saveData.userData.bpk
+        StatisticMPB.innerText = `£${ this.saveData.userData.mpb }`
+
+        // Zombie health
         ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
         ZombieHealthTotal.innerHTML = this.saveData.userData.zombie.totalHealth
     }
