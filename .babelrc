@@ -1,0 +1,23 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "entry",
+                "corejs": 3
+            }
+        ],
+        [
+            "minify",
+            {
+                "keepFnName": true,
+                "keepClassName": true,
+                "builtIns": false // fixes crash
+            }
+        ]
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-class-properties"
+    ],
+    "comments": false
+}
