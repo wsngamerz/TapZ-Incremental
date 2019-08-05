@@ -3,7 +3,23 @@
 
 class BigNumber {
     constructor(number) {
-        this._value = `${number}` // handle numbers as strings as large numbers are an issue in javascript
+        /*
+            This class is used to handle extremly large numbers by storing them
+            as strings rather than as an integer. as a result, the 53bit javascript
+            interger limit is no longer an issue however all number manipulations
+            such as simple adding and subtracting have to be reimplemented.
+
+            NOTE: this class handles integers. floating point numbers are not handled
+                and any numbers after a decimal point will be truncated
+
+                furthermore, any numbers entered as an integer will automatically be converted
+                into a string but numbers larger than the max-integer-limit of javascript will
+                probably break stuff
+        */
+       
+        this._value = `${ number }` // handle numbers as strings as large numbers are an issue in javascript
+
+        // TODO: Implement all from http://www.thealmightyguru.com/Pointless/BigNumbers.html
 
         this.suffixList = [
             ["Thousand", "K"],
@@ -27,8 +43,29 @@ class BigNumber {
             ["Octodecillion", "O"],
             ["Novemdecillion", "N"],
             ["Vigintillion", "v"],
-            ["Unvigintillion", "c"]
+            ["Unvigintillion", "c"],
+            ["Duovigintillion", ""],
+            ["Trevigintillion", ""],
+            ["Quattuorvigintillion", ""],
+            ["Quinvigintillion", ""],
+            ["Sexvigintillion", ""],
+            ["Septenvigintillion", ""],
+            ["Octovigintillion", ""],
+            ["Novemvigintillion", ""],
+            ["Trigintillion", ""],
+            ["Untrigintillion", ""],
+            ["Duotrigintillion", ""],
+            ["Tretrigintillion", ""],
+            ["Quattuortrigintillion", ""]
         ]
+    }
+
+    get value() {
+        return this._value
+    }
+
+    set value(val) {
+        this._value = `${ val }`
     }
 
     add = (number) => {
@@ -37,12 +74,12 @@ class BigNumber {
         let number2 = "" // smallest number
         
         // find largest and smallest and set the variables
-        if (number.length > this._value.length) {
-            number1 = `${number}`
+        if (`${ number }`.length > this._value.length) {
+            number1 = `${ number }`
             number2 = this._value
         } else {
             number1 = this._value
-            number2 = `${number}`
+            number2 = `${ number }`
         }
 
         // ensure both numbers have same number of places
@@ -67,17 +104,17 @@ class BigNumber {
             // prepend value onto sum and set carry if possible
             console.log(a, b, temp)
             if (temp.length == 2) {
-                sum = `${temp[1]}${sum}`
+                sum = `${ temp[1] }${ sum }`
                 carry = +temp[0]
             } else {
-                sum = `${temp}${sum}`
+                sum = `${ temp }${ sum }`
                 carry = 0
             }
         }
 
         // Add final carry digit
         if (carry != 0) {
-            sum = `${carry}${sum}`            
+            sum = `${ carry }${ sum }`            
         }
         
         // set and return the value
@@ -89,8 +126,6 @@ class BigNumber {
 
     }
 
-
-
     format = (shorthand = true) => {
         /* 
             Pretifies numbers by placing them in a shorthand(ish) format
@@ -98,20 +133,24 @@ class BigNumber {
             Shorthand is an argument which decides whether to use a couple of
             letters for the prefix or use the full name
 
-            124232 -> 124.23 Thousand or 124.23 K            
+            124232 -> 124.23 Thousand or 124.23 K
+            
+            NOTE: The value is truncated, not rounded
         */
 
-        if (this._value.length < 4) {
-            return this._value // if lower than 1000
-        } else {
-            const triplets = (this._value.length / 3) >> 0 // a better fersion of Math.floor()
-            const suffix = this.suffixList[triplets - 1][+shorthand]
-            // slice 
-            // https://stackoverflow.com/questions/952924/javascript-chop-slice-trim-off-last-character-in-string
-        }
+        const numberZeros = (this._value.length - 1)
         
+        if (numberZeros < 3) {
+            return this._value
+        } else {
+            const suffixPosition = (numberZeros/3 << 0) - 1
+            const suffix = this.suffixList[suffixPosition][+shorthand]
+            const rm0 = ((suffixPosition + 1) * 3) - 2
+
+            const actualValue = this._value.slice(0, -rm0)
+            const formattedValue = `${ actualValue.slice(0, -2) }.${ actualValue.slice(-2) } ${ suffix }`
+
+            return formattedValue
+        }        
     }
 }
-
-
-const test = new BigNumber("1000")
