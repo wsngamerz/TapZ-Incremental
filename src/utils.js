@@ -123,7 +123,16 @@ class BigNumber {
     }
 
     subtract = (number) => {
+        // TODO: Implement the function
+        // should be similar to the addition one (ish)
+    }
 
+    multiply = (number) => {
+        // TODO: Implement the function
+    }
+
+    divide = (number) => {
+        // TODO: Implement the function
     }
 
     format = (shorthand = true) => {
@@ -138,13 +147,14 @@ class BigNumber {
             NOTE: The value is truncated, not rounded
         */
 
+        // NOTE: Not the actual number of zeros!
         const numberZeros = (this._value.length - 1)
         
         if (numberZeros < 3) {
             return this._value
         } else {
             const suffixPosition = (numberZeros/3 << 0) - 1
-            const suffix = this.suffixList[suffixPosition][+shorthand]
+            const suffix = this.suffixList[suffixPosition][+shorthand] // +shorthand converts a boolean into an integer of either 1 or 0 which is the position in the list
             const rm0 = ((suffixPosition + 1) * 3) - 2
 
             const actualValue = this._value.slice(0, -rm0)

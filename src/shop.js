@@ -189,8 +189,10 @@ class Shop {
     recalculateBuffs = () => {
         const upgrades = this.saveData.userData.upgrades
         
-        let clickDamage = 0
-        let autoDamage = 0
+        let clickDamage = this.saveData.blankUserData.dpc
+        let autoDamage = this.saveData.blankUserData.dps
+        let brainValue = this.saveData.blankUserData.mpb
+        let brainCount = this.saveData.blankUserData.bpk
 
         Object.keys(upgrades).forEach(upgrade => {
             const itemData = this.getItem(upgrade)
@@ -204,11 +206,26 @@ class Shop {
                 autoDamage += itemData.dps * level
             } else {
                 // is a multiplier
+                switch (itemData.effects) {
+                    case "brainCount":
+                        [...Array(level).keys()].forEach(x => brainCount *= itemData.multiplier)
+                        break
+                    
+                    case "brainValue":
+                        [...Array(level).keys()].forEach(x => brainValue *= itemData.multiplier)
+                        break
+                    
+                    default:
+                        console.log(itemData.effects, "=> Unknown Effect")
+                        break
+                }
             }
         })
 
         this.saveData.userData.dpc = clickDamage
         this.saveData.userData.dps = autoDamage
+        this.saveData.userData.mpb = brainValue
+        this.saveData.userData.bpk = brainCount
     }
 
 
