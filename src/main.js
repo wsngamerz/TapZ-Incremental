@@ -75,6 +75,7 @@ class TapZ {
 
         setInterval(() => {
             this.saveData.save()
+            console.log(this.saveData.userData)
         }, 10000);
 
         setInterval(() => {
@@ -145,7 +146,7 @@ class TapZ {
 
 
     click = (event) => {
-        this.saveData.userData.statistics.clicks++
+        this.saveData.userData.statistics.clicks = this.saveData.userData.statistics.clicks.plus(1)
         
         this.injureZombie(this.saveData.userData.dpc)
 
@@ -228,13 +229,13 @@ class TapZ {
 
 
     injureZombie = (damage) => {
-        this.saveData.userData.zombie.currentHealth -= damage
+        this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.currentHealth.minus(damage)
 
-        if (this.saveData.userData.zombie.currentHealth <= 0) {
+        if (this.saveData.userData.zombie.currentHealth.lte(0)) {
             this.killZombie()
         }
 
-        if (damage > 0) {
+        if (damage.gt(0)) {
             // Switch to a different animation (gif) and switch back after 300ms
             Zombie.classList.add("zombie-hurt")
             setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
@@ -244,8 +245,8 @@ class TapZ {
 
 
     killZombie = () => {
-        this.saveData.userData.statistics.kills++
-        this.saveData.userData.brains += this.saveData.userData.bpk
+        this.saveData.userData.statistics.kills = this.saveData.userData.statistics.kills.plus(1)
+        this.saveData.userData.brains = this.saveData.userData.brains.plus(this.saveData.userData.bpk)
         this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.totalHealth
     }
 
@@ -310,11 +311,11 @@ class TapZ {
     update = () => {
         this.updateHealth()
 
-        BrainsSellSpan.innerHTML = `£${ this.shop.sellBrainsCost() }`
+        BrainsSellSpan.innerHTML = `£${ formatNumber(this.shop.sellBrainsCost(), true) }`
         
         // Update all of the brain and money elements
-        Array.from(BrainSpans).forEach(element => element.innerHTML = `${ this.saveData.userData.brains } Brains`)
-        Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ Math.round(this.saveData.userData.money) }`)
+        Array.from(BrainSpans).forEach(element => element.innerHTML = `${ formatNumber(this.saveData.userData.brains, true) } Brains`)
+        Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ formatNumber(this.saveData.userData.money, true) }`)
 
         // Update Settings Buttons
         DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
@@ -322,7 +323,7 @@ class TapZ {
         // Update shop buttons
         Array.from(BuyShopItemButtons).forEach(element => {
             const itemData = this.shop.getItem(element.getAttribute("data-id"))
-            element.innerText = `Buy x1 ${ itemData.text.name } for £${ this.shop.getItemCost(itemData) }`
+            element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), true) }`
         })
 
         // Update Shop Levels
@@ -331,13 +332,13 @@ class TapZ {
         })
 
         // Statistics
-        StatisticClicks.innerText = this.saveData.userData.statistics.clicks
-        StatisticDPC.innerText = this.saveData.userData.dpc
-        StatisticDPS.innerText = this.saveData.userData.dps
-        StatisticKills.innerText = this.saveData.userData.statistics.kills
+        StatisticClicks.innerText = this.saveData.userData.statistics.clicks.toString(10)
+        StatisticDPC.innerText = this.saveData.userData.dpc.toString(10)
+        StatisticDPS.innerText = this.saveData.userData.dps.toString(10)
+        StatisticKills.innerText = this.saveData.userData.statistics.kills.toString(10)
         StatisticLevel.innerText = 0
-        StatisticBPK.innerText = this.saveData.userData.bpk
-        StatisticMPB.innerText = `£${ this.saveData.userData.mpb }`
+        StatisticBPK.innerText = this.saveData.userData.bpk.toString(10)
+        StatisticMPB.innerText = `£${ this.saveData.userData.mpb.toString(10) }`
 
         // Zombie health
         ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
@@ -346,7 +347,7 @@ class TapZ {
 
 
     updateHealth = () => {
-        const percentage = ( this.saveData.userData.zombie.currentHealth / this.saveData.userData.zombie.totalHealth ) * 100
+        const percentage = this.saveData.userData.zombie.currentHealth.dividedBy(this.saveData.userData.zombie.totalHealth) * 100
 
         if (percentage > 50) {
             HealthBarCurrent.classList.remove("health-amber", "health-red")

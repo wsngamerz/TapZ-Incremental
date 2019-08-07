@@ -25,10 +25,10 @@ class Shop {
         const shopItem = this.getItem(shopItemID)
         const itemCost = this.getItemCost(shopItem)
 
-        if (this.saveData.userData.money >= itemCost) {
+        if (this.saveData.userData.money.gte(itemCost)) {
             // Can Afford upgrade            
             this.saveData.userData.upgrades[shopItemID].level += 1
-            this.saveData.userData.money -= itemCost
+            this.saveData.userData.money = this.saveData.userData.money.minus(itemCost)
 
             this.recalculateBuffs()
         } else {
@@ -95,7 +95,7 @@ class Shop {
         shopItemButton.classList.add("button")
         shopItemButton.classList.add("button-primary")
         shopItemButton.classList.add("button-block")
-        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ this.getItemCost(itemData) }`
+        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ formatNumber(this.getItemCost(itemData), true) }`
         shopItemButton.setAttribute("data-id", itemData.id)
         shopItemButton.onclick = () => {
             this.buyItem(itemData.id)
@@ -189,10 +189,10 @@ class Shop {
     recalculateBuffs = () => {
         const upgrades = this.saveData.userData.upgrades
         
-        let clickDamage = this.saveData.blankUserData.dpc
-        let autoDamage = this.saveData.blankUserData.dps
-        let brainValue = this.saveData.blankUserData.mpb
-        let brainCount = this.saveData.blankUserData.bpk
+        let clickDamage = 1
+        let autoDamage = 0
+        let brainValue = 5
+        let brainCount = 1
 
         Object.keys(upgrades).forEach(upgrade => {
             const itemData = this.getItem(upgrade)
@@ -222,17 +222,17 @@ class Shop {
             }
         })
 
-        this.saveData.userData.dpc = clickDamage
-        this.saveData.userData.dps = autoDamage
-        this.saveData.userData.mpb = brainValue
-        this.saveData.userData.bpk = brainCount
+        this.saveData.userData.dpc = BigNumber(clickDamage, 10)
+        this.saveData.userData.dps = BigNumber(autoDamage, 10)
+        this.saveData.userData.mpb = BigNumber(brainValue, 10)
+        this.saveData.userData.bpk = BigNumber(brainCount, 10)
     }
 
 
     sellBrains = () => {
         const cost = this.sellBrainsCost()
-        this.saveData.userData.brains = 0
-        this.saveData.userData.money += cost
+        this.saveData.userData.brains = BigNumber(0, 10)
+        this.saveData.userData.money = this.saveData.userData.money.plus(cost)
     }
 
 
@@ -240,6 +240,6 @@ class Shop {
         const brains = this.saveData.userData.brains
         const moneyPerBrain = this.saveData.userData.mpb
 
-        return (brains * moneyPerBrain)
+        return brains.multipliedBy(moneyPerBrain)
     }
 }
