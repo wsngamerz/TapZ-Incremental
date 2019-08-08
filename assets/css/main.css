@@ -58,7 +58,9 @@ html, body {
     visibility: visible;
 }
 
-
+.modal-settings .modal-content {
+    overflow-y: auto;
+}
 
 /*
     Button Styles
@@ -100,7 +102,7 @@ html, body {
     color: #fff;
 }
 
-.button-primary:hover, .button-primary:active {
+.button-primary:not(:disabled):hover, .button-primary:not(:disabled):active {
     background-color: #388E3C;
 }
 
@@ -109,8 +111,13 @@ html, body {
     color: #fff;
 }
 
-.button-secondary:hover, .button-secondary:active {
+.button-secondary:not(:disabled):hover, .button-secondary:not(:disabled):active {
     background-color: #1976D2;
+}
+
+.button:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
 }
 
 /* 
