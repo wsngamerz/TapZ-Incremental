@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="description" content="TapZ is a zombie based incremental game, full of fun! Currently in alpha stages though."/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>TapZ Incremental</title>
 
-        <link rel="stylesheet" href="./assets/css/main.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@wsngamerz" />
+        <meta name="twitter:title" content="TapZ Incremental" />
+        <meta name="twitter:description" content="TapZ is a zombie based incremental game, full of fun! Currently in alpha stages though." />
+        <meta name="twitter:creator" content="@wsngamerz" />
+        <meta name="twitter:image" content="https://tapz-dev.realstep.co.uk/assets/img/tapz.png" />
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="TapZ Incremental" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tapz-dev.realstep.co.uk/" />
+        <meta property="og:image" content="https://tapz-dev.realstep.co.uk/assets/img/tapz.png" />
+        <meta property="og:description" content="TapZ is a zombie based incremental game, full of fun! Currently in alpha stages though." />
+        <meta property="og:site_name" content="TapZ Incremental" />
+
+        <!-- Stylesheets and Fonts -->
+        <link rel="stylesheet" href="/assets/css/main.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme" />
         
-        <link rel="preload" href="./assets/img/zombie-idle.gif" as="image" type="image/gif">
-        <link rel="preload" href="./assets/img/zombie-hurt.gif" as="image" type="image/gif">
+        <!-- Preloads -->
+        <link rel="preload" href="/assets/img/zombie-idle.gif" as="image" type="image/gif" />
+        <link rel="preload" href="/assets/img/zombie-hurt.gif" as="image" type="image/gif" />
+        <link rel="preload" href="/assets/js/main.js" as="script" />
+        <link rel="preload" href="/assets/js/savedata.js" as="script" />
+        <link rel="preload" href="/assets/js/shop.js" as="script" />
+        <link rel="preload" href="/assets/js/utils.js" as="script" />
     </head>
 
     <body>
@@ -109,10 +130,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/9.0.0/bignumber.js" integrity="sha256-TYZ2kR74G+TqMIiLuKpB57VUTNKhGFknyOKgRYqxhnw=" crossorigin="anonymous"></script>
         
         <!-- Production scripts -->
-        <script src="./assets/js/utils.js"></script>
-        <script src="./assets/js/shop.js"></script>
-        <script src="./assets/js/savedata.js"></script>
-        <script src="./assets/js/main.js"></script>
+        <script src="/assets/js/utils.js"></script>
+        <script src="/assets/js/shop.js"></script>
+        <script src="/assets/js/savedata.js"></script>
+        <script src="/assets/js/main.js"></script>
 
         <!-- Untranspiled scripts [DEVELOPMENT ONLY] -->
         <!-- <script src="./src/utils.js"></script>
