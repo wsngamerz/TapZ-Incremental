@@ -35,6 +35,24 @@ const CloseModalButtons = document.getElementsByClassName("button-closemodal")
 const BuyShopItemButtons = document.getElementsByClassName("shop-item-button")
 const ShopItemLevels = document.getElementsByClassName("shop-item-level")
 
+// Main Menu
+const MenuButtons = document.getElementsByClassName("menubutton")
+const ModalPages = document.getElementsByClassName("modalpage")
+const MenuBackButton = document.getElementsByClassName("button-menuback")[0]
+
+const MainModalPage = document.getElementsByClassName("modalpage-main")[0]
+const DisplayModalPage = document.getElementsByClassName("modalpage-display")[0]
+const SaveModalPage = document.getElementsByClassName("modalpage-saving")[0]
+const AudioModalPage = document.getElementsByClassName("modalpage-audio")[0]
+const StatisticsModalPage = document.getElementsByClassName("modalpage-statistics")[0]
+const AboutModalPage = document.getElementsByClassName("modalpage-about")[0]
+
+const DisplaySettingsButton = document.getElementsByClassName("menubutton-display")[0]
+const SaveSettingsButton = document.getElementsByClassName("menubutton-saving")[0]
+const AudioSettingsButton = document.getElementsByClassName("menubutton-audio")[0]
+const StatisticsSectionButton = document.getElementsByClassName("menubutton-statistics")[0]
+const AboutSectionButton = document.getElementsByClassName("menubutton-about")[0]
+
 // Settings Buttons
 const DamageIndicatorToggle = document.getElementsByClassName("settings-button-damageindicator")[0]
 const SaveButton = document.getElementsByClassName("settings-button-save")[0]
@@ -109,6 +127,14 @@ class TapZ {
         // Modal Opening Buttons
         SettingsButton.addEventListener("click", () => this.toggleModal("settings"))
         ShopButton.addEventListener("click", () => this.toggleModal("shop"))
+
+        // Settings Modal Buttons
+        MenuBackButton.addEventListener("click", () => this.toggleMenu("main"))
+        DisplaySettingsButton.addEventListener("click", () => this.toggleMenu("display"))
+        SaveSettingsButton.addEventListener("click", () => this.toggleMenu("saving"))
+        AudioSettingsButton.addEventListener("click", () => this.toggleMenu("audio"))
+        StatisticsSectionButton.addEventListener("click", () => this.toggleMenu("statistics"))
+        AboutSectionButton.addEventListener("click", () => this.toggleMenu("about"))
 
         // Tab Changing Buttons
         DpcTabButton.addEventListener("click", () => this.toggleTab("dpc"))
@@ -265,6 +291,7 @@ class TapZ {
                 
                 case "settings":
                     SettingsModal.classList.add("modal-visible")
+                    this.toggleMenu("main")
                     break
                 
                 case "":
@@ -306,6 +333,36 @@ class TapZ {
         }
     }
 
+    toggleMenu = (menu) => {
+        Array.from(ModalPages).forEach(menu => menu.classList.remove("modalpage-visible"))
+
+        if (menu == "main") { MenuBackButton.classList.remove("button-visible") }
+        else { MenuBackButton.classList.add("button-visible") }
+
+        switch(menu) {
+            case "main":
+                MainModalPage.classList.add("modalpage-visible")
+                break
+            case "display":
+                DisplayModalPage.classList.add("modalpage-visible")
+                break
+            case "saving":
+                SaveModalPage.classList.add("modalpage-visible")
+                break
+            case "audio":
+                AudioModalPage.classList.add("modalpage-visible")
+                break
+            case "statistics":
+                StatisticsModalPage.classList.add("modalpage-visible")
+                break
+            case "about":
+                AboutModalPage.classList.add("modalpage-visible")
+                break
+            default:
+                console.log("Unknown Menu")
+                MainModalPage.classList.add("modalpage-visible")
+        }
+    }
 
     update = () => {
         this.updateHealth()

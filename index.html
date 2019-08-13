@@ -66,7 +66,7 @@
 
             <footer class="footer">
                 <button class="button button-primary button-left button-shop">Shop</button>
-                <button class="button button-primary button-right button-settings">Settings</button>
+                <button class="button button-primary button-right button-settings">Menu</button>
             </footer>
         </section>
 
@@ -106,44 +106,61 @@
         <!-- The Settings Modal -->
         <section class="modal modal-settings">
             <section class="modal-content">
-                <section class="modalpage modalpage-main">
-                    <button class="button button-secondary" disabled>Game Settings</button>
-                    <button class="button button-secondary" disabled>Saving</button>
-                    <button class="button button-secondary" disabled>Statistics</button>
-                    <button class="button button-secondary" disabled>About</button>
-                </section>
+                <section class="modalpages">
+                    <section class="modalpage modalpage-main modalpage-visible">
+                        <h2>Main Menu</h2>
+                        <section class="menu-options">
+                            <button class="button button-secondary menubutton menubutton-display">Display Settings</button>
+                            <button class="button button-secondary menubutton menubutton-saving">Save Settings</button>
+                            <button class="button button-secondary menubutton menubutton-audio">Audio Settings</button>
+                            <button class="button button-secondary menubutton menubutton-statistics">Statistics</button>
+                            <button class="button button-secondary menubutton menubutton-about">About</button>
+                        </section>
+                    </section>
+    
+                    <section class="modalpage modalpage-display">
+                        <h2>Display Settings</h2>
+                        <button class="button button-secondary settings-button-damageindicator">Damage Indicators: ON</button>
+                    </section>
+    
+                    <section class="modalpage modalpage-saving">
+                        <h2>Save Settings</h2>
+                        <button class="button button-secondary settings-button-save">Save</button>
+                        <button class="button button-secondary settings-button-load">Load</button>
+                        <button class="button button-secondary settings-button-reset">Reset</button>
+                    </section>
+    
+                    <section class="modalpage modalpage-audio">
+                        <h2>Audio Settings</h2>
+                    </section>
 
-                <section class="modalpage modalpage-settings">
-                    <h2>Settings</h2>
-                    <button class="button button-secondary settings-button-damageindicator">Damage Indicators: ON</button>
+                    <section class="modalpage modalpage-statistics">
+                        <h2>Stats</h2>
+                        <p>Brains: <span class="brains" id="statistics-brains">0</span></p>
+                        <p>Money: <span class="money" id="statistics-money">0</span></p>
+                        <p>DPC: <span id="statistics-dpc">0</span></p>
+                        <p>DPS: <span id="statistics-dps">0</span></p>
+                        <p>Kills: <span id="statistics-kills">0</span></p>
+                        <p>Clicks: <span id="statistics-clicks">0</span></p>
+                        <p>Level: <span id="statistics-level">0</span></p>
+                        <p>Brains Per kill: <span id="statistics-bpk">0</span></p>
+                        <p>Brain value: <span id="statistics-mpb">0</span></p>
+                    </section>
+    
+                    <section class="modalpage modalpage-about">
+                        <h2>About</h2>
+                        <p>TapZ is a free-to-play online incremental where you beat the crap outta zombies for money. It's as simple as that!</p>
+                        <p>TapZ Incremental was created by me (<a href="https://github.com/wsngamerz">wsngamerz</a>) and you can follow development on the games GitHub <a href="https://github.com/wsngamerz/TapZ-Incremental">Here</a>.</p>
+                        <br />
+                        <p><a href="https://opengameart.org/content/mini-zombie">Zombie asset</a> created by <a href="https://opengameart.org/users/segel">Segel</a>.</p>
+                        <p>Most icons used were sourced from <a href="https://game-icons.net">Game-icons.net</a>.</p>
+                    </section>
+    
+                    <section class="modalpage-footer">
+                        <button class="button button-closemodal"></button>
+                        <button class="button button-menuback"></button>
+                    </section>
                 </section>
-
-                <section class="modalpage modalpage-saving">
-                    <button class="button button-secondary settings-button-save">Save</button>
-                    <button class="button button-secondary settings-button-load">Load</button>
-                    <button class="button button-secondary settings-button-reset">Reset</button>
-                </section>
-
-                <section class="modalpage modalpage-statistics">
-                    <h2>Stats</h2>
-                    <p>Brains: <span class="brains" id="statistics-brains">0</span></p>
-                    <p>Money: <span class="money" id="statistics-money">0</span></p>
-                    <p>DPC: <span id="statistics-dpc">0</span></p>
-                    <p>DPS: <span id="statistics-dps">0</span></p>
-                    <p>Kills: <span id="statistics-kills">0</span></p>
-                    <p>Clicks: <span id="statistics-clicks">0</span></p>
-                    <p>Level: <span id="statistics-level">0</span></p>
-                    <p>Brains Per kill: <span id="statistics-bpk">0</span></p>
-                    <p>Brain value: <span id="statistics-mpb">0</span></p>
-                </section>
-
-                <section class="modalpage modalpage-about">
-                    <h2>About</h2>
-                    <p>TapZ is a free-to-play online incremental where you beat the crap outta zombies for money. It's as simple as that</p>
-                    <p>TapZ Incremental was created by me (wsngamerz) and you can follow development at my <a href="https://github.com/wsngamerz/TapZ-Incremental">GitHub Page</a></p>
-                </section>
-
-                <button class="button button-closemodal"></button>
             </section>
         </section>
 
