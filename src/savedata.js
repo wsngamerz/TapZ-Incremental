@@ -26,37 +26,46 @@ class Save {
                 clicks: BigNumber(0, 10),
                 kills: BigNumber(0, 10)
             },
-            upgrades: {} // should be auto filled by the shop
+            upgrades: {}, // should be auto filled by the shop
+            saveVersion: 0 // in the future this will be used to hopefully help to migrate old save formats to newer ones
         }
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.8 ALPHA",
+            version: "0.0.9 ALPHA",
             modalOpen: false
         }
     }
 
 
     save = () => {
-        // TODO: REFACTOR SAVING TO WORK WITH BigNumber
+        console.debug("Attempting to save")
+        // pull savedata and convert it to base64
+        // to save in LocalStorage
+        const savedata = btoa(JSON.stringify(this.userData))
+        localStorage.setItem("savedata", savedata)
 
-        // console.log("Attempting to save")
-        // localStorage.setItem("savedata", btoa(JSON.stringify(this.userData)))
-        // console.log(this.userData)
-        
+        console.debug(`Saved at ${ new Date() }`)
     }
 
 
     load = () => {
-        // TODO: REFACTOR SAVING TO WORK WITH BigNumber
+        const savedata = localStorage.getItem("savedata")
 
-        // const saveData = localStorage.getItem("savedata")
-        // if (saveData) {
-        //     this.userData = { ...this.blankUserData, ...JSON.parse(atob(saveData)) }
-        //     console.log("Loaded existing savedata!")
-        // } else {
-        //     console.log("Existing savedata doesn't exist!")
-        // }
+        if (savedata) {
+            console.debug("Existing savedata exists so attempting to load it!")
+            const data = JSON.parse(atob(savedata), (key, value) => {
+                if (typeof value === "string" && value.match(/^[0-9]+$/)) {
+                    return BigNumber(value, 10)
+                }
+                return value
+            })
+
+            // Apply loaded userdata
+            this.userData = data
+        } else {
+            console.debug("Existing savedata doesn't exist!")
+        }
     }
 
 

@@ -75,7 +75,6 @@ class TapZ {
 
         setInterval(() => {
             this.saveData.save()
-            console.log(this.saveData.userData)
         }, 10000);
 
         setInterval(() => {
