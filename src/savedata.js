@@ -32,12 +32,13 @@ class Save {
                 kills: BigNumber(0, 10)
             },
             upgrades: {}, // should be auto filled by the shop
-            saveVersion: 0 // in the future this will be used to hopefully help to migrate old save formats to newer ones
+            saveVersion: 1 // in the future this will be used to hopefully help to migrate old save formats to newer ones
         }
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
             version: "0.0.12 ALPHA",
+            currentSaveVersion: 1,
             modalOpen: false
         }
     }
@@ -59,18 +60,29 @@ class Save {
         const savedata = localStorage.getItem("savedata")
 
         if (savedata) {
-            console.debug("Existing savedata exists so attempting to load it!")
             const data = JSON.parse(atob(savedata), (key, value) => {
                 if (typeof value === "string" && value.match(/^[0-9]+$/)) {
                     return BigNumber(value, 10)
                 }
                 return value
             })
+            console.debug("Existing savedata exists using version", data.saveVersion, "so attempting to load it!")
 
             // Apply loaded userdata
             this.userData = data
         } else {
             console.debug("Existing savedata doesn't exist!")
+        }
+
+        // warn user about old savedata (if old ofc)
+        // TODO: Provide upgrade in the future
+        if ((!this.userData.saveVersion) || (this.userData.saveVersion < this.gameData.currentSaveVersion)) {
+            const userDecision = confirm("You are using an outdated save. Press OK to play (and reset savedata). Press Cancel to keep existing savedata (and be unable to play)")
+            if (userDecision) {
+                this.reset()
+            } else {
+                this.userData = null // doesn't actually delete savedata as savedata is stored in localStorage
+            }
         }
     }
 
