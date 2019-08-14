@@ -21,7 +21,11 @@ class Save {
             options: {
                 language: "en",
                 showDamage: true,
-                numberShorthand: true
+                numberShorthand: true,
+                mutemusic: false,
+                musicvolume: 0.6,
+                mutesfx: false,
+                sfxvolume: 0.8
             },
             statistics: {
                 clicks: BigNumber(0, 10),
@@ -33,7 +37,7 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.11 ALPHA",
+            version: "0.0.12 ALPHA",
             modalOpen: false
         }
     }

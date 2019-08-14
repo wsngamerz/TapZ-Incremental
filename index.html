@@ -113,6 +113,7 @@
                             <button class="button button-secondary menubutton menubutton-audio">Audio Settings</button>
                             <button class="button button-secondary menubutton menubutton-statistics">Statistics</button>
                             <button class="button button-secondary menubutton menubutton-about">About</button>
+                            <button class="button button-secondary menubutton menubutton-credits">Credits</button>
                         </section>
                     </section>
     
@@ -131,6 +132,18 @@
     
                     <section class="modalpage modalpage-audio">
                         <h2>Audio Settings</h2>
+                        <button class="button button-secondary settings-button-playmusic">Play Music</button>
+                        <button class="button button-secondary settings-button-pausemusic">Pause Music</button>
+                        <button class="button button-secondary settings-button-mutemusic">Music: Unmuted</button>
+                        <button class="button button-secondary settings-button-mutesfx">SFX: Unmuted</button>
+                        <section class="slider-container">
+                            <span class="slider-label">Music Volume</span>
+                            <input type="range" min="0" max="100" value="60" class="slider settings-slider-musicvolume">
+                        </section>
+                        <section class="slider-container">
+                            <span class="slider-label">SFX Volume</span>
+                            <input type="range" min="0" max="100" value="100" class="slider settings-slider-sfxvolume">
+                        </section>
                     </section>
 
                     <section class="modalpage modalpage-statistics">
@@ -150,11 +163,17 @@
                         <h2>About</h2>
                         <p>TapZ is a free-to-play online incremental where you beat the crap outta zombies for money. It's as simple as that!</p>
                         <p>TapZ Incremental was created by me (<a href="https://github.com/wsngamerz">wsngamerz</a>) and you can follow development on the games GitHub <a href="https://github.com/wsngamerz/TapZ-Incremental">Here</a>.</p>
-                        <br />
-                        <p><a href="https://opengameart.org/content/mini-zombie">Zombie asset</a> created by <a href="https://opengameart.org/users/segel">Segel</a>.</p>
-                        <p>Most icons used were sourced from <a href="https://game-icons.net">Game-icons.net</a>.</p>
                     </section>
     
+                    <section class="modalpage modalpage-credits">
+                        <h2>Credits</h2>
+                        <p><a href="https://opengameart.org/content/mini-zombie">Zombie asset</a> created by <a href="https://opengameart.org/users/segel">Segel</a>.</p>
+                        <p>Music by Matthew Pablo (<a href="http://www.matthewpablo.com">http://www.matthewpablo.com</a>)</p>
+                        <p><a href="https://opengameart.org/content/zombies-sound-pack">Zombie SFX</a> by <a href="https://opengameart.org/users/artisticdude">artisticdude</a></p>
+                        <p><a href="https://opengameart.org/content/gui-sound-effects">GUI SFX</a> by <a href="https://opengameart.org/users/lokif"></a></p>
+                        <p>Most icons used were sourced from <a href="https://game-icons.net">Game-icons.net</a>.</p>
+                    </section>
+
                     <section class="modalpage-footer">
                         <button class="button button-closemodal"></button>
                         <button class="button button-menuback"></button>

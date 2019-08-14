@@ -10,9 +10,8 @@ const MultiplierTab = document.getElementsByClassName("tab-multipliers")[0]
 
 
 class Shop {
-    constructor(saveData, updateFunction) {
+    constructor(saveData) {
         this.saveData = saveData
-        this.update = updateFunction
 
         this.shopData = null
         this.shopLangData = null
@@ -33,7 +32,7 @@ class Shop {
             this.recalculateBuffs()
         } else {
             // Cannot Afford upgrade
-            console.log(`Cannot afford ${ shopItemID }`)
+            console.debug(`Cannot afford ${ shopItemID }`)
         }
     }
 
@@ -99,6 +98,7 @@ class Shop {
         shopItemButton.setAttribute("data-id", itemData.id)
         shopItemButton.onclick = () => {
             this.buyItem(itemData.id)
+            this.playSFX("buttonClick")
             this.update()
         }
         
