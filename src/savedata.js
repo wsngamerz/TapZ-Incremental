@@ -20,7 +20,8 @@ class Save {
             },
             options: {
                 language: "en",
-                showDamage: true
+                showDamage: true,
+                numberShorthand: true
             },
             statistics: {
                 clicks: BigNumber(0, 10),
@@ -32,7 +33,7 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.10 ALPHA",
+            version: "0.0.11 ALPHA",
             modalOpen: false
         }
     }
@@ -45,6 +46,7 @@ class Save {
         const savedata = btoa(JSON.stringify(this.userData))
         localStorage.setItem("savedata", savedata)
 
+        console.debug(this.userData)
         console.debug(`Saved at ${ new Date() }`)
     }
 

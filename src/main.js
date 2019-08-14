@@ -8,6 +8,7 @@
 const BrainsSellSpan = document.getElementsByClassName("brains-sell")[0]
 const BrainSpans = document.getElementsByClassName("brains")
 const MoneySpans = document.getElementsByClassName("money")
+const LevelSpan = document.getElementsByClassName("level")[0]
 
 // Modal Elements
 const Modals = document.getElementsByClassName("modal")
@@ -55,6 +56,7 @@ const AboutSectionButton = document.getElementsByClassName("menubutton-about")[0
 
 // Settings Buttons
 const DamageIndicatorToggle = document.getElementsByClassName("settings-button-damageindicator")[0]
+const NumberFormatToggle = document.getElementsByClassName("settings-button-numbershorthand")[0]
 const SaveButton = document.getElementsByClassName("settings-button-save")[0]
 const LoadButton = document.getElementsByClassName("settings-button-load")[0]
 const ResetButton = document.getElementsByClassName("settings-button-reset")[0]
@@ -143,6 +145,7 @@ class TapZ {
 
         // Settings
         DamageIndicatorToggle.addEventListener("click", () => this.editSettings("showDamage"))
+        NumberFormatToggle.addEventListener("click", () => this.editSettings("numberShorthand"))
         SaveButton.addEventListener("click", () => this.saveData.save())
         LoadButton.addEventListener("click", () => this.saveData.load())
         ResetButton.addEventListener("click", () => this.saveData.reset())
@@ -271,6 +274,16 @@ class TapZ {
 
     killZombie = () => {
         this.saveData.userData.statistics.kills = this.saveData.userData.statistics.kills.plus(1)
+
+        let killLevelTarget = this.saveData.userData.level.plus(1).pow(3).plus(15)
+        if (this.saveData.userData.statistics.kills.gt(killLevelTarget)) {
+            this.saveData.userData.level = this.saveData.userData.level.plus(1)
+            this.saveData.userData.zombie.totalHealth = this.saveData.userData.zombie.totalHealth.multipliedBy(2)
+
+            console.debug("Level", this.saveData.userData.level.toString(10),"Required", killLevelTarget.toString(10), "kills")
+            console.debug("Zombie health is now", this.saveData.userData.zombie.totalHealth.toString(10))
+        }
+        
         this.saveData.userData.brains = this.saveData.userData.brains.plus(this.saveData.userData.bpk)
         this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.totalHealth
     }
@@ -367,19 +380,21 @@ class TapZ {
     update = () => {
         this.updateHealth()
 
-        BrainsSellSpan.innerHTML = `£${ formatNumber(this.shop.sellBrainsCost(), true) }`
+        BrainsSellSpan.innerText = `£${ formatNumber(this.shop.sellBrainsCost(), this.saveData.userData.options.numberShorthand) }`
         
-        // Update all of the brain and money elements
-        Array.from(BrainSpans).forEach(element => element.innerHTML = `${ formatNumber(this.saveData.userData.brains, true) } Brains`)
-        Array.from(MoneySpans).forEach(element => element.innerHTML = `£${ formatNumber(this.saveData.userData.money, true) }`)
+        // Update all of the data elements
+        Array.from(BrainSpans).forEach(element => element.innerText = `${ formatNumber(this.saveData.userData.brains, this.saveData.userData.options.numberShorthand) } Brains`)
+        Array.from(MoneySpans).forEach(element => element.innerText = `£${ formatNumber(this.saveData.userData.money, this.saveData.userData.options.numberShorthand) }`)
+        LevelSpan.innerText = this.saveData.userData.level
 
         // Update Settings Buttons
         DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
+        NumberFormatToggle.innerText = `Number Format: ${ this.saveData.userData.options.numberShorthand ? 'Short' : 'Long' }`
 
         // Update shop buttons
         Array.from(BuyShopItemButtons).forEach(element => {
             const itemData = this.shop.getItem(element.getAttribute("data-id"))
-            element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), true) }`
+            element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), this.saveData.userData.options.numberShorthand) }`
         })
 
         // Update Shop Levels
@@ -397,8 +412,8 @@ class TapZ {
         StatisticMPB.innerText = `£${ this.saveData.userData.mpb.toString(10) }`
 
         // Zombie health
-        ZombieHealthCurrent.innerHTML = this.saveData.userData.zombie.currentHealth
-        ZombieHealthTotal.innerHTML = this.saveData.userData.zombie.totalHealth
+        ZombieHealthCurrent.innerText = formatNumber(this.saveData.userData.zombie.currentHealth, this.saveData.userData.options.numberShorthand)
+        ZombieHealthTotal.innerText = formatNumber(this.saveData.userData.zombie.totalHealth, this.saveData.userData.options.numberShorthand)
     }
 
 
