@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": ".\\node_modules\\.bin\\babel .\\src --out-dir .\\assets\\js"
+    "build": ".\\node_modules\\.bin\\babel .\\src --out-file .\\assets\\js\\game.js"
   },
   "repository": {
     "type": "git",
