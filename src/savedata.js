@@ -34,10 +34,12 @@ class Save {
             upgrades: {}, // should be auto filled by the shop
             saveVersion: 1 // in the future this will be used to hopefully help to migrate old save formats to newer ones
         }
+
+        this.blankUserData = this.userData
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.12 ALPHA",
+            version: "0.0.13 ALPHA",
             currentSaveVersion: 1,
             modalOpen: false
         }
@@ -61,6 +63,7 @@ class Save {
 
         if (savedata) {
             const data = JSON.parse(atob(savedata), (key, value) => {
+                // TODO: Check for an exponential value which happens when the exponent of the value is past 1e+9
                 if (typeof value === "string" && value.match(/^[0-9]+$/)) {
                     return BigNumber(value, 10)
                 }

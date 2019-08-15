@@ -88,6 +88,11 @@ const StatisticMPB = document.getElementById("statistics-mpb")
 
 class TapZ {
     constructor() {
+        // Setup BigNumber
+        BigNumber.config({
+            EXPONENTIAL_AT: 1e+9
+        })
+
         this.saveData = new Save()
         this.shop = new Shop(this.saveData)
         this.shop.update = this.update
@@ -246,6 +251,9 @@ class TapZ {
         MusicVolumeSlider.addEventListener("change", (event) => {
             this.editSettings("musicvolume", event.target.value / 100)
         })
+        SFXVolumeSlider.addEventListener("change", (event) => {
+            this.editSettings("sfxvolume", event.target.value / 100)
+        })
         
         // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
@@ -348,6 +356,7 @@ class TapZ {
         if (setting == "mutemusic") {
             if (this.saveData.userData.options["mutemusic"]) {
                 this.setMusicVolume(0.0)
+                this.pauseMusic()
             } else {
                 this.setMusicVolume(this.saveData.userData.options.musicvolume)
                 this.playMusic()
@@ -398,10 +407,8 @@ class TapZ {
 
 
     playMusic = () => {
-        if (this.musicPlayer.paused) {
-            if (!this.saveData.userData.options.mutemusic) {
-                this.musicPlayer.play()
-            }
+        if (this.musicPlayer.paused && !this.saveData.userData.options.mutemusic && this.saveData.userData.options.musicvolume != 0) {
+            this.musicPlayer.play()
         }
     }
 
