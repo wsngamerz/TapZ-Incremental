@@ -26,7 +26,7 @@ class Shop {
 
         if (this.saveData.userData.money.gte(itemCost)) {
             // Can Afford upgrade            
-            this.saveData.userData.upgrades[shopItemID].level += 1
+            this.saveData.userData.upgrades[shopItemID].level = this.saveData.userData.upgrades[shopItemID].level.plus(1)
             this.saveData.userData.money = this.saveData.userData.money.minus(itemCost)
 
             this.recalculateBuffs()
@@ -42,7 +42,7 @@ class Shop {
             const test = this.saveData.userData.upgrades[itemData.id]
             if (!test) {
                 this.saveData.userData.upgrades[itemData.id] = {
-                    level: 0
+                    level: BigNumber(0, 10)
                 }
             }
         })
@@ -79,7 +79,7 @@ class Shop {
         
         const shopItemLevel = document.createElement("p")
         shopItemLevel.classList.add("shop-item-level")
-        shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[itemData.id].level }`
+        shopItemLevel.innerText = `Level: ${ formatNumber(this.saveData.userData.upgrades[itemData.id].level.toString(10)) }`
         shopItemLevel.setAttribute("data-id", itemData.id)
         
         shopItemText.appendChild(shopItemName)
@@ -94,7 +94,7 @@ class Shop {
         shopItemButton.classList.add("button")
         shopItemButton.classList.add("button-primary")
         shopItemButton.classList.add("button-block")
-        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ formatNumber(this.getItemCost(itemData), true) }`
+        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ formatNumber(this.getItemCost(itemData).toString(10), this.saveData.userData.options.numberShorthand) }`
         shopItemButton.setAttribute("data-id", itemData.id)
         shopItemButton.onclick = () => {
             this.buyItem(itemData.id)
@@ -150,16 +150,14 @@ class Shop {
     getItemCost = (itemData) => {
         const item = itemData
         const itemLevel = this.saveData.userData.upgrades[itemData.id].level
-        let cost = item.startingCost
+        const itemCostMultiplier = BigNumber(item.costMultiplier, 10)
+        let cost = BigNumber(item.startingCost, 10)
 
         if (itemLevel != 0) {
-            // Loop through all levels to get current price
-            [...Array(itemLevel).keys()].forEach(x => {
-                cost = cost * item.costMultiplier
-            })
+            cost = cost.multipliedBy(itemCostMultiplier.pow(itemLevel)).dp(0)
         }
 
-        return Math.round(cost)
+        return cost
     }
 
 
@@ -189,10 +187,10 @@ class Shop {
     recalculateBuffs = () => {
         const upgrades = this.saveData.userData.upgrades
         
-        let clickDamage = 1
-        let autoDamage = 0
-        let brainValue = 5
-        let brainCount = 1
+        let clickDamage = BigNumber(1, 10)
+        let autoDamage = BigNumber(0, 10)
+        let brainValue = BigNumber(5, 10)
+        let brainCount = BigNumber(1, 10)
 
         Object.keys(upgrades).forEach(upgrade => {
             const itemData = this.getItem(upgrade)
@@ -200,19 +198,19 @@ class Shop {
             
             if (itemData.dpc) {
                 // Is a DPC
-                clickDamage += itemData.dpc * level
+                clickDamage = clickDamage.plus(BigNumber(itemData.dpc, 10).multipliedBy(level))
             } else if (itemData.dps) {
                 // Is DPS
-                autoDamage += itemData.dps * level
+                autoDamage = autoDamage.plus(BigNumber(itemData.dps, 10).multipliedBy(level))
             } else {
                 // is a multiplier
                 switch (itemData.effects) {
                     case "brainCount":
-                        [...Array(level).keys()].forEach(x => brainCount *= itemData.multiplier)
+                        brainCount = brainCount.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
                         break
                     
                     case "brainValue":
-                        [...Array(level).keys()].forEach(x => brainValue *= itemData.multiplier)
+                        brainValue = brainValue.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
                         break
                     
                     default:

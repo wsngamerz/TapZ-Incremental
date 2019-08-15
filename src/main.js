@@ -393,9 +393,11 @@ class TapZ {
         this.saveData.userData.statistics.kills = this.saveData.userData.statistics.kills.plus(1)
 
         let killLevelTarget = this.saveData.userData.level.plus(1).pow(3).plus(15)
+
+        // if next level
         if (this.saveData.userData.statistics.kills.gt(killLevelTarget)) {
             this.saveData.userData.level = this.saveData.userData.level.plus(1)
-            this.saveData.userData.zombie.totalHealth = this.saveData.userData.zombie.totalHealth.multipliedBy(2)
+            this.saveData.userData.zombie.totalHealth = killLevelTarget.minus(5)
 
             console.debug("Level", this.saveData.userData.level.toString(10),"Required", killLevelTarget.toString(10), "kills")
             console.debug("Zombie health is now", this.saveData.userData.zombie.totalHealth.toString(10))

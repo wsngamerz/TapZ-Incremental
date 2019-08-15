@@ -39,7 +39,7 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.14 ALPHA",
+            version: "0.0.15 ALPHA",
             currentSaveVersion: 2,
             modalOpen: false
         }
@@ -47,13 +47,13 @@ class Save {
 
 
     save = () => {
-        console.debug("Attempting to save")
+        // console.debug("Attempting to save")
         // pull savedata and convert it to base64
         // to save in LocalStorage
         const savedata = btoa(JSON.stringify(this.userData))
         localStorage.setItem("savedata", savedata)
 
-        console.debug(this.userData)
+        // console.debug(this.userData)
         console.debug(`Saved at ${ new Date() }`)
     }
 
