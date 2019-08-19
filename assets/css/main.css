@@ -369,14 +369,16 @@ html, body {
 }
 
 .shop-money {
-    margin: 0 1em;
+    margin: 0 0 0 1em;
     font-size: 0.9rem;
     order: 1;
+    text-align: left;
 }
 
 .button-sellbrains {
     order: 2;
     flex-grow: 1;
+    font-size: 0.75em;
 }
 
 .button-closemodal {
@@ -388,8 +390,7 @@ html, body {
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 0;
-    height: 0;
+    height: calc(100% - 1em);
 }
 
 .button-closemodal:hover {
@@ -399,7 +400,7 @@ html, body {
 .items {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: minmax(min-content, max-content);
     grid-gap: 10px;
     padding: 0.5rem;

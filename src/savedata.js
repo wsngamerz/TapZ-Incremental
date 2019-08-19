@@ -9,10 +9,10 @@ class Save {
         this.userData = {
             brains: BigNumber(0, 10),
             money: BigNumber(0, 10),
-            dps: BigNumber(0, 10),
-            dpc: BigNumber(1, 10),
+            dps: BigNumber(0, 10), // Damage per second
+            dpc: BigNumber(1, 10), // Damage per click
             bpk: BigNumber(1, 10), // Brains Per Kill
-            mpb: BigNumber(5, 10), // Money Per Brain,
+            mpb: BigNumber(5, 10), // Money Per Brain
             level: BigNumber(1, 10),
             zombie: {
                 currentHealth: BigNumber(10, 10),
@@ -35,11 +35,12 @@ class Save {
             saveVersion: 2 // in the future this will be used to hopefully help to migrate old save formats to newer ones
         }
 
+        // have a blank copy of the above savedata for reseting purposes and default values
         this.blankUserData = this.userData
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.15 ALPHA",
+            version: "0.0.16 ALPHA",
             currentSaveVersion: 2,
             modalOpen: false
         }
@@ -47,13 +48,11 @@ class Save {
 
 
     save = () => {
-        // console.debug("Attempting to save")
         // pull savedata and convert it to base64
         // to save in LocalStorage
         const savedata = btoa(JSON.stringify(this.userData))
         localStorage.setItem("savedata", savedata)
 
-        // console.debug(this.userData)
         console.debug(`Saved at ${ new Date() }`)
     }
 
@@ -87,6 +86,13 @@ class Save {
                 this.userData = null // doesn't actually delete savedata as savedata is stored in localStorage
             }
         }
+    }
+
+
+    migrateSave = () => {
+        // in the future, save data will be able to migrated to a new save format
+        // which will hopefully negate the need for reseting saves when a new setting
+        // is added
     }
 
 

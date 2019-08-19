@@ -368,8 +368,11 @@ class TapZ {
 
 
     handleDPS = () => {
-        this.injureZombie(this.saveData.userData.dps)
-        this.update()
+        // only cause an update if needed to
+        if (this.saveData.userData.dps.gt(0)) {
+            this.injureZombie(this.saveData.userData.dps)
+            this.update()
+        }
     }
 
 
