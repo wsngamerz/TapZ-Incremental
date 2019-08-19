@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        <canvas class="zombie"></canvas>
+    </body>
+    <style>
+        .zombie {
+            border: 1px solid #000;
+            box-sizing: content-box;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        const zombieCanvas = document.getElementsByClassName("zombie")[0]
+        const zombieContext = zombieCanvas.getContext("2d")
+
+        // Load Parts
+        const zombieParts = { head: new Image(), body: new Image(), left_arm: new Image(), right_arm: new Image(), left_leg: new Image(), right_leg: new Image() }
+        zombieParts.head.src = "/test_images/zombie_head.png"
+        zombieParts.body.src = "/test_images/zombie_body.png"
+        zombieParts.left_arm.src = "/test_images/zombie_left_arm.png"
+        zombieParts.right_arm.src = "/test_images/zombie_right_arm.png"
+        zombieParts.left_leg.src = "/test_images/zombie_left_leg.png"
+        zombieParts.right_leg.src = "/test_images/zombie_right_leg.png"
+
+        // setup canvas
+        zombieCanvas.width = 512
+        zombieCanvas.height = 512
+
+        const maxLoops = 30
+        const maxAngle = 8
+        const maxAnimationLength = 30
+
+        let bodyPartPos = null
+        let resetPos = {bpp: null, cv: null}
+        
+        let zombieHitAnimation = false
+
+        let changeVal = 0.5
+        let angleChange = 0.25
+        let armAngle = 0
+        let loopItter = 0
+        let animationLength = 0
+
+        const ease = (n) => {
+            return 1 == n ? n : 1 - Math.pow(2, -10 * n)
+        }
+
+
+        const update = () => {
+            const bodySpeedX = 4
+            const bodySpeedY = 2
+
+            zombieContext.clearRect(0, 0, zombieCanvas.width, zombieCanvas.height)
+
+            if (loopItter >= maxLoops) {
+                loopItter = 0
+                changeVal = -changeVal
+            }
+
+
+            if ((armAngle > maxAngle) || (armAngle < -maxAngle)) {
+                angleChange = -angleChange
+            }
+
+
+            if (zombieHitAnimation) {
+                // Left Leg
+                zombieContext.drawImage(zombieParts.left_leg, bodyPartPos.left_leg[0], bodyPartPos.left_leg[1])
+                
+                // Right Leg
+                zombieContext.drawImage(zombieParts.right_leg, bodyPartPos.right_leg[0], bodyPartPos.right_leg[1])
+                
+                // Right Arm
+                zombieContext.save()
+                zombieContext.translate(bodyPartPos.right_arm[0], bodyPartPos.right_arm[1])
+                zombieContext.rotate((-armAngle)*Math.PI/180)
+                zombieContext.drawImage(zombieParts.right_arm, 0, 0)
+                zombieContext.restore()
+                
+                // Body
+                zombieContext.drawImage(zombieParts.body, bodyPartPos.body[0], bodyPartPos.body[1])
+                
+                // Left Arm
+                zombieContext.save()
+                zombieContext.translate(bodyPartPos.left_arm[0], bodyPartPos.left_arm[1])
+                zombieContext.rotate((armAngle)*Math.PI/180)
+                zombieContext.drawImage(zombieParts.left_arm, 0, 0)
+                zombieContext.restore()
+                
+                // Head
+                zombieContext.drawImage(zombieParts.head, bodyPartPos.head[0], bodyPartPos.head[1])
+
+                animationLength++
+                if (animationLength >= maxAnimationLength) {
+                    zombieHitAnimation = false
+                    animationLength = 0
+                    bodyPartPos = resetPos.bpp
+                    changeVal = resetPos.cv
+                }
+            } else {
+                // left leg
+                zombieContext.drawImage(zombieParts.left_leg, bodyPartPos.left_leg[0], bodyPartPos.left_leg[1])
+
+
+                // right leg
+                zombieContext.drawImage(zombieParts.right_leg, bodyPartPos.right_leg[0], bodyPartPos.right_leg[1])
+
+
+                // right arm
+                bodyPartPos.right_arm[0] += (changeVal/bodySpeedX) * ease(loopItter/maxLoops)
+                bodyPartPos.right_arm[1] += (changeVal/bodySpeedY) * ease(loopItter/maxLoops)
+                
+                zombieContext.save()
+                zombieContext.translate(bodyPartPos.right_arm[0], bodyPartPos.right_arm[1])
+                zombieContext.rotate((-armAngle)*Math.PI/180)
+                zombieContext.drawImage(zombieParts.right_arm, 0, 0)
+                zombieContext.restore()
+
+                // body
+                bodyPartPos.body[0] += (changeVal/bodySpeedX) * ease(loopItter/maxLoops)
+                bodyPartPos.body[1] += (changeVal/bodySpeedY) * ease(loopItter/maxLoops)
+                zombieContext.drawImage(zombieParts.body, bodyPartPos.body[0], bodyPartPos.body[1])
+
+
+                // left arm
+                
+                bodyPartPos.left_arm[0] += (changeVal/bodySpeedX) * ease(loopItter/maxLoops)
+                bodyPartPos.left_arm[1] += (changeVal/bodySpeedY) * ease(loopItter/maxLoops)
+                
+                zombieContext.save()
+                zombieContext.translate(bodyPartPos.left_arm[0], bodyPartPos.left_arm[1])
+                zombieContext.rotate((armAngle)*Math.PI/180)
+                zombieContext.drawImage(zombieParts.left_arm, 0, 0)
+                zombieContext.restore()
+
+                // head
+                bodyPartPos.head[0] += (changeVal/2) * ease(loopItter/maxLoops)
+                bodyPartPos.head[1] += changeVal * ease(loopItter/maxLoops)
+                zombieContext.drawImage(zombieParts.head, bodyPartPos.head[0], bodyPartPos.head[1])
+            }
+
+            loopItter++
+            armAngle += angleChange
+            requestAnimationFrame(update)
+        }
+        
+        window.onload = () => {
+            bodyPartPos = {
+                body: [((zombieCanvas.width/2) - zombieParts.body.width/2), ((zombieCanvas.height/1.6) - zombieParts.body.height/2)],
+                head: [((zombieCanvas.width/2) - zombieParts.head.width/2), ((zombieCanvas.height/3) - zombieParts.head.height/2)],
+                left_arm: [((zombieCanvas.width/2) - zombieParts.left_arm.width/2), ((zombieCanvas.height/1.5) - zombieParts.left_arm.height/2)],
+                right_arm: [(((zombieCanvas.width/2) - zombieParts.right_arm.width/2) + 80), (((zombieCanvas.height/1.5) - zombieParts.right_arm.height/2)-10)],
+                left_leg: [(((zombieCanvas.width/2) - zombieParts.left_leg.width/2) - 40), ((zombieCanvas.height/1.3) - zombieParts.left_leg.height/2)],
+                right_leg: [(((zombieCanvas.width/2) - zombieParts.right_leg.width/2) + 45), ((zombieCanvas.height/1.325) - zombieParts.right_leg.height/2)]
+
+            }
+
+            
+            zombieCanvas.addEventListener("click", () => {
+                zombieHitAnimation = true
+                resetPos.bpp = bodyPartPos
+                resetPos.cv = changeVal                
+            })
+
+            requestAnimationFrame(update)
+        }
+        </script>
+</html>
