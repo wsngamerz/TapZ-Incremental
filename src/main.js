@@ -84,6 +84,8 @@ const StatisticClicks = document.getElementById("statistics-clicks")
 const StatisticLevel = document.getElementById("statistics-level")
 const StatisticBPK = document.getElementById("statistics-bpk")
 const StatisticMPB = document.getElementById("statistics-mpb")
+const StatisticMoneyNumber = document.getElementById("statistics-money-number")
+const StatisticBrainsNumber = document.getElementById("statistics-brains-number")
 
 
 class TapZ {
@@ -611,6 +613,8 @@ class TapZ {
         StatisticLevel.innerText = 0
         StatisticBPK.innerText = this.saveData.userData.bpk.toString(10)
         StatisticMPB.innerText = `£${ this.saveData.userData.mpb.toString(10) }`
+        StatisticMoneyNumber.innerText = `£${ this.saveData.userData.money.toString(10) }`
+        StatisticBrainsNumber.innerText = this.saveData.userData.brains.toString(10)
 
         // Zombie health
         ZombieHealthCurrent.innerText = formatNumber(this.saveData.userData.zombie.currentHealth, this.saveData.userData.options.numberShorthand)
