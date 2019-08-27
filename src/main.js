@@ -111,6 +111,9 @@ class TapZ {
         console.log(`v${ this.saveData.gameData.version }`)
         VersionSpan.innerText = `v${ this.saveData.gameData.version }`
 
+        // used for logging
+        window.TAPZ_VERSION_NAME = this.saveData.gameData.version
+
         // print some debug info to console
         const deviceInfo = {
             platform: navigator.platform,
