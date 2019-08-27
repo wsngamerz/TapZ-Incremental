@@ -111,6 +111,24 @@ class TapZ {
         console.log(`v${ this.saveData.gameData.version }`)
         VersionSpan.innerText = `v${ this.saveData.gameData.version }`
 
+        // print some debug info to console
+        const deviceInfo = {
+            platform: navigator.platform,
+            userAgent: navigator.userAgent,
+            appVersion: navigator.appVersion,
+            vendor: navigator.vendor,
+            opera: window.opera,
+            language: navigator.language,
+            screen: [
+                window.screen.width,
+                window.screen.height,
+                window.screen.availWidth,
+                window.screen.availHeight
+            ],
+            dpr: window.devicePixelRatio
+        }
+        console.log("[DEBUG] Device Info", deviceInfo)
+
         this.saveData.load()
         this.setupMusic()
         this.update()

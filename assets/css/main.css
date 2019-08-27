@@ -95,6 +95,18 @@ html, body {
     clear: both;
 }
 
+.button-shop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.button-settings {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .button-block {
     display: block;
     width: 100%;
