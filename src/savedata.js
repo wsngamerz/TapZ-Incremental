@@ -40,7 +40,7 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.17 ALPHA",
+            version: "0.0.18 ALPHA",
             currentSaveVersion: 2,
             modalOpen: false
         }
@@ -63,6 +63,7 @@ class Save {
         if (savedata) {
             const data = JSON.parse(atob(savedata), (key, value) => {
                 // TODO: Check for an exponential value which happens when the exponent of the value is past 1e+9
+                //       or in regular numbers: 1,000,000,000
                 if (typeof value === "string" && value.match(/^[0-9]+$/)) {
                     return BigNumber(value, 10)
                 }
@@ -77,22 +78,28 @@ class Save {
         }
 
         // warn user about old savedata (if old ofc)
-        // TODO: Provide upgrade in the future
         if ((!this.userData.saveVersion) || (this.userData.saveVersion < this.gameData.currentSaveVersion)) {
-            const userDecision = confirm("You are using an outdated save. Press OK to play (and reset savedata). Press Cancel to keep existing savedata (and be unable to play)")
-            if (userDecision) {
-                this.reset()
-            } else {
-                this.userData = null // doesn't actually delete savedata as savedata is stored in localStorage
-            }
+            // outdated save found
+            this.migrateSave()
         }
     }
 
 
     migrateSave = () => {
-        // in the future, save data will be able to migrated to a new save format
-        // which will hopefully negate the need for reseting saves when a new setting
-        // is added
+        // Hopefully this should be able to migrate the new objects and props accross to the old
+        // save and then bump the savedata version
+        
+        // unpack objects (and sub-objects) and apply them
+        let tempNewData = { ...this.blankUserData, ...this.userData }
+        tempNewData.zombie = { ...this.blankUserData.zombie, ...this.userData.zombie }
+        tempNewData.options = { ...this.blankUserData.options, ...this.userData.options }
+        tempNewData.statistics = { ...this.blankUserData.statistics, ...this.userData.statistics }
+        tempNewData.saveVersion = this.blankUserData.saveVersion
+        
+        // apply new (updated) userdata
+        this.userData = tempNewData
+        console.debug(`Just Bumped save-version to ${ tempNewData.saveVersion }`)
+        this.save()
     }
 
 
