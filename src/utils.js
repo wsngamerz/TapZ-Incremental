@@ -102,7 +102,16 @@ const suffixList = [
     ["Septennonagintillion", "Spnog"],
     ["Octononagintillion", "Ocnog"],
     ["Novemnonagintillion", "Nonog"],
-    ["Centillion", "C"] // 303 Zeros after digit and is 10^303
+    ["Centillion", "C"], // 303 Zeros after digit and is 10^303
+    ["Uncentillion", "Uc"],
+    ["Duocentillion", "Dc"],
+    ["Trescentillion", "Tc"],
+    ["Quattuorcentillion", "Qac"],
+    ["Quinquacentillion", "Qic"],
+    ["Sexcentillion", "Sxc"],
+    ["Septencentillion", "Spc"],
+    ["Octocentilion", "Occ"],
+    ["Novencentilion", "Noc"]
 ]
 
 const formatNumber = (number, shorthand=false) => {
