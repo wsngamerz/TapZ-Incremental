@@ -384,7 +384,10 @@ class TapZ {
 
     playMusic = () => {
         if (this.musicPlayer.paused && !this.saveData.userData.options.mutemusic && this.saveData.userData.options.musicvolume != 0) {
-            this.musicPlayer.play()
+            this.musicPlayer.play().catch((error) => {
+                console.log("Handled Error", error)
+                console.log("This is likely to be an issue with autoplay being blocked!")
+            })
         }
     }
 

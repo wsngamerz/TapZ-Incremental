@@ -1,5 +1,7 @@
 # TapZ-Incremental
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/72852b33-e684-41f2-be32-2899d9c95229/deploy-status)](https://app.netlify.com/sites/mystifying-saha-7feb44/deploys)
+
 ## Credits
 [Zombie Asset](https://opengameart.org/content/mini-zombie) created by [Segal](https://opengameart.org/users/segel)
 
