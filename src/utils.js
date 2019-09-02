@@ -338,7 +338,7 @@ const suffixList = [
     ["Trestrigintatrecentillion", "", "lv"] // 1998 zeros after digit and is 10^1998
 ]
 
-const formatNumber = (number, shorthand=false) => {
+const formatNumber = (number, format="lazy") => {
     /* 
         Pretifies numbers by placing them in a shorthand(ish) format
 
@@ -346,10 +346,21 @@ const formatNumber = (number, shorthand=false) => {
         letters for the prefix or use the full name
 
         124232 -> 124.23 Thousand or 124.23 K
+
+        Options:
+            - "fullname" -> The full name of the value e.g 'Thousand' or 'Centillion'
+            - "shorthand" -> The shorthand name of the value e.g 'K' or 'C'
+            - "lazy" -> The lazy way of showing large numbers e.g 'a' or 'cw'
         
         NOTE: The value is truncated, not rounded
     */
    
+    const options = {
+        "fullname": 0,
+        "shorthand": 1,
+        "lazy": 2
+    }
+
     let value = ""
 
     if (number instanceof BigNumber) {
@@ -371,9 +382,9 @@ const formatNumber = (number, shorthand=false) => {
 
         // Hopefully handles if the number hasn't been added yet
         if (suffixPosition > (suffixList.length - 1)) {
-            suffix = shorthand ? "?" : "????????????"
+            suffix = format == "fullname" ? "???????????????" : "??"
         } else {
-            suffix = suffixList[suffixPosition][+shorthand] // +shorthand converts a boolean into an integer of either 1 or 0 which is the position in the list
+            suffix = suffixList[suffixPosition][options[format]]
         }
 
         const actualValue = value.slice(0, -rm0)

@@ -56,9 +56,9 @@ const StatisticsSectionButton = document.getElementsByClassName("menubutton-stat
 const AboutSectionButton = document.getElementsByClassName("menubutton-about")[0]
 const CreditsSectionButton = document.getElementsByClassName("menubutton-credits")[0]
 
-// Settings Buttons
+// Settings Elements
 const DamageIndicatorToggle = document.getElementsByClassName("settings-button-damageindicator")[0]
-const NumberFormatToggle = document.getElementsByClassName("settings-button-numbershorthand")[0]
+const NumberFormatDropdown = document.getElementsByClassName("settings-dropdown-numberformatting")[0]
 const SaveButton = document.getElementsByClassName("settings-button-save")[0]
 const LoadButton = document.getElementsByClassName("settings-button-load")[0]
 const ResetButton = document.getElementsByClassName("settings-button-reset")[0]
@@ -163,16 +163,12 @@ class TapZ {
                     return
                 }
 
-                this.playSFX("buttonClick")
                 this.toggleModal("")
             })  
         })
 
         // Close Modals when close modal button clicked
-        Array.from(CloseModalButtons).forEach(button => button.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleModal("")
-        }))
+        Array.from(CloseModalButtons).forEach(button => button.addEventListener("click", () => this.toggleModal("")))
 
         SellBrainsButton.addEventListener("click", () => {
             this.playSFX("buttonClick")
@@ -181,68 +177,25 @@ class TapZ {
         })
 
         // Modal Opening Buttons
-        SettingsButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleModal("settings")
-        })
-        ShopButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleModal("shop")
-        })
+        SettingsButton.addEventListener("click", () => this.toggleModal("settings"))
+        ShopButton.addEventListener("click", () => this.toggleModal("shop"))
 
         // Settings Modal Buttons
-        MenuBackButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("main")
-        })
-        DisplaySettingsButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("display")
-        })
-        SaveSettingsButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("saving")
-        })
-        AudioSettingsButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("audio")
-        })
-        StatisticsSectionButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("statistics")
-        })
-        AboutSectionButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("about")
-        })
-        CreditsSectionButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleMenu("credits")
-        })
+        MenuBackButton.addEventListener("click", () => this.toggleMenu("main"))
+        DisplaySettingsButton.addEventListener("click", () => this.toggleMenu("display"))
+        SaveSettingsButton.addEventListener("click", () => this.toggleMenu("saving"))
+        AudioSettingsButton.addEventListener("click", () => this.toggleMenu("audio"))
+        StatisticsSectionButton.addEventListener("click", () => this.toggleMenu("statistics"))
+        AboutSectionButton.addEventListener("click", () => this.toggleMenu("about"))
+        CreditsSectionButton.addEventListener("click", () => this.toggleMenu("credits"))
 
         // Tab Changing Buttons
-        DpcTabButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleTab("dpc")
-        })
-        DpsTabButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleTab("dps")
-        })
-        MultipliersTabButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.toggleTab("multipliers")
-        })
+        DpcTabButton.addEventListener("click", () => this.toggleTab("dpc"))
+        DpsTabButton.addEventListener("click", () => this.toggleTab("dps"))
+        MultipliersTabButton.addEventListener("click", () => this.toggleTab("multipliers"))
 
         // Settings
-        DamageIndicatorToggle.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.editSettings("showDamage")
-        })
-        NumberFormatToggle.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.editSettings("numberShorthand")
-        })
+        DamageIndicatorToggle.addEventListener("click", () => this.editSettings("showDamage"))
         SaveButton.addEventListener("click", () => {
             this.playSFX("buttonClick")
             this.saveData.save()
@@ -263,20 +216,11 @@ class TapZ {
             this.playSFX("buttonClick")
             this.pauseMusic()
         })
-        MuteMusicButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.editSettings("mutemusic")
-        })
-        MuteSFXButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.editSettings("mutesfx")
-        })
-        MusicVolumeSlider.addEventListener("change", (event) => {
-            this.editSettings("musicvolume", event.target.value / 100)
-        })
-        SFXVolumeSlider.addEventListener("change", (event) => {
-            this.editSettings("sfxvolume", event.target.value / 100)
-        })
+        MuteMusicButton.addEventListener("click", () => this.editSettings("mutemusic"))
+        MuteSFXButton.addEventListener("click", () => this.editSettings("mutesfx"))
+        MusicVolumeSlider.addEventListener("change", (event) => this.editSettings("musicvolume", event.target.value / 100))
+        SFXVolumeSlider.addEventListener("change", (event) => this.editSettings("sfxvolume", event.target.value / 100))
+        NumberFormatDropdown.addEventListener("change", (event) => this.editSettings("numberFormat", event.target.options[event.target.options.selectedIndex].value))
         
         // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
@@ -375,6 +319,8 @@ class TapZ {
             // otherwise just set the value
             this.saveData.userData.options[setting] = value
         }
+
+        this.playSFX("buttonClick")
         
         if (setting == "mutemusic") {
             if (this.saveData.userData.options["mutemusic"]) {
@@ -430,6 +376,8 @@ class TapZ {
         }
         
         this.saveData.userData.brains = this.saveData.userData.brains.plus(this.saveData.userData.bpk)
+        this.saveData.userData.statistics.totalBrains = this.saveData.userData.statistics.totalBrains.plus(this.saveData.userData.bpk)
+
         this.saveData.userData.zombie.currentHealth = this.saveData.userData.zombie.totalHealth
     }
 
@@ -502,6 +450,8 @@ class TapZ {
 
 
     toggleModal = (modal) => {
+        this.saveData.gameData.currentModal = modal
+
         if (this.saveData.gameData.modalOpen) {
             // Close the modals
             Array.from(Modals).forEach(modal => modal.classList.remove("modal-visible"))
@@ -529,6 +479,10 @@ class TapZ {
 
             this.saveData.gameData.modalOpen = true
         }
+
+        // trigger update as the modal wouldn't have been updated until its open
+        this.update()
+        this.playSFX("buttonClick")
     }
 
 
@@ -556,6 +510,8 @@ class TapZ {
             default:
                 console.log(`Unknown Tab: ${ tab }`)
         }
+
+        this.playSFX("buttonClick")
     }
 
     toggleMenu = (menu) => {
@@ -597,49 +553,61 @@ class TapZ {
                 console.log("Unknown Menu")
                 MainModalPage.classList.add("modalpage-visible")
         }
+
+        this.playSFX("buttonClick")
     }
 
     update = () => {
         this.updateHealth()
 
-        BrainsSellSpan.innerText = `£${ formatNumber(this.shop.sellBrainsCost(), this.saveData.userData.options.numberShorthand) }`
+        BrainsSellSpan.innerText = `£${ formatNumber(this.shop.sellBrainsValue(), this.saveData.userData.options.numberFormat) }`
         
         // Update all of the data elements
-        Array.from(BrainSpans).forEach(element => element.innerText = `${ formatNumber(this.saveData.userData.brains, this.saveData.userData.options.numberShorthand) } Brains`)
-        Array.from(MoneySpans).forEach(element => element.innerText = `£${ formatNumber(this.saveData.userData.money, this.saveData.userData.options.numberShorthand) }`)
+        Array.from(BrainSpans).forEach(element => element.innerText = `${ formatNumber(this.saveData.userData.brains, this.saveData.userData.options.numberFormat) } Brains`)
+        Array.from(MoneySpans).forEach(element => element.innerText = `£${ formatNumber(this.saveData.userData.money, this.saveData.userData.options.numberFormat) }`)
         LevelSpan.innerText = this.saveData.userData.level
 
-        // Update Settings Buttons
-        DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
-        NumberFormatToggle.innerText = `Number Format: ${ this.saveData.userData.options.numberShorthand ? 'Short' : 'Long' }`
-        MuteMusicButton.innerText = `Music: ${ this.saveData.userData.options.mutemusic ? 'Muted' : 'Unmuted' }`
-        MuteSFXButton.innerText = `SFX: ${ this.saveData.userData.options.mutesfx ? 'Muted' : 'Unmuted' }`
-
-        // Update shop buttons
-        Array.from(BuyShopItemButtons).forEach(element => {
-            const itemData = this.shop.getItem(element.getAttribute("data-id"))
-            element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), this.saveData.userData.options.numberShorthand) }`
-        })
-
-        // Update Shop Levels
-        Array.from(ShopItemLevels).forEach(shopItemLevel => {
-            shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-id")].level }`
-        })
-
-        // Statistics
-        StatisticClicks.innerText = this.saveData.userData.statistics.clicks.toString(10)
-        StatisticDPC.innerText = this.saveData.userData.dpc.toString(10)
-        StatisticDPS.innerText = this.saveData.userData.dps.toString(10)
-        StatisticKills.innerText = this.saveData.userData.statistics.kills.toString(10)
-        StatisticLevel.innerText = 0
-        StatisticBPK.innerText = this.saveData.userData.bpk.toString(10)
-        StatisticMPB.innerText = `£${ this.saveData.userData.mpb.toString(10) }`
-        StatisticMoneyNumber.innerText = `£${ this.saveData.userData.money.toString(10) }`
-        StatisticBrainsNumber.innerText = this.saveData.userData.brains.toString(10)
+        // try to only update whats currently being displayed on screen
+        if (this.saveData.gameData.currentModal == "shop") {
+            // Update shop buttons
+            Array.from(BuyShopItemButtons).forEach(element => {
+                const itemData = this.shop.getItem(element.getAttribute("data-id"))
+                element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), this.saveData.userData.options.numberFormat) }`
+            })
+    
+            // Update Shop Levels
+            Array.from(ShopItemLevels).forEach(shopItemLevel => {
+                shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-id")].level }`
+            })
+        } else if (this.saveData.gameData.currentModal == "settings") {
+            // Update Settings Buttons
+            DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
+            MuteMusicButton.innerText = `Music: ${ this.saveData.userData.options.mutemusic ? 'Muted' : 'Unmuted' }`
+            MuteSFXButton.innerText = `SFX: ${ this.saveData.userData.options.mutesfx ? 'Muted' : 'Unmuted' }`
+            Array.from(NumberFormatDropdown.options).forEach((option) => {
+                if (option.value != this.saveData.userData.options.numberFormat) {
+                    option.setAttribute("selected", true)
+                } else {
+                    option.setAttribute("selected", false)
+                }
+            })
+            
+            // Statistics
+            StatisticClicks.innerText = this.saveData.userData.statistics.clicks.toString(10)
+            StatisticDPC.innerText = this.saveData.userData.dpc.toString(10)
+            StatisticDPS.innerText = this.saveData.userData.dps.toString(10)
+            StatisticKills.innerText = this.saveData.userData.statistics.kills.toString(10)
+            StatisticLevel.innerText = 0
+            StatisticBPK.innerText = this.saveData.userData.bpk.toString(10)
+            StatisticMPB.innerText = `£${ this.saveData.userData.mpb.toString(10) }`
+            StatisticMoneyNumber.innerText = `£${ this.saveData.userData.money.toString(10) }`
+            StatisticBrainsNumber.innerText = this.saveData.userData.brains.toString(10)
+        }
+        
 
         // Zombie health
-        ZombieHealthCurrent.innerText = formatNumber(this.saveData.userData.zombie.currentHealth, this.saveData.userData.options.numberShorthand)
-        ZombieHealthTotal.innerText = formatNumber(this.saveData.userData.zombie.totalHealth, this.saveData.userData.options.numberShorthand)
+        ZombieHealthCurrent.innerText = formatNumber(this.saveData.userData.zombie.currentHealth, this.saveData.userData.options.numberFormat)
+        ZombieHealthTotal.innerText = formatNumber(this.saveData.userData.zombie.totalHealth, this.saveData.userData.options.numberFormat)
 
         // Update volume
         this.musicPlayer.volume = this.saveData.userData.options.musicvolume

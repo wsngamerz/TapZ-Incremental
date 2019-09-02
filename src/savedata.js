@@ -19,9 +19,10 @@ class Save {
                 totalHealth: BigNumber(10, 10)
             },
             options: {
-                language: "en",
+                language: "en", // corresponds to folder in data directory
                 showDamage: true,
                 numberShorthand: true,
+                numberFormat: "lazy", // can be one of "lazy", "fullname" or "shorthand"
                 mutemusic: false,
                 musicvolume: 0.6,
                 mutesfx: false,
@@ -29,10 +30,12 @@ class Save {
             },
             statistics: {
                 clicks: BigNumber(0, 10),
-                kills: BigNumber(0, 10)
+                kills: BigNumber(0, 10),
+                totalBrains: BigNumber(0, 10),
+                totalMoney: BigNumber(0, 10)
             },
             upgrades: {}, // should be auto filled by the shop
-            saveVersion: 2 // in the future this will be used to hopefully help to migrate old save formats to newer ones
+            saveVersion: 3 // in the future this will be used to hopefully help to migrate old save formats to newer ones
         }
 
         // have a blank copy of the above savedata for reseting purposes and default values
@@ -40,9 +43,10 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.0.22 ALPHA",
-            currentSaveVersion: 2,
-            modalOpen: false
+            version: "0.0.23 ALPHA",
+            currentSaveVersion: 3,
+            modalOpen: false,
+            currentModal: ""
         }
     }
 

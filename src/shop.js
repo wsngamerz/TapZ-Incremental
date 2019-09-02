@@ -79,7 +79,7 @@ class Shop {
         
         const shopItemLevel = document.createElement("p")
         shopItemLevel.classList.add("shop-item-level")
-        shopItemLevel.innerText = `Level: ${ formatNumber(this.saveData.userData.upgrades[itemData.id].level.toString(10)) }`
+        shopItemLevel.innerText = `Level: ${ formatNumber(this.saveData.userData.upgrades[itemData.id].level.toString(10), this.saveData.userData.options.numberFormat) }`
         shopItemLevel.setAttribute("data-id", itemData.id)
         
         shopItemText.appendChild(shopItemName)
@@ -94,7 +94,7 @@ class Shop {
         shopItemButton.classList.add("button")
         shopItemButton.classList.add("button-primary")
         shopItemButton.classList.add("button-block")
-        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ formatNumber(this.getItemCost(itemData).toString(10), this.saveData.userData.options.numberShorthand) }`
+        shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ formatNumber(this.getItemCost(itemData).toString(10), this.saveData.userData.options.numberFormat) }`
         shopItemButton.setAttribute("data-id", itemData.id)
         shopItemButton.onclick = () => {
             this.buyItem(itemData.id)
@@ -206,11 +206,19 @@ class Shop {
                 // is a multiplier
                 switch (itemData.effects) {
                     case "brainCount":
-                        brainCount = brainCount.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
+                        if (itemData.type == "multiplier") {
+                            brainCount = brainCount.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
+                        } else if (itemData.type == "add") {
+                            brainCount = brainCount.plus(BigNumber(itemData.add, 10).multipliedBy(level))
+                        }
                         break
                     
                     case "brainValue":
-                        brainValue = brainValue.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
+                        if (itemData.type == "multiplier") {
+                            brainValue = brainValue.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
+                        } else if (itemData.type == "add") {
+                            brainValue = brainValue.plus(BigNumber(itemData.add, 10).multipliedBy(level))
+                        }
                         break
                     
                     default:
@@ -228,13 +236,14 @@ class Shop {
 
 
     sellBrains = () => {
-        const cost = this.sellBrainsCost()
+        const value = this.sellBrainsValue()
         this.saveData.userData.brains = BigNumber(0, 10)
-        this.saveData.userData.money = this.saveData.userData.money.plus(cost)
+        this.saveData.userData.money = this.saveData.userData.money.plus(value)
+        this.saveData.userData.statistics.totalMoney = this.saveData.userData.statistics.totalMoney.plus(value)
     }
 
 
-    sellBrainsCost = () => {
+    sellBrainsValue = () => {
         const brains = this.saveData.userData.brains
         const moneyPerBrain = this.saveData.userData.mpb
 

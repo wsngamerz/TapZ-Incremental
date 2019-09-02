@@ -120,7 +120,17 @@
                     <section class="modalpage modalpage-display">
                         <h2>Display Settings</h2>
                         <button class="button button-secondary settings-button-damageindicator">Damage Indicators: ON</button>
-                        <button class="button button-secondary settings-button-numbershorthand">Number Format: Short</button>
+                        <br />
+                        <span>
+                            Full Name: 1250 -> 1.25 Thousand<br />
+                            Shorthand: 1250 -> 1.25 K<br />
+                                 Lazy: 1250 -> 1.25 a (Ascending alphabet: a, b ... aa, ab etc.)<br />
+                        </span>
+                        <select class="dropdown settings-dropdown-numberformatting">
+                            <option value="fullname">Full name number formatting</option>
+                            <option value="shorthand">Shorthand number formatting</option>
+                            <option value="lazy">Lazy number formatting</option>
+                        </select>
                     </section>
     
                     <section class="modalpage modalpage-saving">
