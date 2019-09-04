@@ -384,10 +384,16 @@ class TapZ {
 
     playMusic = () => {
         if (this.musicPlayer.paused && !this.saveData.userData.options.mutemusic && this.saveData.userData.options.musicvolume != 0) {
-            this.musicPlayer.play().catch((error) => {
-                console.log("Handled Error", error)
-                console.log("This is likely to be an issue with autoplay being blocked!")
-            })
+            const promise = this.musicPlayer.play()
+            
+            if (promise !== undefined) {
+                promise.then(() => {
+                    console.debug("Autoplayed Background Music")    
+                }).catch((error) => {
+                    console.debug("Handled Error", error)
+                    console.debug("This is likely to be an issue with autoplay being blocked!")
+                })
+            }
         }
     }
 
