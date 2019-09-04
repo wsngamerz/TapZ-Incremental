@@ -130,7 +130,7 @@ class TapZ {
             ],
             dpr: window.devicePixelRatio
         }
-        console.log("[DEBUG] Device Info", deviceInfo)
+        console.debug("[DEBUG] Device Info", deviceInfo)
 
         this.saveData.load()
         this.setupMusic()

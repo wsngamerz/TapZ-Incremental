@@ -43,7 +43,7 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.1.1 BETA",
+            version: "0.1.2 BETA",
             currentSaveVersion: 3,
             modalOpen: false,
             currentModal: ""
