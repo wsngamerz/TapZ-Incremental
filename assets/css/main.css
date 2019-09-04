@@ -317,6 +317,7 @@ html, body {
     visibility: hidden;
     width: 100%;
     padding: 0.5em;
+    overflow-y: auto;
 }
 
 .modalpage-visible {
@@ -329,13 +330,16 @@ html, body {
     text-align: center;
 }
 
-.modalpage-main .menu-options {
+.menu-options {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: minmax(min-content, max-content);
     grid-gap: 10px;
-    overflow-y: auto;
     overflow-x: hidden;
+}
+
+.menu-options button {
+    margin: 0 0.5em 0.5em 0.5em;
 }
 
 .modalpage-footer {

@@ -218,6 +218,9 @@ class Shop {
                             brainValue = brainValue.multipliedBy(BigNumber(itemData.multiplier, 10).pow(level))
                         } else if (itemData.type == "add") {
                             brainValue = brainValue.plus(BigNumber(itemData.add, 10).multipliedBy(level))
+                        } else if (itemData.type == "add%") {
+                            const totalPercent = BigNumber(itemData.add, 10).dividedBy(100).multipliedBy(level)
+                            brainValue = brainValue.multipliedBy(totalPercent + 1)
                         }
                         break
                     
