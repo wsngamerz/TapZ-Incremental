@@ -26,6 +26,18 @@
         <!-- Stylesheets and Fonts -->
         <link rel="stylesheet" href="/assets/css/main.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme" />
+
+        <!-- Check if a polyfill is needed -->
+        <script>
+        const modernBrowser = ('fetch' in window && 'assign' in Object)
+        if ( !modernBrowser ) {
+            console.log("Polyfill is needed -> Now loading")
+            const scriptElement = document.createElement('script')
+            scriptElement.async = false
+            scriptElement.src = '/polyfills.bundle.js'
+            document.head.appendChild(scriptElement)
+        }
+        </script>
     </head>
 
     <body>
@@ -189,7 +201,7 @@
         </section>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/9.0.0/bignumber.js" integrity="sha256-TYZ2kR74G+TqMIiLuKpB57VUTNKhGFknyOKgRYqxhnw=" crossorigin="anonymous"></script>
-        <script src="/assets/js/game.js"></script>
+        <script src="/assets/js/game.bundle.js"></script>
     </body>
 
 </html>

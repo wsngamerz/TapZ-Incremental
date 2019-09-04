@@ -1,3 +1,4 @@
 node_modules/
 development/
 tmp/
+dist/assets/js/

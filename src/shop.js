@@ -3,13 +3,15 @@
 // shop.js
 // 
 
+import { formatNumber } from "./utils"
+
 const DPCTab = document.getElementsByClassName("tab-dpc")[0]
 const DPSTab = document.getElementsByClassName("tab-dps")[0]
 const MultiplierTab = document.getElementsByClassName("tab-multipliers")[0]
 
 
 
-class Shop {
+export default class Shop {
     constructor(saveData) {
         this.saveData = saveData
 

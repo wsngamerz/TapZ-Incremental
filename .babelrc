@@ -6,14 +6,6 @@
                 "useBuiltIns": "entry",
                 "corejs": 3
             }
-        ],
-        [
-            "minify",
-            {
-                "keepFnName": true,
-                "keepClassName": true,
-                "builtIns": false // fixes crash
-            }
         ]
     ],
     "plugins": [

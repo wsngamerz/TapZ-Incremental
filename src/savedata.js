@@ -3,7 +3,7 @@
 // savedata.js
 // 
 
-class Save {
+export default class Save {
     constructor() {
         // used only to store data temp untill saved to localstorage
         this.userData = {
@@ -43,7 +43,7 @@ class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.1.2 BETA",
+            version: "0.2.0 BETA",
             currentSaveVersion: 3,
             modalOpen: false,
             currentModal: ""

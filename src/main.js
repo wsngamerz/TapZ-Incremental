@@ -3,6 +3,10 @@
 // main.js
 // 
 
+// regular imports
+import Save from "./savedata"
+import Shop from "./shop"
+import { formatNumber } from "./utils"
 
 // Data Elements
 const BrainsSellSpan = document.getElementsByClassName("brains-sell")[0]

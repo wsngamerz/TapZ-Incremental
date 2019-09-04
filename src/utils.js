@@ -338,7 +338,7 @@ const suffixList = [
     ["Trestrigintatrecentillion", "", "lv"] // 1998 zeros after digit and is 10^1998
 ]
 
-const formatNumber = (number, format="lazy") => {
+export const formatNumber = (number, format="lazy") => {
     /* 
         Pretifies numbers by placing them in a shorthand(ish) format
 
