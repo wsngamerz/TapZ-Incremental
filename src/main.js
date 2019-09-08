@@ -393,10 +393,17 @@ class TapZ {
             this.currentAnimation = "damaged"
             this.animations["idle"].loop = false
             this.animations["idle"].pause()
-            this.animations["idle"].setDirection(-1)
             this.animations["idle"].setSpeed(8)
-            let startFrame = this.animations["idle"].currentFrame
-            this.animations["idle"].playSegments([startFrame, 0], true)
+
+            let currentFrame = this.animations["idle"].currentFrame
+            if (this.animations["idle"].totalFrames - currentFrame < currentFrame) {
+                this.animations["idle"].setDirection(1)
+                this.animations["idle"].playSegments([currentFrame, this.animations["idle"].totalFrames], true)
+            } else {
+                this.animations["idle"].setDirection(-1)
+                this.animations["idle"].playSegments([currentFrame, 0], true)
+            }
+            
         }
 
     }
