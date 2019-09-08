@@ -639,6 +639,11 @@ class TapZ {
         this.updateHealth()
 
         BrainsSellSpan.innerText = `£${ formatNumber(this.shop.sellBrainsValue(), this.saveData.userData.options.numberFormat) }`
+        if (this.saveData.userData.brains.eq(0)) {
+            BrainsSellSpan.parentElement.setAttribute("disabled", true)
+        } else {
+            BrainsSellSpan.parentElement.removeAttribute("disabled")
+        }
         
         // Update all of the data elements
         Array.from(BrainSpans).forEach(element => element.innerText = `${ formatNumber(this.saveData.userData.brains, this.saveData.userData.options.numberFormat) } Brains`)
@@ -649,14 +654,29 @@ class TapZ {
         if (this.saveData.gameData.currentModal == "shop") {
             // Update shop buttons
             Array.from(BuyShopItemButtons).forEach(element => {
-                const itemData = this.shop.getItem(element.getAttribute("data-id"))
+                const itemData = this.shop.getItem(element.getAttribute("data-shopid"))
                 element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), this.saveData.userData.options.numberFormat) }`
             })
     
             // Update Shop Levels
             Array.from(ShopItemLevels).forEach(shopItemLevel => {
-                shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-id")].level }`
+                shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-shopid")].level }`
             })
+
+            // Update 'able to afford' button styles
+            const shopButtons = document.querySelectorAll("button[data-shopid].shop-item-button")
+            shopButtons.forEach(shopButton => {
+                const shopItemID = shopButton.getAttribute("data-shopid")
+                const shopItemCost = this.shop.getItemCost(this.shop.getItem(shopItemID))
+                if (shopItemCost.gt(this.saveData.userData.money)) {
+                    // too expensive
+                    shopButton.setAttribute("disabled", true)
+                } else {
+                    // affordable
+                    shopButton.removeAttribute("disabled")
+                }
+            })
+
         } else if (this.saveData.gameData.currentModal == "settings") {
             // Update Settings Buttons
             DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`

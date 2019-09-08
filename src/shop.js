@@ -82,7 +82,7 @@ export default class Shop {
         const shopItemLevel = document.createElement("p")
         shopItemLevel.classList.add("shop-item-level")
         shopItemLevel.innerText = `Level: ${ formatNumber(this.saveData.userData.upgrades[itemData.id].level.toString(10), this.saveData.userData.options.numberFormat) }`
-        shopItemLevel.setAttribute("data-id", itemData.id)
+        shopItemLevel.setAttribute("data-shopid", itemData.id)
         
         shopItemText.appendChild(shopItemName)
         shopItemText.appendChild(shopItemDescription)
@@ -97,7 +97,7 @@ export default class Shop {
         shopItemButton.classList.add("button-primary")
         shopItemButton.classList.add("button-block")
         shopItemButton.innerText = `Buy x1 ${ this.shopLangData[itemData.id].name } for £${ formatNumber(this.getItemCost(itemData).toString(10), this.saveData.userData.options.numberFormat) }`
-        shopItemButton.setAttribute("data-id", itemData.id)
+        shopItemButton.setAttribute("data-shopid", itemData.id)
         shopItemButton.onclick = () => {
             this.buyItem(itemData.id)
             this.playSFX("buttonClick")
