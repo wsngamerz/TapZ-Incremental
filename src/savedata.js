@@ -21,6 +21,8 @@ export default class Save {
             options: {
                 language: "en", // corresponds to folder in data directory
                 showDamage: true,
+                animations: true,
+                smoothHealth: true,
                 numberShorthand: true,
                 numberFormat: "lazy", // can be one of "lazy", "fullname" or "shorthand"
                 mutemusic: false,
@@ -32,10 +34,12 @@ export default class Save {
                 clicks: BigNumber(0, 10),
                 kills: BigNumber(0, 10),
                 totalBrains: BigNumber(0, 10),
-                totalMoney: BigNumber(0, 10)
+                totalMoney: BigNumber(0, 10),
+                timePlayed: BigNumber(0, 10) // TODO: Implement!
             },
-            upgrades: {}, // should be auto filled by the shop
-            saveVersion: 3 // in the future this will be used to hopefully help to migrate old save formats to newer ones
+            achievements: {}, // will be auto-filled by achievements manager
+            upgrades: {}, // should be auto-filled by the shop manager
+            saveVersion: 4 // used to help to migrate old save formats to newer ones
         }
 
         // have a blank copy of the above savedata for reseting purposes and default values
@@ -43,8 +47,8 @@ export default class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.2.4 BETA",
-            currentSaveVersion: 3,
+            version: "0.2.5 BETA",
+            currentSaveVersion: 4,
             modalOpen: false,
             currentModal: ""
         }

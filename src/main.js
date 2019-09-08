@@ -62,12 +62,12 @@ const CreditsSectionButton = document.getElementsByClassName("menubutton-credits
 
 // Settings Elements
 const DamageIndicatorToggle = document.getElementsByClassName("settings-button-damageindicator")[0]
+const AnimationsToggle = document.getElementsByClassName("settings-button-animations")[0]
+const SmoothHealthToggle = document.getElementsByClassName("settings-button-smoothhealth")[0]
 const NumberFormatDropdown = document.getElementsByClassName("settings-dropdown-numberformatting")[0]
 const SaveButton = document.getElementsByClassName("settings-button-save")[0]
 const LoadButton = document.getElementsByClassName("settings-button-load")[0]
 const ResetButton = document.getElementsByClassName("settings-button-reset")[0]
-const PlayMusicButton = document.getElementsByClassName("settings-button-playmusic")[0]
-const PauseMusicButton = document.getElementsByClassName("settings-button-pausemusic")[0]
 const MuteMusicButton = document.getElementsByClassName("settings-button-mutemusic")[0]
 const MuteSFXButton = document.getElementsByClassName("settings-button-mutesfx")[0]
 const MusicVolumeSlider = document.getElementsByClassName("settings-slider-musicvolume")[0]
@@ -206,6 +206,8 @@ class TapZ {
 
         // Settings
         DamageIndicatorToggle.addEventListener("click", () => this.editSettings("showDamage"))
+        AnimationsToggle.addEventListener("click", () => this.editSettings("animations"))
+        SmoothHealthToggle.addEventListener("click", () => this.editSettings("smoothHealth"))
         SaveButton.addEventListener("click", () => {
             this.playSFX("buttonClick")
             this.saveData.save()
@@ -217,14 +219,6 @@ class TapZ {
         ResetButton.addEventListener("click", () => {
             this.playSFX("buttonClick")
             this.saveData.reset()
-        })
-        PlayMusicButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.playMusic()
-        })
-        PauseMusicButton.addEventListener("click", () => {
-            this.playSFX("buttonClick")
-            this.pauseMusic()
         })
         MuteMusicButton.addEventListener("click", () => this.editSettings("mutemusic"))
         MuteSFXButton.addEventListener("click", () => this.editSettings("mutesfx"))
@@ -389,7 +383,7 @@ class TapZ {
             this.killZombie()
         }
 
-        if (damage.gt(0)) {
+        if (damage.gt(0) && this.saveData.userData.options.animations) {
             this.currentAnimation = "damaged"
             this.animations["idle"].loop = false
             this.animations["idle"].pause()
@@ -412,7 +406,7 @@ class TapZ {
     killZombie = () => {
         this.saveData.userData.statistics.kills = this.saveData.userData.statistics.kills.plus(1)
 
-        let killLevelTarget = this.saveData.userData.level.plus(1).pow(3).plus(15)
+        let killLevelTarget = this.saveData.userData.level.plus(1).pow(3).plus(15).multipliedBy(0.75).dp(0)
 
         // if next level
         if (this.saveData.userData.statistics.kills.gt(killLevelTarget)) {
@@ -511,7 +505,7 @@ class TapZ {
             container: Zombie,
             renderer: 'svg',
             loop: true,
-            autoplay: true,
+            autoplay: false,
             path: "assets/data/zombie/idle.json"
         })
 
@@ -524,6 +518,7 @@ class TapZ {
         })
 
         this.animations["damaged"].hide()
+        this.saveData.userData.options.animations ? this.animations["idle"].play() : this.animations["idle"].pause()
     }
 
 
@@ -680,6 +675,8 @@ class TapZ {
         } else if (this.saveData.gameData.currentModal == "settings") {
             // Update Settings Buttons
             DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
+            AnimationsToggle.innerText = `Animations: ${ this.saveData.userData.options.animations ? 'ON' : 'OFF' }`
+            SmoothHealthToggle.innerText = `Smooth Healthbar: ${ this.saveData.userData.options.smoothHealth ? 'ON' : 'OFF' }`
             MuteMusicButton.innerText = `Music: ${ this.saveData.userData.options.mutemusic ? 'Muted' : 'Unmuted' }`
             MuteSFXButton.innerText = `SFX: ${ this.saveData.userData.options.mutesfx ? 'Muted' : 'Unmuted' }`
             Array.from(NumberFormatDropdown.options).forEach((option) => {
@@ -690,6 +687,12 @@ class TapZ {
                 }
             })
             
+            // apply updates settings
+            MusicVolumeSlider.setAttribute("value", this.saveData.userData.options.musicvolume * 100)
+            SFXVolumeSlider.setAttribute("value", this.saveData.userData.options.sfxvolume * 100)
+            this.saveData.userData.options.animations ? this.animations["idle"].play() : this.animations["idle"].pause()
+            this.saveData.userData.options.smoothHealth ? HealthBarCurrent.classList.add("fluid-health") : HealthBarCurrent.classList.remove("fluid-health")
+
             // Statistics
             StatisticClicks.innerText = this.saveData.userData.statistics.clicks.toString(10)
             StatisticDPC.innerText = this.saveData.userData.dpc.toString(10)

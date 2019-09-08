@@ -153,7 +153,7 @@
     "multipliers": [
         {
             "id": "advancedSpoon",
-            "startingCost": 750,
+            "startingCost": 500,
             "costMultiplier": 2,
             "effects": "brainCount",
             "type": "add",
