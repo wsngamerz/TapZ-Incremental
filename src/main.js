@@ -77,6 +77,7 @@ const SFXVolumeSlider = document.getElementsByClassName("settings-slider-sfxvolu
 const HealthBarCurrent = document.getElementsByClassName("current-health")[0]
 const VersionSpan = document.getElementById("version")
 const Zombie = document.getElementsByClassName("zombie")[0]
+const ZombieHit = document.getElementsByClassName("zombieHit")[0]
 const ZombieHealthCurrent = document.getElementsByClassName("zombie-current-health")[0]
 const ZombieHealthTotal = document.getElementsByClassName("zombie-total-health")[0]
 
@@ -103,10 +104,15 @@ class TapZ {
         this.shop = new Shop(this.saveData)
         this.shop.update = this.update
         this.shop.playSFX = this.playSFX
+        this.animations = {}
+        this.currentAnimation = "idle"
 
         this.musicPlayer = new Audio("/assets/audio/the_last_encounter_loop.mp3")
         this.sfxPlayers = []
         this.currentlyPlaying = 0
+        
+        // needs to be setup before event listeners added
+        this.setupAnimations()
 
         // Do I really need to say what these do?
         this.addEventListeners()
@@ -229,6 +235,33 @@ class TapZ {
         // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
         Zombie.addEventListener("touchstart", this.multiTouch)
+
+        // Zombie animations
+        this.animations["idle"].onComplete = () => {
+            if (this.currentAnimation == "damaged") {
+                this.animations["idle"].stop()
+                this.animations["idle"].hide()
+                // reset speed and direction
+                this.animations["idle"].setSpeed(1)
+                this.animations["idle"].setDirection(1)
+
+                this.animations["damaged"].goToAndPlay(0)
+                this.animations["damaged"].show()
+                this.animations["damaged"].setSpeed(4)
+            }
+        }
+
+        this.animations["damaged"].onLoopComplete = () => {
+            this.animations["damaged"].hide()
+            this.animations["damaged"].stop()
+
+            this.animations["idle"].setSpeed(1)
+            this.animations["idle"].setDirection(1)
+            this.animations["idle"].playSegments([0, this.animations["idle"].animationData.op], true)
+            this.animations["idle"].loop = true
+            this.animations["idle"].show()
+            this.currentAnimation = "idle"
+        }
     }
 
 
@@ -357,9 +390,13 @@ class TapZ {
         }
 
         if (damage.gt(0)) {
-            // Switch to a different animation (gif) and switch back after 300ms
-            Zombie.classList.add("zombie-hurt")
-            setTimeout(() => Zombie.classList.remove("zombie-hurt"), 300)
+            this.currentAnimation = "damaged"
+            this.animations["idle"].loop = false
+            this.animations["idle"].pause()
+            this.animations["idle"].setDirection(-1)
+            this.animations["idle"].setSpeed(8)
+            let startFrame = this.animations["idle"].currentFrame
+            this.animations["idle"].playSegments([startFrame, 0], true)
         }
 
     }
@@ -459,6 +496,27 @@ class TapZ {
         this.musicPlayer.volume = this.saveData.userData.options.musicvolume
         this.musicPlayer.loop = true
         this.playMusic() // this probably won't work in modern browsers due to autoplay being blocked without a user interaction
+    }
+
+
+    setupAnimations = () => {
+        this.animations["idle"] = lottie.loadAnimation({
+            container: Zombie,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: "assets/data/zombie/idle.json"
+        })
+
+        this.animations["damaged"] = lottie.loadAnimation({
+            container: ZombieHit,
+            renderer: "svg",
+            loop: true,
+            autoplay: false,
+            path: "assets/data/zombie/damaged.json"
+        })
+
+        this.animations["damaged"].hide()
     }
 
 

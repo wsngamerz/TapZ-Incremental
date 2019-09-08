@@ -231,25 +231,15 @@ html, body {
     z-index: 100;
 }
 
-.zombie {
-    width: 500px;
-    height: 433px;
-    background-image: url('../img/zombie-idle.gif');
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
+.zombie, .zombieHit {
+    position: absolute;
+    width: 512px;
+    height: 512px;
     display: block;
     cursor: pointer;
-    image-rendering: high-quality;
-    user-select: none;
     max-width: 100%;
     max-height: 100%;
     user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.zombie-hurt {
-    background-image: url('../img/zombie-hurt.gif');
 }
 
 .footer {
