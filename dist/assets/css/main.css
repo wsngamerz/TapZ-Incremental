@@ -1,0 +1,558 @@
+/* 
+    TapZ Incremental
+    main.css
+*/
+
+
+
+/* 
+    Default Reset and sitewide styles
+*/
+
+html, body {
+    width: 100vw;
+    height: 100%;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+*, *::before, *::after {
+    font-family: "Acme", Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+/*
+    Modal Styles
+*/
+
+.modal {
+    display: none;
+    visibility: hidden;
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.modal-content {
+    display: block;
+    width: 90vw;
+    height: 90%;
+    margin: 2.5% 5vw;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0 4px 2px rgba(33, 33, 33, 0.25);
+}
+
+.modal-visible {
+    display: block;
+    visibility: visible;
+}
+
+.modal-settings .modal-content {
+    overflow-y: auto;
+}
+
+
+
+/*
+    Button Styles
+*/
+
+.button {
+    margin: 0.5em;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    display: inline-block;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.button-left {
+    float: left;
+}
+
+.button-right {
+    float: right;
+}
+
+.button-left::after,
+.button-right::after {
+    content: "";
+    clear: both;
+}
+
+.button-shop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.button-settings {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.button-block {
+    display: block;
+    width: 100%;
+}
+
+.button-primary {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.button-primary:not(:disabled):hover,
+.button-primary:not(:disabled):active {
+    background-color: #388E3C;
+}
+
+.button-secondary {
+    background-color: #2196F3;
+    color: #fff;
+}
+
+.button-secondary:not(:disabled):hover,
+.button-secondary:not(:disabled):active {
+    background-color: #1976D2;
+}
+
+.button:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+
+
+/* 
+    Dropdown Styles
+*/
+
+.dropdown {
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    display: inline-block;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.dropdown-secondary {
+    background-color: #2196F3;
+    color: #fff;
+}
+
+.dropdown-secondary > option {
+    background-color: #2196F3;
+}
+
+.dropdown-secondary:not(:disabled):hover,
+.dropdown-secondary:not(:disabled):active {
+    background-color: #1976D2;
+}
+
+
+
+/* 
+    Slider Styles
+*/
+
+.slider-container {
+    margin: 0 0.5rem 0.5rem 0.5rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    flex-grow: 1;
+    height: 0.5rem;
+    background-color: #E0E0E0;
+    border-radius: 0.25rem;
+    outline: none;
+    opacity: 0.75;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #2196F3;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    -moz-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #2196F3;
+    cursor: pointer;
+}
+
+.slider-label {
+    margin-right: 0.5rem;
+}
+
+
+
+/* 
+    Main Section Styles
+*/
+
+#version {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 30%;
+    width: 40%;
+    text-align: center;
+    background-color: lightgray;
+    padding: 0.2rem;
+    border-radius: .2rem; 
+    margin: .5rem;
+    opacity: 0.5;
+    font-size: 0.75rem;
+    user-select: none;
+    z-index: -10000;
+}
+
+.game {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    font-size: 1.5em;
+}
+
+.data {
+    display: block;
+    font-size: 1em;
+    font-weight: lighter;
+}
+
+.health {
+    width: 70vw;
+    height: 10px;
+    margin: 0 auto;
+}
+
+.healthbar {
+    background-color: #EEEEEE;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.current-health {
+    background-color: #4CAF50;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.fluid-health {
+    transition: all .2s;
+}
+
+.health-green {
+    background-color: #4CAF50;
+}
+
+.health-amber {
+    background-color: #FFC107;
+}
+
+.health-red {
+    background-color: #f44336;
+}
+
+.main {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.damage-indicator {
+    display: block;
+    position: absolute;
+    user-select: none;
+    font-weight: bold;
+    font-size: 2em;
+    transition: all .2s linear;
+    z-index: 100;
+}
+
+.zombie, .zombieHit {
+    position: absolute;
+    width: 512px;
+    height: 512px;
+    display: block;
+    cursor: pointer;
+    max-width: 100%;
+    max-height: 100%;
+    user-select: none;
+}
+
+.footer {
+    width: 100%;
+}
+
+
+
+/* Tab Styles */
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.tab-buttons {
+    text-align: center;
+    display: flex;
+}
+
+.tab-btn {
+    flex-grow: 1;
+    background-color: #CFD8DC;
+    border: none;
+    padding: 1em;
+    font-size: .75em;
+    color: #616161;
+    cursor: pointer;
+    outline: none;
+}
+
+.tab-btn-active {
+    background-color: #fff;
+    color: #212121;
+}
+
+.tab {
+    display: none;
+    visibility: hidden;
+    overflow-y: scroll;
+    background-color: #F5F5F5;
+}
+
+.tab-visible {
+    display: flex;
+    visibility: visible;
+    flex: 1;
+}
+
+
+
+/* Modalpage Styles */
+
+.modalpages {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.modalpage {
+    display: none;
+    visibility: hidden;
+    width: 100%;
+    padding: 0.5em;
+    overflow-y: auto;
+}
+
+.modalpage-visible {
+    display: block;
+    visibility: visible;
+    flex: 1;
+}
+
+.modalpage-main {
+    text-align: center;
+}
+
+.menu-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: minmax(min-content, max-content);
+    grid-gap: 10px;
+    overflow-x: hidden;
+}
+
+.menu-options button,
+.menu-options .dropdown {
+    margin: 0 0.5em 0.5em 0.5em;
+}
+
+.modalpage-footer {
+    width: 100%;
+}
+
+.button-menuback {
+    order: 3;
+    padding: 1.3em;
+    margin-left: 0;
+    background-color: #4CAF50;
+    background-image: url('../img/home.svg');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 0;
+    height: 0;
+    display: none;
+    visibility: hidden;
+}
+
+.button-menuback:hover {
+    background-color: #388E3C;
+}
+
+.button-visible {
+    display: block;
+    visibility: visible;
+}
+
+.modalpage-footer .button-closemodal,
+.modalpage-footer .button-menuback {
+    float: right;
+}
+
+
+/* Shop Styles */
+
+.shop-footer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.shop-money {
+    margin: 0 0 0 1em;
+    font-size: 0.9rem;
+    order: 1;
+    text-align: left;
+}
+
+.button-sellbrains {
+    order: 2;
+    flex-grow: 1;
+    font-size: 0.75em;
+}
+
+.button-closemodal {
+    order: 3;
+    padding: 1.3em;
+    margin-left: 0;
+    background-color: #f44336;
+    background-image: url('../img/cancel.svg');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: calc(100% - 1em);
+}
+
+.button-closemodal:hover {
+    background-color: #d32f2f;
+}
+
+.items {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: minmax(min-content, max-content);
+    grid-gap: 10px;
+    padding: 0.5rem;
+}
+
+.shop-item {
+    padding: 0.5rem;
+    background-color: #EEEEEE;
+    border-radius: 0.25rem;
+}
+
+.shop-item-information {
+    align-items: center;
+    display: flex;
+}
+
+.shop-item-icon {
+    width: 128px;
+    height: 128px;
+    background-color: #212121;
+    border-radius: 0.25rem;
+    flex-shrink: 0;
+    padding: 0.5rem;
+}
+
+.shop-item-text {
+    margin-left: 0.5rem;
+}
+
+.shop-item-name {
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.shop-item-description {
+    font-size: 0.75rem;
+    font-weight: lighter;
+}
+
+.shop-item-level {
+    font-size: 0.75rem;
+}
+
+.shop-item-button {
+    margin: 0.5rem 0 0 0;
+}
+
+
+/* Statistic styles */
+
+.modalpage-statistics p span {
+    word-break: break-all;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    font-size: 0.75em;
+}

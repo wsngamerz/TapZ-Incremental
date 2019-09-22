@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="description" content="TapZ is a zombie based incremental game, full of fun! Currently in alpha stages though."/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>TapZ Incremental</title>
+
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@wsngamerz" />
+        <meta name="twitter:title" content="TapZ Incremental" />
+        <meta name="twitter:description" content="TapZ is a zombie based incremental game, full of fun! Currently in alpha stages though." />
+        <meta name="twitter:creator" content="@wsngamerz" />
+        <meta name="twitter:image" content="https://tapz-dev.realstep.co.uk/assets/img/tapz_square.png" />
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="TapZ Incremental" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tapz-dev.realstep.co.uk/" />
+        <meta property="og:image" content="https://tapz-dev.realstep.co.uk/assets/img/tapz_landscape.png" />
+        <meta property="og:description" content="TapZ is a zombie based incremental game, full of fun! Currently in alpha stages though." />
+        <meta property="og:site_name" content="TapZ Incremental" />
+
+        <!-- Stylesheets and Fonts -->
+        <link rel="stylesheet" href="/assets/css/main.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme" />
+
+        <!-- Check if a polyfill is needed -->
+        <script>
+        const modernBrowser = ('fetch' in window && 'assign' in Object)
+        if ( !modernBrowser ) {
+            console.log("Polyfill is needed -> Now loading")
+            const scriptElement = document.createElement('script')
+            scriptElement.async = false
+            scriptElement.src = '/assets/js/polyfills.bundle.js'
+            document.head.appendChild(scriptElement)
+        }
+        </script>
+    </head>
+
+    <body>
+        <!-- Main Content of the game -->
+        <section class="game">
+            <span id="version"></span>
+            <header class="header">
+                <h3 class="title">TapZ Incremental</h3>
+
+                <section class="data">
+                    <span class="brains">0 Brains</span> |
+                    <span class="money">£0</span> |
+                    <span>
+                        HP:
+                        <span class="zombie-current-health">0</span> / 
+                        <span class="zombie-total-health">0</span>
+                    </span> | 
+                    Lvl: <span class="level">0</span>
+                </section>
+
+                <section class="health">
+                    <span class="healthbar">
+                        <span class="current-health"></span>
+                    </span>
+                </section>
+            </header>
+
+            <main class="main">
+                <section class="zombieHit"></section>
+                <section class="zombie"></section>
+            </main>
+
+            <footer class="footer">
+                <button class="button button-primary button-left button-shop">Shop</button>
+                <button class="button button-primary button-right button-settings">Menu</button>
+            </footer>
+        </section>
+
+        <!-- The Shop Modal -->
+        <section class="modal modal-shop">
+            <section class="modal-content">
+                <section class="tabs">
+
+                    <section class="tab-buttons">
+                        <button class="tab-btn tab-btn-dpc tab-btn-active">DPC</button>
+                        <button class="tab-btn tab-btn-dps">DPS</button>
+                        <button class="tab-btn tab-btn-multipliers">Multipliers</button>
+                    </section>
+
+                    <section class="tab tab-dpc tab-visible">
+                        <section class="items"></section>
+                    </section>
+        
+                    <section class="tab tab-dps">
+                        <section class="items"></section>
+                    </section>
+                    
+                    <section class="tab tab-multipliers">
+                        <section class="items"></section>
+                    </section>
+
+                    <section class="shop-footer">
+                        <span class="shop-money">Balance: <span class="money">£0</span></span>
+                        <button class="button button-secondary button-right button-sellbrains">Sell <span class="brains">0 Brains</span> for <span class="brains-sell">£0</span></button>
+                        <button class="button button-right button-closemodal"></button>
+                    </section>
+
+                </section>
+            </section>
+        </section>
+
+        <!-- The Settings Modal -->
+        <section class="modal modal-settings">
+            <section class="modal-content">
+                <section class="modalpages">
+                    <section class="modalpage modalpage-main modalpage-visible">
+                        <h2>Main Menu</h2>
+                        <section class="menu-options">
+                            <button class="button button-secondary menubutton menubutton-display">Display Settings</button>
+                            <button class="button button-secondary menubutton menubutton-saving">Save Settings</button>
+                            <button class="button button-secondary menubutton menubutton-audio">Audio Settings</button>
+                            <button class="button button-secondary menubutton menubutton-statistics">Statistics</button>
+                            <button class="button button-secondary menubutton menubutton-about">About</button>
+                            <button class="button button-secondary menubutton menubutton-credits">Credits</button>
+                        </section>
+                    </section>
+    
+                    <section class="modalpage modalpage-display">
+                        <h2>Display Settings</h2>
+                        <section class="menu-options">
+                            <button class="button button-secondary settings-button-damageindicator">Damage Indicators: ON</button>
+                            <button class="button button-secondary settings-button-animations">Animations: ON</button>
+                            <button class="button button-secondary settings-button-smoothhealth">Smooth Healthbar: ON</button>
+                            <select class="dropdown dropdown-secondary settings-dropdown-numberformatting">
+                                <option value="fullname">Full name number formatting</option>
+                                <option value="shorthand">Shorthand number formatting</option>
+                                <option value="lazy">Lazy number formatting</option>
+                            </select>
+                        </section>
+                    </section>
+    
+                    <section class="modalpage modalpage-saving">
+                        <h2>Save Settings</h2>
+                        <section class="menu-options">
+                            <button class="button button-secondary settings-button-save">Save</button>
+                            <button class="button button-secondary settings-button-load">Load</button>
+                            <button class="button button-secondary settings-button-reset">Reset</button>
+                        </section>
+                    </section>
+    
+                    <section class="modalpage modalpage-audio">
+                        <h2>Audio Settings</h2>
+                        <section class="menu-options">
+                            <button class="button button-secondary settings-button-mutemusic">Music: Unmuted</button>
+                            <button class="button button-secondary settings-button-mutesfx">SFX: Unmuted</button>
+                            <section class="slider-container">
+                                <span class="slider-label">Music Volume</span>
+                                <input type="range" min="0" max="100" value="60" class="slider settings-slider-musicvolume">
+                            </section>
+                            <section class="slider-container">
+                                <span class="slider-label">SFX Volume</span>
+                                <input type="range" min="0" max="100" value="100" class="slider settings-slider-sfxvolume">
+                            </section>
+                        </section>
+                    </section>
+
+                    <section class="modalpage modalpage-statistics">
+                        <h2>Stats</h2>
+                        <p>DPC: <span id="statistics-dpc">0</span></p>
+                        <p>DPS: <span id="statistics-dps">0</span></p>
+                        <p>Kills: <span id="statistics-kills">0</span></p>
+                        <p>Clicks: <span id="statistics-clicks">0</span></p>
+                        <p>Level: <span id="statistics-level">0</span></p>
+                        <p>Brains Per kill: <span id="statistics-bpk">0</span></p>
+                        <p>Brain value: <span id="statistics-mpb">0</span></p>
+                        <p>Money: <span class="money" id="statistics-money">0</span></p>
+                        <p>Money (Number): <span id="statistics-money-number">0</span></p>
+                        <p>Brains: <span class="brains" id="statistics-brains">0</span></p>
+                        <p>Brains (Number): <span id="statistics-brains-number">0</span></p>
+                    </section>
+    
+                    <section class="modalpage modalpage-about">
+                        <h2>About</h2>
+                        <p>TapZ is a free-to-play online incremental where you beat the crap outta zombies for money. It's as simple as that!</p>
+                        <p>TapZ Incremental was created by me (<a href="https://github.com/wsngamerz">wsngamerz</a>) and you can follow development on the games GitHub <a href="https://github.com/wsngamerz/TapZ-Incremental">Here</a>.</p>
+                    </section>
+    
+                    <section class="modalpage modalpage-credits">
+                        <h2>Credits</h2>
+                        <h4>Assets</h4>
+                        <p>Music by Matthew Pablo (<a href="http://www.matthewpablo.com">http://www.matthewpablo.com</a>)</p>
+                        <p><a href="https://opengameart.org/content/zombies-sound-pack">Zombie SFX</a> by <a href="https://opengameart.org/users/artisticdude">artisticdude</a></p>
+                        <p><a href="https://opengameart.org/content/gui-sound-effects">GUI SFX</a> by <a href="https://opengameart.org/users/lokif">Lokif</a></p>
+                        <p>Most icons used were sourced from <a href="https://game-icons.net">Game-icons.net</a>.</p>
+                        <br>
+                        <h4>Libraries</h4>
+                        <p>Big numbers handled behind the scene using <a href="https://github.com/MikeMcl/bignumber.js/">bignumber.js</a> by <a href="https://github.com/MikeMcl">Michael Mclaughlin</a>.</p>
+                        <p>Smooth zombie animations rendered using <a href="https://airbnb.io/lottie/#/">Lottie</a> by <a href="https://airbnb.io">Airbnb</a>.</p>
+                    </section>
+                    <section class="modalpage-footer">
+                        <button class="button button-closemodal"></button>
+                        <button class="button button-menuback"></button>
+                    </section>
+                </section>
+            </section>
+        </section>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.8/lottie_light.min.js" integrity="sha256-0sCR8V9DCs7yOSUFyCy3lFFmBHtajne5BT+IUVKsQ0I=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/9.0.0/bignumber.js" integrity="sha256-TYZ2kR74G+TqMIiLuKpB57VUTNKhGFknyOKgRYqxhnw=" crossorigin="anonymous"></script>
+        <script src="/assets/js/game.bundle.js"></script>
+    </body>
+
+</html>

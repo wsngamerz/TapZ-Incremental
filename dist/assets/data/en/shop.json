@@ -1,0 +1,94 @@
+{
+    "knife": {
+        "name": "Kitchen Kit",
+        "description": "Increases damage by +1"
+    },
+    "baseballBat": {
+        "name": "Baseball Bat",
+        "description": "Increases damage by +3"
+    },
+    "dagger": {
+        "name": "Dagger",
+        "description": "Increase damage by +5"
+    },
+    "sword": {
+        "name": "Deadly Sword",
+        "description": "Increases damage by +7"
+    },
+    "shuriken": {
+        "name": "Shuriken",
+        "description":"Increases damage by +8"
+    },
+    "katana": {
+        "name": "Katana",
+        "description": "Increases damage by +12"
+    },
+    "pistol": {
+        "name": "Pistol",
+        "description": "Increases damage by +15"
+    },
+    "grenade": {
+        "name": "Grenade",
+        "description": "Increases damage by +30"
+    },
+    "crossbow": {
+        "name": "Crossbow",
+        "description": "Increase damage by +50"
+    },
+    "shotgun": {
+        "name": "Shotgun",
+        "description": "Increase damage by +75"
+    },
+    "trident": {
+        "name": "Trident",
+        "description": "Increase damage by +100"
+    },
+    "flamethrower": {
+        "name": "Flamethrower",
+        "description": "Increase damage by +250"
+    },
+    "rocketLauncher": {
+        "name": "Rocket Launcher",
+        "description": "Increase damage by +500"
+    },
+    "blackMagic": {
+        "name": "Black Magic",
+        "description": "Increase damage by +1,000"
+    },
+    "nuke": {
+        "name": "Nuke",
+        "description": "Increase damage by +9,999"
+    },
+    "farmer": {
+        "name": "Farmer",
+        "description": "Increases auto damage by +1"
+    },
+    "pikeman": {
+        "name": "Pikeman",
+        "description": "Increases auto damage by +10"
+    },
+    "knight": {
+        "name": "Knight",
+        "description": "Increases auto damage by +50"
+    },
+    "elf": {
+        "name": "Elf",
+        "description": "Increases auto damage by +75"
+    },
+    "assassin": {
+        "name": "Assassin",
+        "description": "Increases auto damage by +100"
+    },
+    "ninja": {
+        "name": "Ninja",
+        "description": "Increases auto damage by +200"
+    },
+    "advancedSpoon": {
+        "name": "Advanced Spoon",
+        "description": "Increases brains per kill by +1"
+    },
+    "brainEnrichment": {
+        "name": "Brain Enrichment",
+        "description": "Increases brain Value by +100%"
+    }
+}
