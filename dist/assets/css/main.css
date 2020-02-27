@@ -16,6 +16,7 @@ html, body {
     padding: 0;
     margin: 0;
     overflow: hidden;
+    background-color: #fff;
 }
 
 *, *::before, *::after {
@@ -242,7 +243,6 @@ html, body {
     opacity: 0.5;
     font-size: 0.75rem;
     user-select: none;
-    z-index: -10000;
 }
 
 .game {
@@ -402,6 +402,10 @@ html, body {
     overflow-y: auto;
 }
 
+.modalpage h2 {
+    margin-bottom: 0.5em;
+}
+
 .modalpage-visible {
     display: block;
     visibility: visible;
@@ -548,11 +552,13 @@ html, body {
 }
 
 
-/* Statistic styles */
+/* Statistic styles & Credits styles */
 
-.modalpage-statistics p span {
+.modalpage-statistics p span,
+.modalpage-credits p {
     word-break: break-all;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: lighter;
     font-size: 0.75em;
 }
+

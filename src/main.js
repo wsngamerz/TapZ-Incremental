@@ -4,7 +4,7 @@
 // 
 
 // regular imports
-import Save from "./savedata"
+import Save from "./save"
 import Shop from "./shop"
 import { formatNumber } from "./utils"
 
@@ -121,9 +121,6 @@ class TapZ {
         console.log(`v${ this.saveData.gameData.version }`)
         VersionSpan.innerText = `v${ this.saveData.gameData.version }`
 
-        // used for logging
-        window.TAPZ_VERSION_NAME = this.saveData.gameData.version
-
         // print some debug info to console
         const deviceInfo = {
             platform: navigator.platform,
@@ -146,10 +143,12 @@ class TapZ {
         this.setupMusic()
         this.update()
 
+        // save every 10 seconds
         setInterval(() => {
             this.saveData.save()
         }, 10000);
 
+        // perform damage every second
         setInterval(() => {
             this.handleDPS()
         }, 1000)
@@ -245,6 +244,8 @@ class TapZ {
             }
         }
 
+        // loop though damage animation and once finished,
+        // start the idle animation again as usual
         this.animations["damaged"].onLoopComplete = () => {
             this.animations["damaged"].hide()
             this.animations["damaged"].stop()
@@ -259,14 +260,18 @@ class TapZ {
     }
 
 
+    // used to simulate a click on the zombie when used with multi-touch on
+    // mobile devices
     multiTouch = (event) => {
         // Hopefully prevent click event so no double-calling
         event.preventDefault()
 
         // get only the most recent touch
+        // - prevents sending 5 touch events every time by having 4 fingers
+        //   resting on screen and 1 finger tapping which is a bit cheaty
         const lastTouch = event.touches[event.touches.length - 1]
 
-        // Fake a click event and send that to the onclick function
+        // Fake a click event and send that to the zombie 'onclick' function
         const clickEvent = new MouseEvent("click", {
             clientX: lastTouch.clientX,
             clientY: lastTouch.clientY
@@ -275,10 +280,11 @@ class TapZ {
         this.click(clickEvent)
     }
 
-
+    // a click on the zombie
     click = (event) => {
         this.playSFX("zombieHit")
 
+        // increment the number of clicks
         this.saveData.userData.statistics.clicks = this.saveData.userData.statistics.clicks.plus(1)
         
         this.injureZombie(this.saveData.userData.dpc)
@@ -309,9 +315,10 @@ class TapZ {
             damageElement.dataset.uid = uid
             damageElement.dataset.x = clickX
             damageElement.dataset.y = clickY
-            damageElement.style.top = `${ clickY - 40 }px`
-            damageElement.style.left = `${ clickX + 20 }px`
+            damageElement.style.top = `${ clickY - 40 }px`  // offset from click slightly to reduce the effect
+            damageElement.style.left = `${ clickX + 20 }px` // of the client clicking on the indicator
 
+            // display the indicator
             document.body.appendChild(damageElement)
 
             // Update position of damage element every 100ms
@@ -324,8 +331,10 @@ class TapZ {
                 damageElement.style.opacity = damageElement.dataset.itter / 10
 
                 if (damageElement.dataset.itter <= 0) {
+                    // once finished stop the loop
                     clearInterval(interval)
 
+                    // .... and then remove the element from dom
                     if (damageElement != null) {
                         damageElement.parentNode.removeChild(damageElement)
                     }
@@ -716,6 +725,7 @@ class TapZ {
 
 
     updateHealth = () => {
+        // update the health bar and set the colours
         const percentage = this.saveData.userData.zombie.currentHealth.dividedBy(this.saveData.userData.zombie.totalHealth) * 100
 
         if (percentage > 50) {

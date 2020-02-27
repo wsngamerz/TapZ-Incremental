@@ -23,12 +23,11 @@ export default class Save {
                 showDamage: true,
                 animations: true,
                 smoothHealth: true,
-                numberShorthand: true,
                 numberFormat: "lazy", // can be one of "lazy", "fullname" or "shorthand"
                 mutemusic: false,
-                musicvolume: 0.6,
+                musicvolume: 0.3,
                 mutesfx: false,
-                sfxvolume: 0.8
+                sfxvolume: 0.4
             },
             statistics: {
                 clicks: BigNumber(0, 10),
@@ -47,7 +46,7 @@ export default class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.2.5 BETA",
+            version: "0.3.0 BETA",
             currentSaveVersion: 4,
             modalOpen: false,
             currentModal: ""
