@@ -3,7 +3,9 @@
 // main.js
 // 
 
-// regular imports
+import * as Sentry from "@sentry/browser";
+import { Integrations } from "@sentry/tracing";
+
 import Save from "./save"
 import Shop from "./shop"
 import { formatNumber } from "./utils"
@@ -93,14 +95,24 @@ const StatisticMoneyNumber = document.getElementById("statistics-money-number")
 const StatisticBrainsNumber = document.getElementById("statistics-brains-number")
 
 
+// Main TapZ Class
 class TapZ {
     constructor() {
+        this.saveData = new Save()
+
+        // setup sentry error collection
+        Sentry.init({
+            dsn: "https://b3deba62133847bb90e5e2de6ff311e5@o294554.ingest.sentry.io/1541595",
+            release: `TapZ v${this.saveData.gameData.version}`,
+            integrations: [new Integrations.BrowserTracing()],
+            tracesSampleRate: 1.0
+        })
+
         // Setup BigNumber
         BigNumber.config({
             EXPONENTIAL_AT: 1e+9
         })
 
-        this.saveData = new Save()
         this.shop = new Shop(this.saveData)
         this.shop.update = this.update
         this.shop.playSFX = this.playSFX
@@ -110,7 +122,7 @@ class TapZ {
         this.musicPlayer = new Audio("/assets/audio/the_last_encounter_loop.mp3")
         this.sfxPlayers = []
         this.currentlyPlaying = 0
-        
+
         // needs to be setup before event listeners added
         this.setupAnimations()
 
@@ -118,8 +130,8 @@ class TapZ {
         this.addEventListeners()
 
         console.log("TapZ Incremental")
-        console.log(`v${ this.saveData.gameData.version }`)
-        VersionSpan.innerText = `v${ this.saveData.gameData.version }`
+        console.log(`v${this.saveData.gameData.version}`)
+        VersionSpan.innerText = `v${this.saveData.gameData.version}`
 
         // print some debug info to console
         const deviceInfo = {
@@ -173,7 +185,7 @@ class TapZ {
                 }
 
                 this.toggleModal("")
-            })  
+            })
         })
 
         // Close Modals when close modal button clicked
@@ -224,7 +236,7 @@ class TapZ {
         MusicVolumeSlider.addEventListener("change", (event) => this.editSettings("musicvolume", event.target.value / 100))
         SFXVolumeSlider.addEventListener("change", (event) => this.editSettings("sfxvolume", event.target.value / 100))
         NumberFormatDropdown.addEventListener("change", (event) => this.editSettings("numberFormat", event.target.options[event.target.options.selectedIndex].value))
-        
+
         // Zombie Click (obvs!)
         Zombie.addEventListener("click", this.click)
         Zombie.addEventListener("touchstart", this.multiTouch)
@@ -286,7 +298,7 @@ class TapZ {
 
         // increment the number of clicks
         this.saveData.userData.statistics.clicks = this.saveData.userData.statistics.clicks.plus(1)
-        
+
         this.injureZombie(this.saveData.userData.dpc)
 
         // Allows for people to turn off damage indicators if it causes performance issues 
@@ -308,15 +320,15 @@ class TapZ {
             const damageElement = document.createElement("span")
 
             // Set the damage indicators data and styles
-            damageElement.innerHTML = `-${ this.saveData.userData.dpc }`
+            damageElement.innerHTML = `-${this.saveData.userData.dpc}`
             damageElement.id = uid
             damageElement.classList.add("damage-indicator")
             damageElement.dataset.itter = 10
             damageElement.dataset.uid = uid
             damageElement.dataset.x = clickX
             damageElement.dataset.y = clickY
-            damageElement.style.top = `${ clickY - 40 }px`  // offset from click slightly to reduce the effect
-            damageElement.style.left = `${ clickX + 20 }px` // of the client clicking on the indicator
+            damageElement.style.top = `${clickY - 40}px`  // offset from click slightly to reduce the effect
+            damageElement.style.left = `${clickX + 20}px` // of the client clicking on the indicator
 
             // display the indicator
             document.body.appendChild(damageElement)
@@ -326,8 +338,8 @@ class TapZ {
                 damageElement.dataset.itter--
                 damageElement.dataset.x = parseInt(damageElement.dataset.x) + 25
                 damageElement.dataset.y = parseInt(damageElement.dataset.y) - 75
-                damageElement.style.top = `${ damageElement.dataset.y }px`
-                damageElement.style.left = `${ damageElement.dataset.x }px`
+                damageElement.style.top = `${damageElement.dataset.y}px`
+                damageElement.style.left = `${damageElement.dataset.x}px`
                 damageElement.style.opacity = damageElement.dataset.itter / 10
 
                 if (damageElement.dataset.itter <= 0) {
@@ -348,7 +360,7 @@ class TapZ {
     editSettings = (setting, value) => {
         const currentValue = this.saveData.userData.options[setting]
 
-        if (typeof(currentValue) == "boolean") {
+        if (typeof (currentValue) == "boolean") {
             // If the value is a boolean, it must be a toggle
             if (currentValue) {
                 this.saveData.userData.options[setting] = false
@@ -361,7 +373,7 @@ class TapZ {
         }
 
         this.playSFX("buttonClick")
-        
+
         if (setting == "mutemusic") {
             if (this.saveData.userData.options["mutemusic"]) {
                 this.setMusicVolume(0.0)
@@ -406,7 +418,7 @@ class TapZ {
                 this.animations["idle"].setDirection(-1)
                 this.animations["idle"].playSegments([currentFrame, 0], true)
             }
-            
+
         }
 
     }
@@ -422,10 +434,10 @@ class TapZ {
             this.saveData.userData.level = this.saveData.userData.level.plus(1)
             this.saveData.userData.zombie.totalHealth = killLevelTarget.minus(5)
 
-            console.debug("Level", this.saveData.userData.level.toString(10),"Required", killLevelTarget.toString(10), "kills")
+            console.debug("Level", this.saveData.userData.level.toString(10), "Required", killLevelTarget.toString(10), "kills")
             console.debug("Zombie health is now", this.saveData.userData.zombie.totalHealth.toString(10))
         }
-        
+
         this.saveData.userData.brains = this.saveData.userData.brains.plus(this.saveData.userData.bpk)
         this.saveData.userData.statistics.totalBrains = this.saveData.userData.statistics.totalBrains.plus(this.saveData.userData.bpk)
 
@@ -436,10 +448,10 @@ class TapZ {
     playMusic = () => {
         if (this.musicPlayer.paused && !this.saveData.userData.options.mutemusic && this.saveData.userData.options.musicvolume != 0) {
             const promise = this.musicPlayer.play()
-            
+
             if (promise !== undefined) {
                 promise.then(() => {
-                    console.debug("Autoplayed Background Music")    
+                    console.debug("Autoplayed Background Music")
                 }).catch((error) => {
                     console.debug("Handled Error", error)
                     console.debug("This is likely to be an issue with autoplay being blocked!")
@@ -468,26 +480,26 @@ class TapZ {
                     break
                 }
             }
-        
+
             // create another 'audio channel' if unable to find a free one
             if (!sfxPlayer) {
                 sfxPlayer = new Audio()
                 this.sfxPlayers.push(sfxPlayer)
             }
-            
+
             sfxPlayer.onplay = () => this.currentlyPlaying++
             sfxPlayer.onended = () => this.currentlyPlaying--
             sfxPlayer.volume = this.saveData.userData.options.sfxvolume
-        
-            switch(sfx) {
+
+            switch (sfx) {
                 case "buttonClick":
                     sfxPlayer.src = "/assets/audio/click.mp3"
                     sfxPlayer.play()
                     break
-                    
+
                 case "zombieHit":
                     if ((Math.random() >= 0.85) && (this.currentlyPlaying < 3)) { // 15% chance of playing if less than 3 sounds already playing
-                        const zombieSound = `/assets/audio/zombie_${ Math.floor(Math.random() * 24) + 1 }.mp3`
+                        const zombieSound = `/assets/audio/zombie_${Math.floor(Math.random() * 24) + 1}.mp3`
                         sfxPlayer.src = zombieSound
                         sfxPlayer.play()
                     }
@@ -496,11 +508,11 @@ class TapZ {
         }
     }
 
-            
+
     setMusicVolume = (volume) => {
         this.musicPlayer.volume = volume
     }
-            
+
 
     setupMusic = () => {
         this.musicPlayer.volume = this.saveData.userData.options.musicvolume
@@ -541,22 +553,22 @@ class TapZ {
             this.saveData.gameData.modalOpen = false
         } else {
             // Open the modal
-            switch(modal) {
+            switch (modal) {
                 case "shop":
                     ShopModal.classList.add("modal-visible")
                     break
-                
+
                 case "settings":
                     SettingsModal.classList.add("modal-visible")
                     this.toggleMenu("main")
                     break
-                
+
                 case "":
                     // Handle for the click off modal
                     break
-                
+
                 default:
-                    console.log(`Error, unknown modal: ${ modal }`)
+                    console.log(`Error, unknown modal: ${modal}`)
             }
 
             this.saveData.gameData.modalOpen = true
@@ -573,24 +585,24 @@ class TapZ {
         Array.from(TabButtons).forEach(button => button.classList.remove("tab-btn-active"))
         Array.from(Tabs).forEach(tab => tab.classList.remove("tab-visible"))
 
-        switch(tab) {
+        switch (tab) {
             case "dpc":
                 DpcTabButton.classList.add("tab-btn-active")
                 DpcTab.classList.add("tab-visible")
                 break
-            
+
             case "dps":
                 DpsTabButton.classList.add("tab-btn-active")
                 DpsTab.classList.add("tab-visible")
                 break
-            
+
             case "multipliers":
                 MultipliersTabButton.classList.add("tab-btn-active")
                 MultipliersTab.classList.add("tab-visible")
                 break
-            
+
             default:
-                console.log(`Unknown Tab: ${ tab }`)
+                console.log(`Unknown Tab: ${tab}`)
         }
 
         this.playSFX("buttonClick")
@@ -602,7 +614,7 @@ class TapZ {
         if (menu == "main") { MenuBackButton.classList.remove("button-visible") }
         else { MenuBackButton.classList.add("button-visible") }
 
-        switch(menu) {
+        switch (menu) {
             case "main":
                 MainModalPage.classList.add("modalpage-visible")
                 break
@@ -642,16 +654,16 @@ class TapZ {
     update = () => {
         this.updateHealth()
 
-        BrainsSellSpan.innerText = `£${ formatNumber(this.shop.sellBrainsValue(), this.saveData.userData.options.numberFormat) }`
+        BrainsSellSpan.innerText = `£${formatNumber(this.shop.sellBrainsValue(), this.saveData.userData.options.numberFormat)}`
         if (this.saveData.userData.brains.eq(0)) {
             BrainsSellSpan.parentElement.setAttribute("disabled", true)
         } else {
             BrainsSellSpan.parentElement.removeAttribute("disabled")
         }
-        
+
         // Update all of the data elements
-        Array.from(BrainSpans).forEach(element => element.innerText = `${ formatNumber(this.saveData.userData.brains, this.saveData.userData.options.numberFormat) } Brains`)
-        Array.from(MoneySpans).forEach(element => element.innerText = `£${ formatNumber(this.saveData.userData.money, this.saveData.userData.options.numberFormat) }`)
+        Array.from(BrainSpans).forEach(element => element.innerText = `${formatNumber(this.saveData.userData.brains, this.saveData.userData.options.numberFormat)} Brains`)
+        Array.from(MoneySpans).forEach(element => element.innerText = `£${formatNumber(this.saveData.userData.money, this.saveData.userData.options.numberFormat)}`)
         LevelSpan.innerText = this.saveData.userData.level
 
         // try to only update whats currently being displayed on screen
@@ -659,12 +671,12 @@ class TapZ {
             // Update shop buttons
             Array.from(BuyShopItemButtons).forEach(element => {
                 const itemData = this.shop.getItem(element.getAttribute("data-shopid"))
-                element.innerText = `Buy x1 ${ itemData.text.name } for £${ formatNumber(this.shop.getItemCost(itemData), this.saveData.userData.options.numberFormat) }`
+                element.innerText = `Buy x1 ${itemData.text.name} for £${formatNumber(this.shop.getItemCost(itemData), this.saveData.userData.options.numberFormat)}`
             })
-    
+
             // Update Shop Levels
             Array.from(ShopItemLevels).forEach(shopItemLevel => {
-                shopItemLevel.innerText = `Level: ${ this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-shopid")].level }`
+                shopItemLevel.innerText = `Level: ${this.saveData.userData.upgrades[shopItemLevel.getAttribute("data-shopid")].level}`
             })
 
             // Update 'able to afford' button styles
@@ -683,11 +695,11 @@ class TapZ {
 
         } else if (this.saveData.gameData.currentModal == "settings") {
             // Update Settings Buttons
-            DamageIndicatorToggle.innerText = `Damage Indicators: ${ this.saveData.userData.options.showDamage ? 'ON' : 'OFF' }`
-            AnimationsToggle.innerText = `Animations: ${ this.saveData.userData.options.animations ? 'ON' : 'OFF' }`
-            SmoothHealthToggle.innerText = `Smooth Healthbar: ${ this.saveData.userData.options.smoothHealth ? 'ON' : 'OFF' }`
-            MuteMusicButton.innerText = `Music: ${ this.saveData.userData.options.mutemusic ? 'Muted' : 'Unmuted' }`
-            MuteSFXButton.innerText = `SFX: ${ this.saveData.userData.options.mutesfx ? 'Muted' : 'Unmuted' }`
+            DamageIndicatorToggle.innerText = `Damage Indicators: ${this.saveData.userData.options.showDamage ? 'ON' : 'OFF'}`
+            AnimationsToggle.innerText = `Animations: ${this.saveData.userData.options.animations ? 'ON' : 'OFF'}`
+            SmoothHealthToggle.innerText = `Smooth Healthbar: ${this.saveData.userData.options.smoothHealth ? 'ON' : 'OFF'}`
+            MuteMusicButton.innerText = `Music: ${this.saveData.userData.options.mutemusic ? 'Muted' : 'Unmuted'}`
+            MuteSFXButton.innerText = `SFX: ${this.saveData.userData.options.mutesfx ? 'Muted' : 'Unmuted'}`
             Array.from(NumberFormatDropdown.options).forEach((option) => {
                 if (option.value != this.saveData.userData.options.numberFormat) {
                     option.setAttribute("selected", true)
@@ -695,7 +707,7 @@ class TapZ {
                     option.setAttribute("selected", false)
                 }
             })
-            
+
             // apply updates settings
             MusicVolumeSlider.setAttribute("value", this.saveData.userData.options.musicvolume * 100)
             SFXVolumeSlider.setAttribute("value", this.saveData.userData.options.sfxvolume * 100)
@@ -709,11 +721,11 @@ class TapZ {
             StatisticKills.innerText = this.saveData.userData.statistics.kills.toString(10)
             StatisticLevel.innerText = 0
             StatisticBPK.innerText = this.saveData.userData.bpk.toString(10)
-            StatisticMPB.innerText = `£${ this.saveData.userData.mpb.toString(10) }`
-            StatisticMoneyNumber.innerText = `£${ this.saveData.userData.money.toString(10) }`
+            StatisticMPB.innerText = `£${this.saveData.userData.mpb.toString(10)}`
+            StatisticMoneyNumber.innerText = `£${this.saveData.userData.money.toString(10)}`
             StatisticBrainsNumber.innerText = this.saveData.userData.brains.toString(10)
         }
-        
+
 
         // Zombie health
         ZombieHealthCurrent.innerText = formatNumber(this.saveData.userData.zombie.currentHealth, this.saveData.userData.options.numberFormat)
@@ -739,7 +751,7 @@ class TapZ {
             HealthBarCurrent.classList.add("health-red")
         }
 
-        HealthBarCurrent.style.width = `${ percentage }%`
+        HealthBarCurrent.style.width = `${percentage}%`
     }
 }
 

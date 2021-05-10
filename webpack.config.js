@@ -1,5 +1,5 @@
 const path = require("path")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const TerserPlugin = require("terser-webpack-plugin")
 
 module.exports = {
     mode: "production",
@@ -27,9 +27,12 @@ module.exports = {
         ]
     },
     optimization: {
+        minimize: true,
         minimizer: [
-            new UglifyJsPlugin({
-                sourceMap: true
+            new TerserPlugin({
+                terserOptions: {
+                    sourceMap: true
+                }
             })
         ],
     },

@@ -20,18 +20,19 @@
   },
   "homepage": "https://github.com/wsngamerz/TapZ-Incremental",
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/core": "^7.14.0",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.14.1",
     "babel-loader": "^8.2.2",
-    "uglifyjs-webpack-plugin": "^1.1.2",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
+    "serve": "^11.3.2",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.7.0"
   },
   "browserslist": "> 0.25%, not dead",
   "dependencies": {
-    "core-js": "^3.6.4",
-    "serve": "^11.3.0",
-    "whatwg-fetch": "^3.0.0"
+    "@sentry/browser": "^6.3.6",
+    "@sentry/tracing": "^6.3.6",
+    "core-js": "^3.12.1",
+    "whatwg-fetch": "^3.6.2"
   }
 }

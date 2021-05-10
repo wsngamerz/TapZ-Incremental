@@ -46,7 +46,7 @@ export default class Save {
         
         // stuff that isn't user based or needed to be saved across saves
         this.gameData = {
-            version: "0.3.0 BETA",
+            version: "0.3.1 BETA",
             currentSaveVersion: 4,
             modalOpen: false,
             currentModal: ""
