@@ -5,6 +5,7 @@
   export let colour: "red" | "yellow" | "green" | "blue";
   export let icon: ComponentType | undefined = undefined;
   export let content: string | undefined = undefined;
+  export let iconText: string | undefined = undefined;
 
 
   const variants = {
@@ -15,10 +16,13 @@
   };
 </script>
 
-<div class="flex gap-1 w-full bg-gray-900 rounded h-12 p-1">
+<div class="flex gap-1 w-full bg-gray-900 rounded h-14 p-1">
   {#if icon}
-    <div class="h-full rounded aspect-square {variants[colour]} flex items-center justify-center">
-      <svelte:component this="{icon}" class="text-white" />
+    <div class="relative h-full rounded aspect-square {variants[colour]} flex items-center justify-center">
+      <svelte:component this="{icon}" class="text-white w-8 h-8" />
+      {#if iconText}
+        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">{iconText}</span>
+      {/if}
     </div>
   {/if}
 
@@ -26,7 +30,7 @@
     <div class="{variants[colour]} h-full rounded-sm transition-[width] duration-75 ease-out" style="width: {value}%"></div>
 
     {#if content}
-      <div class="absolute rounded mx-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-black">
+      <div class="absolute rounded mx-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-lg">
         {content}
       </div>
     {/if}

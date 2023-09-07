@@ -22,3 +22,26 @@ html, body {
     @apply transition-transform duration-200 ease-in-out;
     @apply scale-50 md:scale-[.65] lg:scale-90;
 }
+
+@keyframes damage-indicator {
+    from {
+        left: 50%;
+        top: 50%;
+        opacity: 1;
+    }
+
+    to{
+        left: 200%;
+        top: -100%;
+        opacity: 0;
+    }
+}
+
+.damage-indicator {
+    @apply text-red-600;
+    @apply block absolute select-none font-bold text-4xl;
+    @apply transition-all duration-500 ease-in-out;
+
+    transform: translate(var(--random), var(--random));
+    animation: damage-indicator 1.5s linear;
+}
