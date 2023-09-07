@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes zombie-sprite {
+    to { background-position: -2048px; }
+}
+
+.zombie {
+    width: 512px;
+    height: 512px;
+    background: url("/zombie_sprites.png");
+    background-size: cover;
+    animation: zombie-sprite 2s steps(4) infinite;
+
+    @apply transition-transform duration-200 ease-in-out;
+    @apply scale-50 md:scale-[.65] lg:scale-90;
+}
