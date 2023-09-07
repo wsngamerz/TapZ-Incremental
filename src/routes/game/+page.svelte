@@ -1,9 +1,10 @@
 <script lang="ts">
   import Progress from "../../components/ui/progress.svelte";
-  import { SettingsIcon, MedalIcon } from "lucide-svelte";
+  import { SettingsIcon, MedalIcon, ShieldIcon, CrossIcon, BrainIcon, CoinsIcon } from "lucide-svelte";
   import { health } from "$lib/store";
 
   $: healthPercentage = $health * 10;
+  $: healthContent = `${$health}/10`;
 
   const clickHandler = () => {
     health.update((n: number) => n - 1);
@@ -17,23 +18,22 @@
 <div class="flex flex-col w-full h-full">
   <header class="block w-full space-y-2 p-2 max-w-4xl mx-auto">
     <div class="flex gap-2">
-      <Progress value={20} colour="blue" />
-      <Progress value={50} colour="green" />
-      <Progress value={80} colour="yellow" />
+      <Progress icon={ShieldIcon} content="Lvl: 1" value={20} colour="blue" />
+      <Progress icon={BrainIcon} content="1,042" colour="green" />
+      <Progress icon={CoinsIcon} content="2,435" colour="yellow" />
     </div>
 
     <div class="flex gap-2">
-      <div class="h-10 aspect-square p-2 bg-gray-900 rounded">
+      <div class="h-12 aspect-square p-2 bg-gray-900 rounded">
         <MedalIcon class="h-full w-full" />
       </div>
 
-      <Progress value={healthPercentage} colour="red" />
+      <Progress icon={CrossIcon}
+                value={healthPercentage}
+                colour="red"
+                content={healthContent}/>
 
-      <div class="h-10 w-16 bg-gray-900 flex items-center justify-center p-2 rounded text-sm font-light">
-        {$health}/10
-      </div>
-
-      <div class="h-10 aspect-square p-2 bg-gray-900 rounded">
+      <div class="h-12 aspect-square p-2 bg-gray-900 rounded">
         <SettingsIcon class="h-full w-full" />
       </div>
     </div>
