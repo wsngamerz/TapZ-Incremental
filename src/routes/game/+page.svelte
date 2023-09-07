@@ -1,6 +1,6 @@
 <script lang="ts">
   import Progress from "../../components/ui/progress.svelte";
-  import { SettingsIcon, ShieldIcon } from "lucide-svelte";
+  import { SettingsIcon, MedalIcon } from "lucide-svelte";
   import { health } from "$lib/store";
 
   $: healthPercentage = $health * 10;
@@ -23,13 +23,17 @@
     </div>
 
     <div class="flex gap-2">
-      <div class="h-10 aspect-square p-1 bg-gray-900 rounded">
-        <ShieldIcon class="h-full w-full" />
+      <div class="h-10 aspect-square p-2 bg-gray-900 rounded">
+        <MedalIcon class="h-full w-full" />
       </div>
 
       <Progress value={healthPercentage} colour="red" />
 
-      <div class="h-10 aspect-square p-1 bg-gray-900 rounded">
+      <div class="h-10 w-16 bg-gray-900 flex items-center justify-center p-2 rounded text-sm font-light">
+        {$health}/10
+      </div>
+
+      <div class="h-10 aspect-square p-2 bg-gray-900 rounded">
         <SettingsIcon class="h-full w-full" />
       </div>
     </div>
