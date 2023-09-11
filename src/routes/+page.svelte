@@ -2,13 +2,14 @@
   import NavButton from "../components/nav-button.svelte";
 
   import { AwardIcon, GlobeIcon, SettingsIcon, ShareIcon, ShieldIcon } from "lucide-svelte";
+  import { VERSION } from "$lib/game.js";
 </script>
 
 <main class="w-full h-full grid grid-rows-[auto_100px] overflow-hidden">
   <div class="flex flex-col gap-16 items-center justify-center">
     <div class="flex flex-col items-end w-fit">
       <h1 class="text-9xl font-black">TapZ</h1>
-      <span>v1.0.0 alpha 1</span>
+      <span>{VERSION}</span>
     </div>
 
     <a href="/game" class="bg-green-700 px-12 py-3 rounded-sm font-black">Play</a>

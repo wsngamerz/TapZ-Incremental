@@ -1,47 +1,51 @@
 <script lang="ts">
   import Progress from "../../components/ui/progress.svelte";
   import { SettingsIcon, MedalIcon, ShieldIcon, CrossIcon, BrainIcon, CoinsIcon } from "lucide-svelte";
-  import { attack, brains, experience, health, level, maxExperience, maxHealth, money } from "$lib/store";
+  import { gameModel, updateGameModel } from "$lib/store";
+  import { startGame } from "$lib/game";
 
-  $: healthPercentage = $health / $maxHealth * 100;
-  $: experiencePercentage = $experience / $maxExperience * 100 ;
+  startGame();
+
+  $: healthPercentage = $gameModel.saveData.health / $gameModel.saveData.maxHealth * 100;
+  $: experiencePercentage = $gameModel.saveData.experience / $gameModel.saveData.maxExperience * 100 ;
 
   // perform number formatting
-  $: healthContent = `${$health}/${$maxHealth} hp`;
-  $: experienceContent = `${$experience} xp`;
-  $: levelContent = `${$level}`;
-  $: brainsContent = `${$brains}`;
-  $: moneyContent = `${$money}`;
+  $: healthContent = `${$gameModel.saveData.health}/${$gameModel.saveData.maxHealth} hp`;
+  $: experienceContent = `${$gameModel.saveData.experience} xp`;
+  $: levelContent = `${$gameModel.saveData.level}`;
+  $: brainsContent = `${$gameModel.saveData.brains}`;
+  $: moneyContent = `${$gameModel.saveData.money}`;
 
+  let zombie: HTMLElement;
   let damageIndicators: HTMLElement;
 
+  $: {
+    if (zombie) {
+      if ($gameModel.saveData.health <= 0) {
+        zombie.classList.add("dead");
+      } else {
+        zombie.classList.remove("dead");
+      }
+    }
+  }
+
   const clickHandler = (event: MouseEvent) => {
-    damageIndicator(event.clientX, event.clientY);
+    const damage = $gameModel.attack();
+    if (damage > 0) damageIndicator(event.clientX, event.clientY, damage);
 
-    health.update((n: number) => n - $attack);
-
-    if ($health === 0) {
-      health.set($maxHealth);
-
-      brains.update((n: number) => n + 1);
-      experience.update((n: number) => n + 1);
+    if ($gameModel.saveData.experience === $gameModel.saveData.maxExperience) {
+      $gameModel.levelUp();
     }
 
-    if ($experience === $maxExperience) {
-      experience.set(0);
-      maxExperience.update((n: number) => n + 1);
-      level.update((n: number) => n + 1);
-    }
+    updateGameModel();
   };
 
-  const damageIndicator = (x: number, y: number) => {
-    console.log(x,y)
-
+  const damageIndicator = (x: number, y: number, damage:  number) => {
     const indicator = document.createElement("div");
     indicator.classList.add("damage-indicator");
     indicator.style.setProperty("--x", `${x}px`);
     indicator.style.setProperty("--y", `${y}px`);
-    indicator.innerText = `-${$attack}`;
+    indicator.innerText = `-${damage}`;
     damageIndicators.appendChild(indicator);
 
     setTimeout(() => {
@@ -78,7 +82,7 @@
 
     <div class="transition duration-200 hover:ease-out ease-in hover:scale-110"
          on:click={clickHandler}>
-      <div class="zombie"/>
+      <div bind:this={zombie} class="zombie"/>
     </div>
   </main>
 

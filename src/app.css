@@ -12,15 +12,9 @@ html, body {
     to { background-position: -2048px; }
 }
 
-.zombie {
-    width: 512px;
-    height: 512px;
-    background: url("/zombie_sprites.png");
-    background-size: cover;
-    animation: zombie-sprite 2s steps(4) infinite;
-
-    @apply transition-transform duration-200 ease-in-out;
-    @apply scale-50 md:scale-[.65] lg:scale-90;
+@keyframes zombie-dead {
+    from { transform: translate(0, 0) rotate(0deg) scale(1); }
+    to { transform: translate(20vw, 120vh) rotate(90deg) scale(0.25); }
 }
 
 @keyframes damage-indicator {
@@ -33,6 +27,24 @@ html, body {
         transform: translate(10vw, -25vh) scale(0.25);
         opacity: 0;
     }
+}
+
+.zombie {
+    width: 512px;
+    height: 512px;
+    background: url("/zombie_sprites.png");
+    background-size: cover;
+    animation: zombie-sprite 2s steps(4) infinite;
+
+    @apply transition-transform duration-200 ease-in-out;
+    @apply scale-50 md:scale-[.65] lg:scale-90;
+}
+
+.zombie.dead {
+    @apply grayscale transition-all duration-100;
+    animation: zombie-dead .75s ease-in-out;
+    animation-iteration-count: 1;
+    background-position: -2048px;
 }
 
 .damage-indicator {
