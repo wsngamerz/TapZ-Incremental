@@ -25,23 +25,28 @@ html, body {
 
 @keyframes damage-indicator {
     from {
-        left: 50%;
-        top: 50%;
+        transform: translate(0, 0) scale(1);
         opacity: 1;
     }
 
-    to{
-        left: 200%;
-        top: -100%;
+    to {
+        transform: translate(10vw, -25vh) scale(0.25);
         opacity: 0;
     }
 }
 
 .damage-indicator {
-    @apply text-red-600;
-    @apply block absolute select-none font-bold text-4xl;
+    @apply text-gray-100;
+    @apply block fixed select-none font-bold text-4xl;
     @apply transition-all duration-500 ease-in-out;
 
-    transform: translate(var(--random), var(--random));
-    animation: damage-indicator 1.5s linear;
+    filter: drop-shadow(-0.5px 0      0 black)
+            drop-shadow(.5px   0      0 black)
+            drop-shadow(0      -0.5px 0 black)
+            drop-shadow(0      .5px   0 black);
+
+    top: var(--y);
+    left: var(--x);
+
+    animation: damage-indicator 1s linear;
 }

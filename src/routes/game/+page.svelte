@@ -13,10 +13,10 @@
   $: brainsContent = `${$brains}`;
   $: moneyContent = `${$money}`;
 
-  let zombie;
+  let damageIndicators: HTMLElement;
 
-  const clickHandler = () => {
-    damageIndicator();
+  const clickHandler = (event: MouseEvent) => {
+    damageIndicator(event.clientX, event.clientY);
 
     health.update((n: number) => n - $attack);
 
@@ -34,12 +34,15 @@
     }
   };
 
-  const damageIndicator = () => {
+  const damageIndicator = (x: number, y: number) => {
+    console.log(x,y)
+
     const indicator = document.createElement("div");
     indicator.classList.add("damage-indicator");
-    indicator.style.setProperty("--random", `${Math.round(Math.random() * 200) - 100}%`);
+    indicator.style.setProperty("--x", `${x}px`);
+    indicator.style.setProperty("--y", `${y}px`);
     indicator.innerText = `-${$attack}`;
-    zombie.appendChild(indicator);
+    damageIndicators.appendChild(indicator);
 
     setTimeout(() => {
       indicator.remove();
@@ -71,11 +74,13 @@
     </div>
   </header>
 
-  <main class="flex-grow flex items-center justify-center">
+  <main class="flex-grow flex items-center justify-center overflow-hidden">
 
     <div class="transition duration-200 hover:ease-out ease-in hover:scale-110"
          on:click={clickHandler}>
-      <div bind:this={zombie} class="zombie"/>
+      <div class="zombie"/>
     </div>
   </main>
+
+  <div class="indicators" bind:this={damageIndicators}></div>
 </div>
