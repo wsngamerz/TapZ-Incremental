@@ -12,6 +12,9 @@
 
   import ShopScreen from "./slideout-pages/shop.svelte"
   import SettingsScreen from "./slideout-pages/settings.svelte"
+  import StatsScreen from "./slideout-pages/stats.svelte"
+  import AchievementsScreen from "./slideout-pages/achievements.svelte"
+  import LeaderboardsScreen from "./slideout-pages/leaderboards.svelte"
 
   enum Tabs {
     Shop,
@@ -70,11 +73,11 @@
       {#if activeTab === Tabs.Shop}
         <ShopScreen />
       {:else if activeTab === Tabs.Achievements}
-        <span>Achievements</span>
+        <AchievementsScreen />
       {:else if activeTab === Tabs.Leaderboards}
-        <span>Leaderboards</span>
+        <LeaderboardsScreen />
       {:else if activeTab === Tabs.Stats}
-        <span>Stats</span>
+        <StatsScreen />
       {:else if activeTab === Tabs.Settings}
         <SettingsScreen />
       {/if}
