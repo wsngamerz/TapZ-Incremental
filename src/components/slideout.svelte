@@ -61,11 +61,7 @@
                  icon={SettingsIcon} />
 
       <button on:click={toggleSlideout} class="bg-gray-700 rounded rounded-b-none px-2 py-1">
-        {#if slideoutOpen}
-          <ChevronDownIcon class="text-gray-300"/>
-        {:else}
-          <ChevronUpIcon class="text-gray-300"/>
-        {/if}
+        <ChevronDownIcon class={`text-gray-300 transition-transform duration-200 ease-in-out ${slideoutOpen && "rotate-180"}`}/>
       </button>
     </div>
 
