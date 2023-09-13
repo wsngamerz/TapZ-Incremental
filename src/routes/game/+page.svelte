@@ -11,7 +11,10 @@
 
   const clickHandler = (event: MouseEvent) => {
     const damage = $gameModel.attack();
-    if (damage > 0) damageIndicator(event.clientX, event.clientY, damage);
+    if (damage > 0) {
+      $gameModel.click();
+      damageIndicator(event.clientX, event.clientY, damage);
+    }
     updateGameModel();
   };
 

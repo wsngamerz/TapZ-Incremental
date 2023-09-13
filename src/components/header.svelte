@@ -3,15 +3,15 @@
   import Progress from "./ui/progress.svelte";
   import { gameModel } from "$lib/store.js";
 
-  $: healthPercentage = $gameModel.saveData.health / $gameModel.saveData.maxHealth * 100;
+  $: healthPercentage = $gameModel.saveData.zombie.health / $gameModel.saveData.zombie.maxHealth * 100;
   $: experiencePercentage = $gameModel.saveData.experience / $gameModel.saveData.maxExperience * 100;
 
   // perform number formatting
-  $: healthContent = `${$gameModel.saveData.health}/${$gameModel.saveData.maxHealth} hp`;
+  $: healthContent = `${$gameModel.saveData.zombie.health}/${$gameModel.saveData.zombie.maxHealth} hp`;
   $: experienceContent = `${$gameModel.saveData.experience} xp`;
   $: levelContent = `${$gameModel.saveData.level}`;
-  $: brainsContent = `${$gameModel.saveData.brains}`;
-  $: moneyContent = `${$gameModel.saveData.money}`;
+  $: brainsContent = `${$gameModel.saveData.resources.brains}`;
+  $: moneyContent = `${$gameModel.saveData.resources.money}`;
 </script>
 
 <header class="block w-full space-y-2 p-1.5 max-w-4xl mx-auto">

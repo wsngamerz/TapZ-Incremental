@@ -44,7 +44,7 @@ function tick() {
 	// console.log(deltaT);
 
 	// respawn enemies
-	if (lastKillTicks == null && gameModelInstance.saveData.health <= 0) {
+	if (lastKillTicks == null && gameModelInstance.saveData.zombie.health <= 0) {
 		lastKillTicks = 0;
 	} else if (lastKillTicks !== null && lastKillTicks >= respawnCooldownTicks) {
 		lastKillTicks = null;

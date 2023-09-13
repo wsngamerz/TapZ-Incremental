@@ -1,12 +1,26 @@
 import { writable } from 'svelte/store';
 import { load } from '$lib/save';
 
-export class SaveData {
+class Resources {
 	public money: number = 0;
 	public brains: number = 0;
+}
 
+class Zombie {
 	public health: number = 10;
 	public maxHealth: number = 10;
+}
+
+class Stats {
+	public clicks: number = 0;
+	public damageDealt: number = 0;
+	public kills: number = 0;
+}
+
+export class SaveData {
+	public resources: Resources = new Resources();
+	public zombie: Zombie = new Zombie();
+	public stats: Stats = new Stats();
 
 	public attack: number = 1;
 	// TODO: Add generators and upgrades
@@ -25,13 +39,18 @@ export class GameModel {
 		this.saveData = load();
 	}
 
+	public click() {
+		this.saveData.stats.clicks += 1;
+	}
+
 	public attack(): number {
-		if (this.saveData.health <= 0) return 0;
+		if (this.saveData.zombie.health <= 0) return 0;
 
-		this.saveData.health -= this.saveData.attack;
+		this.saveData.zombie.health -= this.saveData.attack;
+		this.saveData.stats.damageDealt += this.saveData.attack;
 
-		if (this.saveData.health <= 0) {
-			this.saveData.health = 0;
+		if (this.saveData.zombie.health <= 0) {
+			this.saveData.zombie.health = 0;
 			this.onKill();
 		}
 
@@ -39,12 +58,13 @@ export class GameModel {
 	}
 
 	public respawn() {
-		this.saveData.health = this.saveData.maxHealth;
+		this.saveData.zombie.health = this.saveData.zombie.maxHealth;
 	}
 
 	public onKill() {
-		this.saveData.brains += 1;
+		this.saveData.resources.brains += 1;
 		this.saveData.experience += 1;
+		this.saveData.stats.kills += 1;
 	}
 
 	public levelUp() {
