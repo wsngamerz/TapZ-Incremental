@@ -1,6 +1,7 @@
 <script lang="ts">
   import { gameModel, updateGameModel } from "$lib/store";
   import { startGame } from "$lib/game";
+  import Slideout from "../../components/slideout.svelte";
   import Header from "../../components/header.svelte";
   import Zombie from "../../components/zombie.svelte";
 
@@ -32,6 +33,8 @@
   <main class="flex-grow flex items-center justify-center overflow-hidden">
     <Zombie on:click={clickHandler} />
   </main>
+
+  <Slideout />
 
   <div class="indicators" bind:this={damageIndicators}></div>
 </div>
