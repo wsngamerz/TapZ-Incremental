@@ -10,6 +10,9 @@
   } from "lucide-svelte";
   import TabButton from "./tab-button.svelte";
 
+  import ShopScreen from "./slideout-pages/shop.svelte"
+  import SettingsScreen from "./slideout-pages/settings.svelte"
+
   enum Tabs {
     Shop,
     Achievements,
@@ -65,7 +68,7 @@
 
     <div class="bg-gray-700 p-2 h-96">
       {#if activeTab === Tabs.Shop}
-        <span>Shop</span>
+        <ShopScreen />
       {:else if activeTab === Tabs.Achievements}
         <span>Achievements</span>
       {:else if activeTab === Tabs.Leaderboards}
@@ -73,7 +76,7 @@
       {:else if activeTab === Tabs.Stats}
         <span>Stats</span>
       {:else if activeTab === Tabs.Settings}
-        <span>Settings</span>
+        <SettingsScreen />
       {/if}
     </div>
   </div>
