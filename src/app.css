@@ -61,7 +61,7 @@ html, body {
     top: var(--y);
     left: var(--x);
 
-    animation: damage-indicator 1s linear;
+    animation: damage-indicator 1.1s linear;
 }
 
 .slideout {

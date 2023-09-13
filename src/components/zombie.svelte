@@ -12,7 +12,7 @@
 
   $: {
     if (zombie) {
-      if ($gameModel.saveData.health <= 0) {
+      if ($gameModel.saveData.zombie.health <= 0) {
         zombie.classList.add("dead");
         zombie.classList.remove(...hueClasses);
       } else {
