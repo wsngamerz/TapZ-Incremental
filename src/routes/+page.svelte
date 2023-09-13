@@ -15,7 +15,7 @@
     <a href="/game" class="bg-green-700 px-12 py-3 rounded-sm font-black">Play</a>
   </div>
 
-  <nav class="bg-gray-900 flex gap-2 p-2 justify-center overflow-x-scroll">
+  <nav class="bg-gray-900 flex gap-2 p-2 justify-center overflow-x-auto">
     <NavButton icon="{ShareIcon}" href="/share" text="Share" />
     <NavButton icon="{AwardIcon}" href="/medals" text="Medals" />
     <NavButton icon="{ShieldIcon}" href="/ranking" text="Ranking" />

@@ -15,10 +15,13 @@ let lastTick = Date.now();
 let lastAutosave = Date.now();
 let lastKillTicks: number | null = null;
 
-let gameLoopInterval;
-
 export function startGame() {
-	gameLoopInterval = setInterval(tick, tickInterval);
+	console.log('game started');
+
+	// @ts-ignore
+	if (window.gameLoopInterval) clearInterval(window.gameLoopInterval);
+	// @ts-ignore
+	window.gameLoopInterval = setInterval(tick, tickInterval);
 }
 
 function tick() {
@@ -36,7 +39,9 @@ function tick() {
 	lastTick = currentTime;
 
 	// update all generators using deltaT
+	// gameModelInstance.clickers.forEach((clicker) => clicker.update(deltaT)); etc...
 	// gameModelInstance.generators.forEach((generator) => generator.update(deltaT)); etc....
+	// console.log(deltaT);
 
 	// respawn enemies
 	if (lastKillTicks == null && gameModelInstance.saveData.health <= 0) {
@@ -46,6 +51,11 @@ function tick() {
 		gameModelInstance.respawn();
 	} else if (lastKillTicks !== null) {
 		lastKillTicks++;
+	}
+
+	// update experience and level up if necessary
+	if (gameModelInstance.saveData.experience === gameModelInstance.saveData.maxExperience) {
+		gameModelInstance.levelUp();
 	}
 
 	updateGameModel();

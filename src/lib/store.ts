@@ -48,6 +48,7 @@ export class GameModel {
 	}
 
 	public levelUp() {
+		console.log('level up');
 		this.saveData.experience = 0;
 		this.saveData.maxExperience += 1;
 		this.saveData.level += 1;
