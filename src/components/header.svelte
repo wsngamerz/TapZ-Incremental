@@ -16,8 +16,7 @@
 
 <header class="block w-full space-y-2 p-1.5 max-w-4xl mx-auto">
   <div class="flex gap-2">
-    <Progress iconText={levelContent} icon={ShieldIcon} content={experienceContent} value={experiencePercentage}
-              colour="blue" />
+    <Progress iconText={levelContent} icon={ShieldIcon} content={experienceContent} value={experiencePercentage} colour="blue" />
     <Progress icon={BrainIcon} content={brainsContent} colour="green" />
     <Progress icon={CoinsIcon} content={moneyContent} colour="yellow" />
   </div>

@@ -4,8 +4,7 @@
   import Slideout from "../../components/slideout.svelte";
   import Header from "../../components/header.svelte";
   import Zombie from "../../components/zombie.svelte";
-
-  startGame();
+  import { onMount } from "svelte";
 
   let damageIndicators: HTMLElement;
 
@@ -28,6 +27,10 @@
 
     setTimeout(() => indicator.remove(), 1_000);
   };
+
+  onMount(() => {
+    startGame();
+  });
 </script>
 
 <div class="flex flex-col w-full h-full">
