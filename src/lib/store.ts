@@ -73,6 +73,11 @@ export class GameModel {
 		this.saveData.maxExperience += 1;
 		this.saveData.level += 1;
 	}
+
+	public sellBrains() {
+		this.saveData.resources.money += this.saveData.resources.brains * 5;
+		this.saveData.resources.brains = 0;
+	}
 }
 
 export const gameModel = writable(new GameModel());
