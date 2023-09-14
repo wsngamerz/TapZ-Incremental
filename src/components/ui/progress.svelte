@@ -6,6 +6,7 @@
   export let icon: ComponentType | undefined = undefined;
   export let content: string | undefined = undefined;
   export let iconText: string | undefined = undefined;
+  export let type: "light" | undefined = undefined;
 
 
   const variants = {
@@ -16,7 +17,7 @@
   };
 </script>
 
-<div class="flex gap-1 w-full bg-gray-900 rounded h-14 p-1">
+<div class={`flex gap-1 w-full bg-gray-900 rounded h-14 p-1 ${type === "light" && "h-3 p-1"}`}>
   {#if icon}
     <div class="relative h-full rounded aspect-square {variants[colour]} flex items-center justify-center">
       <svelte:component this="{icon}" class="text-white w-8 h-8" />

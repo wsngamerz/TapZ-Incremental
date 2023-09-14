@@ -33,14 +33,14 @@
   });
 </script>
 
-<div class="flex flex-col w-full h-full">
-  <Header />
+<div class="relative flex flex-col w-full h-full max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto">
+    <Header />
 
-  <main class="flex-grow flex items-center justify-center overflow-hidden">
-    <Zombie on:click={clickHandler} />
-  </main>
+    <main class="flex-grow flex items-center justify-center overflow-hidden">
+      <Zombie on:click={clickHandler} />
+    </main>
 
-  <Slideout />
+    <Slideout />
 
-  <div class="indicators" bind:this={damageIndicators}></div>
+    <div class="indicators" bind:this={damageIndicators}></div>
 </div>

@@ -41,7 +41,7 @@
 </script>
 
 <div bind:this={slideoutElement} class="slideout">
-  <div class="block w-full max-w-4xl mx-auto">
+  <div class="block w-full">
     <div class="flex items-end w-full gap-1">
       <TabButton on:click={() => setActiveTab(Tabs.Shop)}
                  active={activeTab === Tabs.Shop}
