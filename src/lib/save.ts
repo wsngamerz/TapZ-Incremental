@@ -1,4 +1,4 @@
-import { SaveData } from '$lib/store';
+import { SaveData } from './savedata';
 
 const saveDataKey = 'tapz-saveData';
 

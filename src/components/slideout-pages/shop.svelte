@@ -14,6 +14,7 @@
   import Button from "../ui/button.svelte";
   import Layout from "./layout.svelte";
   import ShopItem from "../shop-item.svelte";
+  import { DPS_UPGRADES } from "$lib/data";
 
   const handleSellAll = () => {
     $gameModel.sellBrains();
@@ -52,20 +53,21 @@
   </div>
 
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-    {#if currentDisplay === "all" || currentDisplay === "dpc"}
-      <ShopItem icon="{GrabIcon}" name="Fists" extra="+1 dmg" type="DPC" />
-      <ShopItem icon="{UtensilsIcon}" name="Kitchen Set" extra="+3 dmg" type="DPC" />
-      <ShopItem icon="{SwordIcon}" name="Spicy Sword" extra="+7 dmg" type="DPC" />
-    {/if}
+    <!--{#if currentDisplay === "all" || currentDisplay === "dpc"}-->
+    <!--  <ShopItem icon="{GrabIcon}" name="Fists" extra="+1 dmg" type="DPC" />-->
+    <!--  <ShopItem icon="{UtensilsIcon}" name="Kitchen Set" extra="+3 dmg" type="DPC" />-->
+    <!--  <ShopItem icon="{SwordIcon}" name="Spicy Sword" extra="+7 dmg" type="DPC" />-->
+    <!--{/if}-->
 
     {#if currentDisplay === "all" || currentDisplay === "dps"}
-      <ShopItem icon="{SwordsIcon}" name="Militia" extra="+2 dmg/s" type="DPS" />
-      <ShopItem icon="{CurrencyIcon}" name="Turret" extra="+5 dmg/s" type="DPS" />
+      {#each DPS_UPGRADES as upgrade}
+        <ShopItem id="{upgrade.id}" type="DPS" />
+      {/each}
     {/if}
 
-    {#if currentDisplay === "all" || currentDisplay === "multi"}
-      <ShopItem icon="{BrainCircuitIcon}" name="Enhanced Brains" extra="+50% brain value" type="Multi" />
-      <ShopItem icon="{FlaskConicalIcon}" name="Scientific Extraction" extra="+1 brain/kill" type="Multi" />
-    {/if}
+    <!--{#if currentDisplay === "all" || currentDisplay === "multi"}-->
+    <!--  <ShopItem icon="{BrainCircuitIcon}" name="Enhanced Brains" extra="+50% brain value" type="Multi" />-->
+    <!--  <ShopItem icon="{FlaskConicalIcon}" name="Scientific Extraction" extra="+1 brain/kill" type="Multi" />-->
+    <!--{/if}-->
   </div>
 </Layout>

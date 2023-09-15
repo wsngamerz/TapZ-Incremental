@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import NavButton from "../components/nav-button.svelte";
 
   import { AwardIcon, GlobeIcon, SettingsIcon, ShareIcon, ShieldIcon } from "lucide-svelte";
-  import { VERSION } from "$lib/game";
+  import { VERSION } from "$lib/data";
 </script>
 
 <main class="w-full h-full grid grid-rows-[auto_100px] overflow-hidden">

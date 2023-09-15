@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+  import { gameModel } from "$lib/store";
+
   import Button from "../ui/button.svelte";
   import Layout from "./layout.svelte"
 
@@ -6,11 +8,18 @@
     localStorage.clear();
     location.reload();
   };
+
+  const saveGame = () => {
+    $gameModel.saveGameData();
+  };
 </script>
 
 
 <Layout>
   <span slot="title">Settings</span>
 
-  <Button on:click={resetData}>Reset data</Button>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+    <Button on:click={saveGame}>Save</Button>
+    <Button on:click={resetData}>Reset data</Button>
+  </div>
 </Layout>

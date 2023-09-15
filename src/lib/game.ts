@@ -1,56 +1,59 @@
-import type { GameModel } from '$lib/store';
+import type { GameModel } from '$lib/savedata';
+
 import { gameModel, updateGameModel } from '$lib/store';
-import { save } from '$lib/save';
+import {
+	AUTOSAVE_INTERVAL,
+	DPS_UPGRADES,
+	RESPAWN_COOLDOWN,
+	TICK_INTERVAL,
+	VERSION
+} from '$lib/data';
 
 let gameModelInstance: GameModel;
 gameModel.subscribe((m) => (gameModelInstance = m));
 
-export const VERSION = 'v1.0.0 ALPHA 2';
-
-const tickInterval = 1000 / 5;
-const autosaveInterval = 1000 * 60;
-const respawnCooldownTicks = 2;
-
 let lastTick = Date.now();
 let lastAutosave = Date.now();
-let lastKillTicks: number | null = null;
+let lastKill: number | null = null;
 
 export function startGame() {
 	console.log('game started');
+	console.log('tick interval', TICK_INTERVAL);
+	console.log('autosave interval', AUTOSAVE_INTERVAL);
+	console.log('version', VERSION);
 
-	// @ts-ignore
-	if (window.gameLoopInterval) clearInterval(window.gameLoopInterval);
-	// @ts-ignore
-	window.gameLoopInterval = setInterval(tick, tickInterval);
+	// register upgrades
+	DPS_UPGRADES.forEach((upgrade) => gameModelInstance.registerDpsUpgrade(upgrade));
+
+	(function loop() {
+		tick();
+		setTimeout(loop, TICK_INTERVAL);
+	})();
 }
 
 function tick() {
 	console.log('tick');
 	const currentTime = Date.now();
 
-	if (currentTime - lastAutosave >= autosaveInterval) {
+	if (currentTime - lastAutosave >= AUTOSAVE_INTERVAL) {
 		lastAutosave = currentTime;
 
 		console.log('autosave');
-		save(gameModelInstance.saveData);
+		gameModelInstance.saveGameData();
 	}
 
 	let deltaT = Math.max(Math.min((currentTime - lastTick) / 1000, 1), 0);
 	lastTick = currentTime;
 
-	// update all generators using deltaT
-	// gameModelInstance.clickers.forEach((clicker) => clicker.update(deltaT)); etc...
-	// gameModelInstance.generators.forEach((generator) => generator.update(deltaT)); etc....
-	// console.log(deltaT);
+	// update all generators / dps using deltaT
+	DPS_UPGRADES.forEach((upgrade) => upgrade.update(deltaT));
 
 	// respawn enemies
-	if (lastKillTicks == null && gameModelInstance.saveData.zombie.health <= 0) {
-		lastKillTicks = 0;
-	} else if (lastKillTicks !== null && lastKillTicks >= respawnCooldownTicks) {
-		lastKillTicks = null;
+	if (lastKill == null && gameModelInstance.saveData.zombie.health <= 0) {
+		lastKill = Date.now();
+	} else if (lastKill !== null && currentTime - lastKill >= RESPAWN_COOLDOWN) {
+		lastKill = null;
 		gameModelInstance.respawn();
-	} else if (lastKillTicks !== null) {
-		lastKillTicks++;
 	}
 
 	// update experience and level up if necessary
