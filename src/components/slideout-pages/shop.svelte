@@ -1,14 +1,4 @@
 <script lang="ts">
-  import {
-    BrainCircuitIcon,
-    CurrencyIcon,
-    FlaskConicalIcon,
-    GrabIcon,
-    SwordIcon,
-    SwordsIcon,
-    UtensilsIcon
-  } from "lucide-svelte";
-
   import { gameModel } from "$lib/store.js";
 
   import Button from "../ui/button.svelte";
