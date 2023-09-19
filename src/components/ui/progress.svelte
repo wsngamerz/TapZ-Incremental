@@ -17,12 +17,12 @@
   };
 </script>
 
-<div class={`flex gap-1 w-full bg-gray-900 rounded h-14 p-1 ${type === "light" && "h-3 p-1"}`}>
+<div class={`flex gap-1 w-full bg-gray-900 rounded h-12 p-1 ${type === "light" && "h-3 p-1"}`}>
   {#if icon}
     <div class="relative h-full rounded aspect-square {variants[colour]} flex items-center justify-center">
       <svelte:component this="{icon}" class="text-white w-8 h-8" />
       {#if iconText}
-        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">{iconText}</span>
+        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm">{iconText}</span>
       {/if}
     </div>
   {/if}
