@@ -115,17 +115,23 @@ export class GameModel {
 		this.saveData.maxExperience += 1;
 		this.saveData.level += 1;
 		this.saveData.zombie.maxHealth = Math.floor(10 + Math.pow(this.saveData.level, 1.5));
+
+		this.saveGameData();
 	}
 
 	public sellBrains() {
 		this.saveData.resources.money += this.saveData.resources.brains * 5;
 		this.saveData.resources.brains = 0;
+
+		this.saveGameData();
 	}
 
 	public spendMoney(amount: number): boolean {
 		if (this.saveData.resources.money < amount) return false;
 
 		this.saveData.resources.money -= amount;
+		this.saveGameData();
+
 		return true;
 	}
 
