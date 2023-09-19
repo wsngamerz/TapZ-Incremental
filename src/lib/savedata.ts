@@ -1,6 +1,8 @@
+import type { Upgrade } from '$lib/upgrade';
 import type { DpsUpgrade } from '$lib/upgrade';
 
 import { load, save } from '$lib/save';
+import { UpgradeType } from '$lib/enums';
 
 class Resources {
 	public money: number = 0;
@@ -42,14 +44,14 @@ export class SaveData {
 export class GameModel {
 	public saveData: SaveData;
 
-	public dpsUpgrades: DpsUpgrade[] = [];
+	public upgrades: Upgrade[] = [];
 
 	constructor() {
 		this.saveData = load();
 	}
 
-	public registerDpsUpgrade(upgrade: DpsUpgrade) {
-		this.dpsUpgrades.push(upgrade);
+	public registerUpgrade(upgrade: Upgrade) {
+		this.upgrades.push(upgrade);
 	}
 
 	public getDpc(): number {
@@ -57,7 +59,15 @@ export class GameModel {
 	}
 
 	public getDps(): number {
-		return this.dpsUpgrades.map((upgrade) => upgrade.getTotalDps()).reduce((a, b) => a + b, 0);
+		return this.upgrades
+			.map((upgrade) => {
+				if (upgrade.type === UpgradeType.DPS) {
+					return (upgrade as DpsUpgrade).getTotalDps();
+				}
+
+				return 0;
+			})
+			.reduce((a, b) => a + b, 0);
 	}
 
 	public click() {

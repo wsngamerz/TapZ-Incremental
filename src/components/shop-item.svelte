@@ -1,31 +1,22 @@
 <script lang="ts">
   import Button from "./ui/button.svelte";
-  import { DPS_UPGRADES } from "$lib/data";
+  import { UPGRADES } from "$lib/data";
   import { gameModel } from "$lib/store";
+  import { UpgradeType } from "$lib/enums";
 
   export let id: string;
-  export let type: "DPC" | "DPS" | "Multi";
+
+  let upgrade = UPGRADES.find(u => u.id === id);
+  let type = UpgradeType[upgrade?.type];
+  let name = upgrade?.name || "Unknown";
+  let extra = upgrade?.description || "Unknown";
+  let icon = upgrade?.icon || null;
 
   let badgeVariant = {
     DPC: "bg-red-700",
     DPS: "bg-blue-700",
-    Multi: "bg-green-700"
+    MULTI: "bg-green-700"
   }[type];
-
-  let upgrade: Upgrade | undefined;
-  switch (type) {
-    case "DPS":
-      upgrade = DPS_UPGRADES.find(u => u.id === id);
-      break;
-
-    default:
-      upgrade = null;
-      break;
-  }
-
-  let name = upgrade?.name || "Unknown"
-  let extra = upgrade?.description || "Unknown";
-  let icon = upgrade?.icon || null;
 
   $: canAfford = $gameModel.saveData.resources.money >= cost;
   $: level = $gameModel.saveData.upgrades[id].level || 0;
@@ -37,7 +28,7 @@
     }
 
     cost = upgrade?.getCost() || 0;
-  }
+  };
 </script>
 
 <div class="rounded flex gap-2 bg-gray-800 p-2">

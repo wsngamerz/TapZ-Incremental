@@ -1,13 +1,8 @@
 import type { GameModel } from '$lib/savedata';
 
 import { gameModel, updateGameModel } from '$lib/store';
-import {
-	AUTOSAVE_INTERVAL,
-	DPS_UPGRADES,
-	RESPAWN_COOLDOWN,
-	TICK_INTERVAL,
-	VERSION
-} from '$lib/data';
+import { AUTOSAVE_INTERVAL, UPGRADES, RESPAWN_COOLDOWN, TICK_INTERVAL, VERSION } from '$lib/data';
+import { DpsUpgrade } from '$lib/upgrade';
 
 let gameModelInstance: GameModel;
 gameModel.subscribe((m) => (gameModelInstance = m));
@@ -23,7 +18,7 @@ export function startGame() {
 	console.log('version', VERSION);
 
 	// register upgrades
-	DPS_UPGRADES.forEach((upgrade) => gameModelInstance.registerDpsUpgrade(upgrade));
+	UPGRADES.forEach((upgrade) => gameModelInstance.registerUpgrade(upgrade));
 
 	(function loop() {
 		tick();
@@ -46,7 +41,11 @@ function tick() {
 	lastTick = currentTime;
 
 	// update all generators / dps using deltaT
-	DPS_UPGRADES.forEach((upgrade) => upgrade.update(deltaT));
+	UPGRADES.forEach((upgrade) => {
+		if (upgrade instanceof DpsUpgrade) {
+			upgrade.update(deltaT);
+		}
+	});
 
 	// respawn enemies
 	if (lastKill == null && gameModelInstance.saveData.zombie.health <= 0) {

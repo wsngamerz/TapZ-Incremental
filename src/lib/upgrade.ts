@@ -1,20 +1,23 @@
 import { gameModel, updateGameModel } from '$lib/store';
 import type { GameModel } from '$lib/savedata';
+import { UpgradeType } from '$lib/enums';
 
 let gameModelInstance: GameModel;
 gameModel.subscribe((m) => (gameModelInstance = m));
 
-abstract class Upgrade {
+export abstract class Upgrade {
 	public id: string;
 	public name: string;
 	public icon: any;
 	public description: string;
 	public cost: number;
 	public costMultiplier: number;
+	public type: UpgradeType;
 
 	protected constructor(
 		id: string,
 		name: string,
+		type: UpgradeType,
 		icon: any,
 		description: string,
 		cost: number,
@@ -22,6 +25,7 @@ abstract class Upgrade {
 	) {
 		this.id = id;
 		this.name = name;
+		this.type = type;
 		this.icon = icon;
 		this.description = description;
 		this.cost = cost;
@@ -71,7 +75,7 @@ export class DpsUpgrade extends Upgrade {
 		costMultiplier: number,
 		dps: number
 	) {
-		super(id, name, icon, description, cost, costMultiplier);
+		super(id, name, UpgradeType.DPS, icon, description, cost, costMultiplier);
 		this.dps = dps;
 	}
 
