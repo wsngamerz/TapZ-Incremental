@@ -17,6 +17,7 @@
   let currentDisplay = "all";
   let supportedDisplays = ["all", "dpc", "dps", "multi"];
 
+  let dpcUpgrades = UPGRADES.filter(u => u.type === UpgradeType.DPC);
   let dpsUpgrades = UPGRADES.filter(u => u.type === UpgradeType.DPS);
 
   const handleBuyCountToggle = () => {
@@ -46,11 +47,11 @@
   </div>
 
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-    <!--{#if currentDisplay === "all" || currentDisplay === "dpc"}-->
-    <!--  <ShopItem icon="{GrabIcon}" name="Fists" extra="+1 dmg" type="DPC" />-->
-    <!--  <ShopItem icon="{UtensilsIcon}" name="Kitchen Set" extra="+3 dmg" type="DPC" />-->
-    <!--  <ShopItem icon="{SwordIcon}" name="Spicy Sword" extra="+7 dmg" type="DPC" />-->
-    <!--{/if}-->
+    {#if currentDisplay === "all" || currentDisplay === "dpc"}
+      {#each dpcUpgrades as upgrade}
+        <ShopItem id="{upgrade.id}" />
+      {/each}
+    {/if}
 
     {#if currentDisplay === "all" || currentDisplay === "dps"}
       {#each dpsUpgrades as upgrade}

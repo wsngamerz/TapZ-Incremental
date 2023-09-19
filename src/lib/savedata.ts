@@ -1,5 +1,4 @@
-import type { Upgrade } from '$lib/upgrade';
-import type { DpsUpgrade } from '$lib/upgrade';
+import type { DpcUpgrade, DpsUpgrade, Upgrade } from '$lib/upgrade';
 
 import { load, save } from '$lib/save';
 import { UpgradeType } from '$lib/enums';
@@ -31,7 +30,6 @@ export class SaveData {
 	public zombie: Zombie = new Zombie();
 	public stats: Stats = new Stats();
 
-	public attack: number = 1;
 	public upgrades: Record<string, UpgradeRecord> = {};
 
 	public level: number = 1;
@@ -55,7 +53,15 @@ export class GameModel {
 	}
 
 	public getDpc(): number {
-		return this.saveData.attack;
+		return this.upgrades
+			.map((upgrade) => {
+				if (upgrade.type === UpgradeType.DPC) {
+					return (upgrade as DpcUpgrade).getTotalDPC();
+				}
+
+				return 0;
+			})
+			.reduce((a, b) => a + b, 0);
 	}
 
 	public getDps(): number {
@@ -75,7 +81,7 @@ export class GameModel {
 	}
 
 	public attack(): number {
-		return this.damage(this.saveData.attack);
+		return this.damage(this.getDpc());
 	}
 
 	public damage(amount: number): number {
