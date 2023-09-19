@@ -10,7 +10,6 @@ gameModel.subscribe((m) => (gameModelInstance = m));
 
 let lastTick = Date.now();
 let lastAutosave = Date.now();
-let lastKill: number | null = null;
 
 export function startGame() {
 	console.log('game started');
@@ -61,11 +60,8 @@ function tick() {
 	});
 
 	// respawn enemies
-	if (lastKill == null && gameModelInstance.saveData.zombie.health <= 0) {
-		lastKill = Date.now();
-	} else if (lastKill !== null && currentTime - lastKill >= RESPAWN_COOLDOWN) {
-		lastKill = null;
-		gameModelInstance.respawn();
+	if (gameModelInstance.saveData.zombie.health <= 0) {
+		setTimeout(() => gameModelInstance.respawn(), RESPAWN_COOLDOWN);
 	}
 
 	// update experience and level up if necessary
