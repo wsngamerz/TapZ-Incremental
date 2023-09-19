@@ -65,7 +65,7 @@ function tick() {
 	}
 
 	// update experience and level up if necessary
-	if (gameModelInstance.saveData.experience === gameModelInstance.saveData.maxExperience) {
+	if (gameModelInstance.saveData.experience >= gameModelInstance.saveData.maxExperience) {
 		gameModelInstance.levelUp();
 	}
 
