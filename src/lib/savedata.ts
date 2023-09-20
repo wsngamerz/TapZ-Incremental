@@ -1,8 +1,10 @@
-import type { DpcUpgrade, DpsUpgrade, Upgrade } from '$lib/upgrade';
+import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
+import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
+import type { Upgrade } from '$lib/upgrades/upgrade';
 
 import { load, save } from '$lib/save';
-import { UpgradeType } from '$lib/enums';
 import { ZOMBIE_HEALTH } from '$lib/data';
+import { UpgradeType } from '$lib/upgrades/upgradeType';
 
 class Resources {
 	public money: number = 0;

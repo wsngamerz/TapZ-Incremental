@@ -4,7 +4,7 @@
   import Button from "../ui/button.svelte";
   import Layout from "./layout.svelte";
   import ShopItem from "../shop-item.svelte";
-  import { UpgradeType } from "$lib/enums";
+  import { UpgradeType } from "$lib/upgrades/upgradeType";
 
   const handleSellAll = () => {
     $gameModel.sellBrains();

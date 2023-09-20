@@ -1,9 +1,10 @@
+import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
 import type { GameModel } from '$lib/savedata';
 
 import { gameModel, updateGameModel } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, UPGRADES, VERSION } from '$lib/data';
-import { DpcUpgrade, DpsUpgrade } from '$lib/upgrade';
-import { UpgradeType } from '$lib/enums';
+import { UpgradeType } from '$lib/upgrades/upgradeType';
+import { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 
 let gameModelInstance: GameModel;
 gameModel.subscribe((m) => (gameModelInstance = m));

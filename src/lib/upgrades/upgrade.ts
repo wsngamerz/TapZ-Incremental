@@ -1,6 +1,6 @@
 import { updateGameModel } from '$lib/store';
 import type { GameModel } from '$lib/savedata';
-import { UpgradeType } from '$lib/enums';
+import type { UpgradeType } from '$lib/upgrades/upgradeType';
 
 export abstract class Upgrade {
 	public id: string;
@@ -64,63 +64,5 @@ export abstract class Upgrade {
 
 		updateGameModel();
 		return false;
-	}
-}
-
-export class DpcUpgrade extends Upgrade {
-	public dpc: number;
-
-	constructor(
-		id: string,
-		name: string,
-		icon: any,
-		description: string,
-		cost: number,
-		costMultiplier: number,
-		dpc: number
-	) {
-		super(id, name, UpgradeType.DPC, icon, description, cost, costMultiplier);
-		this.dpc = dpc;
-	}
-
-	public getTotalDPC(): number {
-		return this.getCount() * this.dpc;
-	}
-}
-
-export class DpsUpgrade extends Upgrade {
-	public dps: number;
-
-	private _internalCount: number = 0;
-
-	constructor(
-		id: string,
-		name: string,
-		icon: any,
-		description: string,
-		cost: number,
-		costMultiplier: number,
-		dps: number
-	) {
-		super(id, name, UpgradeType.DPS, icon, description, cost, costMultiplier);
-		this.dps = dps;
-	}
-
-	public update(deltaT: number) {
-		const count = this.getCount();
-		if (count === 0) return;
-
-		this._internalCount += count * this.dps * deltaT;
-		if (this._internalCount >= 1) {
-			const flooredCount = Math.floor(this._internalCount);
-			this.gameModel.damage(flooredCount);
-			this._internalCount -= flooredCount;
-		}
-
-		updateGameModel();
-	}
-
-	public getTotalDps(): number {
-		return this.getCount() * this.dps;
 	}
 }

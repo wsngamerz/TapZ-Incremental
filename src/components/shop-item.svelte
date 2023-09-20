@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from "./ui/button.svelte";
   import { gameModel } from "$lib/store";
-  import { UpgradeType } from "$lib/enums";
+  import { UpgradeType } from "$lib/upgrades/upgradeType";
 
   export let id: string;
 
@@ -26,7 +26,7 @@
     "rare",
     "epic",
     "legendary"
-  // ][level > 0 ? (Math.round(Math.random() * 4)) : 0];
+    // ][level > 0 ? (Math.round(Math.random() * 4)) : 0];
   ][0];
 
   const buyItem = () => {

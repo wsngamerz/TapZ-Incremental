@@ -1,5 +1,7 @@
-import { DpcUpgrade, DpsUpgrade, Upgrade } from '$lib/upgrade';
+import type { Upgrade } from '$lib/upgrades/upgrade';
 import { CurrencyIcon, GrabIcon, SwordIcon, SwordsIcon, UtensilsIcon } from 'lucide-svelte';
+import { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
+import { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 
 export const VERSION = 'v2.0.0 ALPHA 5';
 export const TICK_INTERVAL = 1000 / 5;
