@@ -10,7 +10,7 @@
   };
 
   const saveGame = () => {
-    $gameManager.saveGameData();
+    $gameManager.save();
   };
 </script>
 

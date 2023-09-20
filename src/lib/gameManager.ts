@@ -1,9 +1,8 @@
 import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
 import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
-import type { SaveData } from '$lib/savedata';
 
+import { SaveData } from '$lib/savedata';
 import { UpgradeManager } from '$lib/upgrades/upgradeManager';
-import { load, save } from '$lib/save';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
 import { ZOMBIE_HEALTH } from '$lib/data';
 
@@ -12,7 +11,7 @@ export class GameManager {
 	public upgradeManager = new UpgradeManager(this);
 
 	constructor() {
-		this.saveData = load();
+		this.saveData = SaveData.load();
 	}
 
 	public getDpc(): number {
@@ -69,27 +68,26 @@ export class GameManager {
 		this.saveData.level += 1;
 		this.saveData.zombie.maxHealth = ZOMBIE_HEALTH(this.saveData.level);
 
-		this.saveGameData();
+		this.save();
 	}
 
 	public sellBrains() {
 		this.saveData.resources.money += this.saveData.resources.brains * 5;
 		this.saveData.resources.brains = 0;
 
-		this.saveGameData();
+		this.save();
 	}
 
 	public spendMoney(amount: number): boolean {
 		if (this.saveData.resources.money < amount) return false;
 
 		this.saveData.resources.money -= amount;
-		this.saveGameData();
+		this.save();
 
 		return true;
 	}
 
-	public saveGameData() {
-		console.log('saving game data');
-		save(this.saveData);
+	public save() {
+		SaveData.save(this.saveData);
 	}
 }

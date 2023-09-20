@@ -46,7 +46,7 @@ function tick() {
 		lastAutosave = currentTime;
 
 		console.log('autosave');
-		gameManagerInstance.saveGameData();
+		gameManagerInstance.save();
 	}
 
 	let deltaT = Math.max(Math.min((currentTime - lastTick) / 1000, 1), 0);
