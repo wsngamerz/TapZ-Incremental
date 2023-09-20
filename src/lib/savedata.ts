@@ -49,7 +49,17 @@ export class GameModel {
 	}
 
 	public registerUpgrade(upgrade: Upgrade) {
+		upgrade.gameModel = this;
 		this.upgrades.push(upgrade);
+	}
+
+	public getUpgradeById(id: string): Upgrade | undefined {
+		return this.upgrades.find((upgrade) => upgrade.id === id);
+	}
+
+	public getUpgradesByType(type: UpgradeType | null = null): Upgrade[] {
+		if (type === null) return this.upgrades;
+		return this.upgrades.filter((upgrade) => upgrade.type === type);
 	}
 
 	public getDpc(): number {

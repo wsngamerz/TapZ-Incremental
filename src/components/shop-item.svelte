@@ -1,12 +1,11 @@
 <script lang="ts">
   import Button from "./ui/button.svelte";
-  import { UPGRADES } from "$lib/data";
   import { gameModel } from "$lib/store";
   import { UpgradeType } from "$lib/enums";
 
   export let id: string;
 
-  let upgrade = UPGRADES.find(u => u.id === id);
+  let upgrade = $gameModel.getUpgradeById(id);
   let type = UpgradeType[upgrade?.type];
   let name = upgrade?.name || "Unknown";
   let extra = upgrade?.description || "Unknown";

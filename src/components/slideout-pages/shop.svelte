@@ -4,7 +4,6 @@
   import Button from "../ui/button.svelte";
   import Layout from "./layout.svelte";
   import ShopItem from "../shop-item.svelte";
-  import { UPGRADES } from "$lib/data";
   import { UpgradeType } from "$lib/enums";
 
   const handleSellAll = () => {
@@ -16,9 +15,6 @@
 
   let currentDisplay = "all";
   let supportedDisplays = ["all", "dpc", "dps", "multi"];
-
-  let dpcUpgrades = UPGRADES.filter(u => u.type === UpgradeType.DPC);
-  let dpsUpgrades = UPGRADES.filter(u => u.type === UpgradeType.DPS);
 
   const handleBuyCountToggle = () => {
     currentBuy = supportedBuys[(supportedBuys.indexOf(currentBuy) + 1) % supportedBuys.length];
@@ -48,13 +44,13 @@
 
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
     {#if currentDisplay === "all" || currentDisplay === "dpc"}
-      {#each dpcUpgrades as upgrade}
+      {#each $gameModel.getUpgradesByType(UpgradeType.DPC) as upgrade}
         <ShopItem id="{upgrade.id}" />
       {/each}
     {/if}
 
     {#if currentDisplay === "all" || currentDisplay === "dps"}
-      {#each dpsUpgrades as upgrade}
+      {#each $gameModel.getUpgradesByType(UpgradeType.DPS) as upgrade}
         <ShopItem id="{upgrade.id}" />
       {/each}
     {/if}

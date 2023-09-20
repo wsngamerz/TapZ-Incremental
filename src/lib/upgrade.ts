@@ -1,9 +1,6 @@
-import { gameModel, updateGameModel } from '$lib/store';
+import { updateGameModel } from '$lib/store';
 import type { GameModel } from '$lib/savedata';
 import { UpgradeType } from '$lib/enums';
-
-let gameModelInstance: GameModel;
-gameModel.subscribe((m) => (gameModelInstance = m));
 
 export abstract class Upgrade {
 	public id: string;
@@ -13,6 +10,8 @@ export abstract class Upgrade {
 	public cost: number;
 	public costMultiplier: number;
 	public type: UpgradeType;
+
+	private _gameModel: GameModel | undefined;
 
 	protected constructor(
 		id: string,
@@ -32,17 +31,25 @@ export abstract class Upgrade {
 		this.costMultiplier = costMultiplier;
 	}
 
-	private _ensureDataExists() {
-		if (!gameModelInstance.saveData.upgrades[this.id]) {
-			gameModelInstance.saveData.upgrades[this.id] = {
+	get gameModel(): GameModel {
+		if (!this._gameModel) throw new Error('GameModel is not set');
+
+		return this._gameModel;
+	}
+
+	set gameModel(value: GameModel) {
+		this._gameModel = value;
+
+		// create the upgrade data if it doesn't exist
+		if (!this.gameModel.saveData.upgrades[this.id]) {
+			this.gameModel.saveData.upgrades[this.id] = {
 				level: 0
 			};
 		}
 	}
 
 	public getCount(): number {
-		this._ensureDataExists();
-		return gameModelInstance.saveData.upgrades[this.id]?.level || 0;
+		return this.gameModel.saveData.upgrades[this.id]?.level || 0;
 	}
 
 	public getCost(): number {
@@ -50,9 +57,8 @@ export abstract class Upgrade {
 	}
 
 	public buy(): boolean {
-		if (gameModelInstance.spendMoney(this.getCost())) {
-			this._ensureDataExists();
-			gameModelInstance.saveData.upgrades[this.id].level += 1;
+		if (this.gameModel.spendMoney(this.getCost())) {
+			this.gameModel.saveData.upgrades[this.id].level += 1;
 			return true;
 		}
 
@@ -107,7 +113,7 @@ export class DpsUpgrade extends Upgrade {
 		this._internalCount += count * this.dps * deltaT;
 		if (this._internalCount >= 1) {
 			const flooredCount = Math.floor(this._internalCount);
-			gameModelInstance.damage(flooredCount);
+			this.gameModel.damage(flooredCount);
 			this._internalCount -= flooredCount;
 		}
 

@@ -21,9 +21,9 @@ export function startGame() {
 	UPGRADES.forEach((upgrade) => gameModelInstance.registerUpgrade(upgrade));
 
 	// check that the user has at least level 1 in the lowest dpc upgrade
-	let lowestDpcUpgrade = (UPGRADES as DpcUpgrade[])
-		.filter((upgrade) => upgrade.type === UpgradeType.DPC)
-		.sort((a, b) => a.dpc - b.dpc)[0];
+	let lowestDpcUpgrade = (
+		gameModelInstance.getUpgradesByType(UpgradeType.DPC) as DpcUpgrade[]
+	).sort((a, b) => a.dpc - b.dpc)[0];
 
 	if (gameModelInstance.saveData.upgrades[lowestDpcUpgrade.id].level < 1) {
 		gameModelInstance.saveData.upgrades[lowestDpcUpgrade.id].level = 1;
@@ -53,7 +53,7 @@ function tick() {
 	lastTick = currentTime;
 
 	// update all generators / dps using deltaT
-	UPGRADES.forEach((upgrade) => {
+	gameModelInstance.upgrades.forEach((upgrade) => {
 		if (upgrade instanceof DpsUpgrade) {
 			upgrade.update(deltaT);
 		}
