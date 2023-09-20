@@ -1,9 +1,10 @@
 import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
 
 import { gameManager, updateGameManager } from '$lib/store';
-import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, UPGRADES, VERSION } from '$lib/data';
+import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, VERSION } from '$lib/data';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
 import type { GameManager } from '$lib/gameManager';
+import UPGRADES from '$lib/upgrades';
 
 let gameManagerInstance: GameManager;
 gameManager.subscribe((m) => (gameManagerInstance = m));
