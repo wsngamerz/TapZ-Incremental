@@ -3,7 +3,7 @@ import { CurrencyIcon, GrabIcon, SwordIcon, SwordsIcon, UtensilsIcon } from 'luc
 import { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
 import { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 
-export const VERSION = 'v2.0.0 ALPHA 5';
+export const VERSION = 'v2.0.0 ALPHA 6';
 export const TICK_INTERVAL = 1000 / 5;
 export const AUTOSAVE_INTERVAL = 1000 * 60;
 export const RESPAWN_COOLDOWN = 1000 / 4;
