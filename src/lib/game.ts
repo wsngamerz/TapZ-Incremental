@@ -10,6 +10,7 @@ gameManager.subscribe((m) => (gameManagerInstance = m));
 
 let lastTick = Date.now();
 let lastAutosave = Date.now();
+let startedRespawning = false;
 
 export function startGame() {
 	console.log('game started');
@@ -56,8 +57,12 @@ function tick() {
 	gameManagerInstance.upgradeManager.update(deltaT);
 
 	// respawn enemies
-	if (gameManagerInstance.saveData.zombie.health <= 0) {
-		setTimeout(() => gameManagerInstance.respawn(), RESPAWN_COOLDOWN);
+	if (gameManagerInstance.saveData.zombie.health <= 0 && !startedRespawning) {
+		startedRespawning = true;
+		setTimeout(() => {
+			gameManagerInstance.respawn();
+			startedRespawning = false;
+		}, RESPAWN_COOLDOWN);
 	}
 
 	// update experience and level up if necessary
