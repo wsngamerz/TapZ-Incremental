@@ -5,7 +5,7 @@
 
   export let id: string;
 
-  let upgrade = $gameModel.getUpgradeById(id);
+  let upgrade = $gameModel.upgradeManager.getUpgradeById(id);
   let type = UpgradeType[upgrade?.type];
   let name = upgrade?.name || "Unknown";
   let extra = upgrade?.description || "Unknown";

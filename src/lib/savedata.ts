@@ -1,10 +1,10 @@
 import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
-import type { Upgrade } from '$lib/upgrades/upgrade';
 
 import { load, save } from '$lib/save';
 import { ZOMBIE_HEALTH } from '$lib/data';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
+import { UpgradeManager } from '$lib/upgrades/upgradeManager';
 
 class Resources {
 	public money: number = 0;
@@ -44,48 +44,23 @@ export class SaveData {
 
 export class GameModel {
 	public saveData: SaveData;
-
-	public upgrades: Upgrade[] = [];
+	public upgradeManager = new UpgradeManager(this);
 
 	constructor() {
 		this.saveData = load();
 	}
 
-	public registerUpgrade(upgrade: Upgrade) {
-		upgrade.gameModel = this;
-		this.upgrades.push(upgrade);
-	}
-
-	public getUpgradeById(id: string): Upgrade | undefined {
-		return this.upgrades.find((upgrade) => upgrade.id === id);
-	}
-
-	public getUpgradesByType(type: UpgradeType | null = null): Upgrade[] {
-		if (type === null) return this.upgrades;
-		return this.upgrades.filter((upgrade) => upgrade.type === type);
-	}
-
 	public getDpc(): number {
-		return this.upgrades
-			.map((upgrade) => {
-				if (upgrade.type === UpgradeType.DPC) {
-					return (upgrade as DpcUpgrade).getTotalDPC();
-				}
-
-				return 0;
-			})
+		return this.upgradeManager
+			.getUpgradesByType(UpgradeType.DPC)
+			.map((upgrade) => (upgrade as DpcUpgrade).getTotalDPC())
 			.reduce((a, b) => a + b, 0);
 	}
 
 	public getDps(): number {
-		return this.upgrades
-			.map((upgrade) => {
-				if (upgrade.type === UpgradeType.DPS) {
-					return (upgrade as DpsUpgrade).getTotalDps();
-				}
-
-				return 0;
-			})
+		return this.upgradeManager
+			.getUpgradesByType(UpgradeType.DPS)
+			.map((upgrade) => (upgrade as DpsUpgrade).getTotalDps())
 			.reduce((a, b) => a + b, 0);
 	}
 

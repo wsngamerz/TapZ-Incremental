@@ -4,8 +4,6 @@ import type { GameModel } from '$lib/savedata';
 import { gameModel, updateGameModel } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, UPGRADES, VERSION } from '$lib/data';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
-import { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
-
 let gameModelInstance: GameModel;
 gameModel.subscribe((m) => (gameModelInstance = m));
 
@@ -19,11 +17,11 @@ export function startGame() {
 	console.log('version', VERSION);
 
 	// register upgrades
-	UPGRADES.forEach((upgrade) => gameModelInstance.registerUpgrade(upgrade));
+	UPGRADES.forEach((upgrade) => gameModelInstance.upgradeManager.registerUpgrade(upgrade));
 
 	// check that the user has at least level 1 in the lowest dpc upgrade
 	let lowestDpcUpgrade = (
-		gameModelInstance.getUpgradesByType(UpgradeType.DPC) as DpcUpgrade[]
+		gameModelInstance.upgradeManager.getUpgradesByType(UpgradeType.DPC) as DpcUpgrade[]
 	).sort((a, b) => a.dpc - b.dpc)[0];
 
 	if (gameModelInstance.saveData.upgrades[lowestDpcUpgrade.id].level < 1) {
@@ -54,11 +52,7 @@ function tick() {
 	lastTick = currentTime;
 
 	// update all generators / dps using deltaT
-	gameModelInstance.upgrades.forEach((upgrade) => {
-		if (upgrade instanceof DpsUpgrade) {
-			upgrade.update(deltaT);
-		}
-	});
+	gameModelInstance.upgradeManager.update(deltaT);
 
 	// respawn enemies
 	if (gameModelInstance.saveData.zombie.health <= 0) {
