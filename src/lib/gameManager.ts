@@ -33,7 +33,9 @@ export class GameManager {
 	}
 
 	public attack(): number {
-		return this.damage(this.getDpc());
+		const dmg = this.damage(this.getDpc());
+		if (dmg > 0) this.click();
+		return dmg;
 	}
 
 	public damage(amount: number): number {
