@@ -6,6 +6,8 @@ export const TICK_INTERVAL = 1000 / 5;
 export const AUTOSAVE_INTERVAL = 1000 * 60;
 export const RESPAWN_COOLDOWN = 1000 / 4;
 
+export const ZOMBIE_HEALTH = (level: number) => Math.floor(10 * Math.pow(1.5, level - 1));
+
 export const UPGRADES: Upgrade[] = [
 	new DpcUpgrade('fist', 'Fist', GrabIcon, '+1 dmg/click', 10, 1.1, 1),
 	new DpcUpgrade('kitchenSet', 'Kitchen Set', UtensilsIcon, '+3 dmg/click', 50, 1.1, 3),

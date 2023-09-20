@@ -2,6 +2,7 @@ import type { DpcUpgrade, DpsUpgrade, Upgrade } from '$lib/upgrade';
 
 import { load, save } from '$lib/save';
 import { UpgradeType } from '$lib/enums';
+import { ZOMBIE_HEALTH } from '$lib/data';
 
 class Resources {
 	public money: number = 0;
@@ -124,7 +125,7 @@ export class GameModel {
 		this.saveData.experience = 0;
 		this.saveData.maxExperience += 1;
 		this.saveData.level += 1;
-		this.saveData.zombie.maxHealth = Math.floor(10 + Math.pow(this.saveData.level, 1.5));
+		this.saveData.zombie.maxHealth = ZOMBIE_HEALTH(this.saveData.level);
 
 		this.saveGameData();
 	}
