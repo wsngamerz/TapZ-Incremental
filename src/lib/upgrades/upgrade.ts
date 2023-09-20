@@ -1,6 +1,6 @@
-import { updateGameModel } from '$lib/store';
-import type { GameModel } from '$lib/savedata';
+import { updateGameManager } from '$lib/store';
 import type { UpgradeType } from '$lib/upgrades/upgradeType';
+import type { GameManager } from '$lib/gameManager';
 
 export abstract class Upgrade {
 	public id: string;
@@ -11,7 +11,7 @@ export abstract class Upgrade {
 	public costMultiplier: number;
 	public type: UpgradeType;
 
-	private _gameModel: GameModel | undefined;
+	private _gameManager: GameManager | undefined;
 
 	protected constructor(
 		id: string,
@@ -31,25 +31,25 @@ export abstract class Upgrade {
 		this.costMultiplier = costMultiplier;
 	}
 
-	get gameModel(): GameModel {
-		if (!this._gameModel) throw new Error('GameModel is not set');
+	get gameManager(): GameManager {
+		if (!this._gameManager) throw new Error('GameManager is not set');
 
-		return this._gameModel;
+		return this._gameManager;
 	}
 
-	set gameModel(value: GameModel) {
-		this._gameModel = value;
+	set gameManager(value: GameManager) {
+		this._gameManager = value;
 
 		// create the upgrade data if it doesn't exist
-		if (!this.gameModel.saveData.upgrades[this.id]) {
-			this.gameModel.saveData.upgrades[this.id] = {
+		if (!this.gameManager.saveData.upgrades[this.id]) {
+			this.gameManager.saveData.upgrades[this.id] = {
 				level: 0
 			};
 		}
 	}
 
 	public getCount(): number {
-		return this.gameModel.saveData.upgrades[this.id]?.level || 0;
+		return this.gameManager.saveData.upgrades[this.id]?.level || 0;
 	}
 
 	public getCost(): number {
@@ -57,12 +57,12 @@ export abstract class Upgrade {
 	}
 
 	public buy(): boolean {
-		if (this.gameModel.spendMoney(this.getCost())) {
-			this.gameModel.saveData.upgrades[this.id].level += 1;
+		if (this.gameManager.spendMoney(this.getCost())) {
+			this.gameManager.saveData.upgrades[this.id].level += 1;
 			return true;
 		}
 
-		updateGameModel();
+		updateGameManager();
 		return false;
 	}
 }

@@ -1,11 +1,12 @@
 import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
-import type { GameModel } from '$lib/savedata';
 
-import { gameModel, updateGameModel } from '$lib/store';
+import { gameManager, updateGameManager } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, UPGRADES, VERSION } from '$lib/data';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
-let gameModelInstance: GameModel;
-gameModel.subscribe((m) => (gameModelInstance = m));
+import type { GameManager } from '$lib/gameManager';
+
+let gameManagerInstance: GameManager;
+gameManager.subscribe((m) => (gameManagerInstance = m));
 
 let lastTick = Date.now();
 let lastAutosave = Date.now();
@@ -17,19 +18,19 @@ export function startGame() {
 	console.log('version', VERSION);
 
 	// register upgrades
-	UPGRADES.forEach((upgrade) => gameModelInstance.upgradeManager.registerUpgrade(upgrade));
+	UPGRADES.forEach((upgrade) => gameManagerInstance.upgradeManager.registerUpgrade(upgrade));
 
 	// check that the user has at least level 1 in the lowest dpc upgrade
 	let lowestDpcUpgrade = (
-		gameModelInstance.upgradeManager.getUpgradesByType(UpgradeType.DPC) as DpcUpgrade[]
+		gameManagerInstance.upgradeManager.getUpgradesByType(UpgradeType.DPC) as DpcUpgrade[]
 	).sort((a, b) => a.dpc - b.dpc)[0];
 
-	if (gameModelInstance.saveData.upgrades[lowestDpcUpgrade.id].level < 1) {
-		gameModelInstance.saveData.upgrades[lowestDpcUpgrade.id].level = 1;
+	if (gameManagerInstance.saveData.upgrades[lowestDpcUpgrade.id].level < 1) {
+		gameManagerInstance.saveData.upgrades[lowestDpcUpgrade.id].level = 1;
 		console.log('set lowest dpc upgrade to level 1');
 	}
 
-	updateGameModel();
+	updateGameManager();
 
 	(function loop() {
 		tick();
@@ -45,24 +46,24 @@ function tick() {
 		lastAutosave = currentTime;
 
 		console.log('autosave');
-		gameModelInstance.saveGameData();
+		gameManagerInstance.saveGameData();
 	}
 
 	let deltaT = Math.max(Math.min((currentTime - lastTick) / 1000, 1), 0);
 	lastTick = currentTime;
 
 	// update all generators / dps using deltaT
-	gameModelInstance.upgradeManager.update(deltaT);
+	gameManagerInstance.upgradeManager.update(deltaT);
 
 	// respawn enemies
-	if (gameModelInstance.saveData.zombie.health <= 0) {
-		setTimeout(() => gameModelInstance.respawn(), RESPAWN_COOLDOWN);
+	if (gameManagerInstance.saveData.zombie.health <= 0) {
+		setTimeout(() => gameManagerInstance.respawn(), RESPAWN_COOLDOWN);
 	}
 
 	// update experience and level up if necessary
-	if (gameModelInstance.saveData.experience >= gameModelInstance.saveData.maxExperience) {
-		gameModelInstance.levelUp();
+	if (gameManagerInstance.saveData.experience >= gameManagerInstance.saveData.maxExperience) {
+		gameManagerInstance.levelUp();
 	}
 
-	updateGameModel();
+	updateGameManager();
 }

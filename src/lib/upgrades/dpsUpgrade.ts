@@ -1,4 +1,4 @@
-import { updateGameModel } from '$lib/store';
+import { updateGameManager } from '$lib/store';
 import { Upgrade } from '$lib/upgrades/upgrade';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
 
@@ -27,11 +27,11 @@ export class DpsUpgrade extends Upgrade {
 		this._internalCount += count * this.dps * deltaT;
 		if (this._internalCount >= 1) {
 			const flooredCount = Math.floor(this._internalCount);
-			this.gameModel.damage(flooredCount);
+			this.gameManager.damage(flooredCount);
 			this._internalCount -= flooredCount;
 		}
 
-		updateGameModel();
+		updateGameManager();
 	}
 
 	public getTotalDps(): number {

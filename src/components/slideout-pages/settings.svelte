@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { gameModel } from "$lib/store";
+  import { gameManager } from "$lib/store";
 
   import Button from "../ui/button.svelte";
   import Layout from "./layout.svelte"
@@ -10,7 +10,7 @@
   };
 
   const saveGame = () => {
-    $gameModel.saveGameData();
+    $gameManager.saveGameData();
   };
 </script>
 

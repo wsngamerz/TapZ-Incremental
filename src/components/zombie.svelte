@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { gameModel } from "$lib/store.js";
+  import { gameManager } from "$lib/store.js";
 
   let zombie: HTMLElement;
 
@@ -12,7 +12,7 @@
 
   $: {
     if (zombie) {
-      if ($gameModel.saveData.zombie.health <= 0) {
+      if ($gameManager.saveData.zombie.health <= 0) {
         zombie.classList.add("dead");
         zombie.classList.remove(...hueClasses);
       } else {

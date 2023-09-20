@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
-import { GameModel } from '$lib/savedata';
+import { GameManager } from '$lib/gameManager';
 
-export const gameModel = writable(new GameModel());
+export const gameManager = writable(new GameManager());
 
-export function updateGameModel() {
-	gameModel.update((m) => (m = m));
+export function updateGameManager() {
+	gameManager.update((m) => (m = m));
 }

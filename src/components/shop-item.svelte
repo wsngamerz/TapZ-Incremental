@@ -1,11 +1,11 @@
 <script lang="ts">
   import Button from "./ui/button.svelte";
-  import { gameModel } from "$lib/store";
+  import { gameManager } from "$lib/store";
   import { UpgradeType } from "$lib/upgrades/upgradeType";
 
   export let id: string;
 
-  let upgrade = $gameModel.upgradeManager.getUpgradeById(id);
+  let upgrade = $gameManager.upgradeManager.getUpgradeById(id);
   let type = UpgradeType[upgrade?.type];
   let name = upgrade?.name || "Unknown";
   let extra = upgrade?.description || "Unknown";
@@ -17,8 +17,8 @@
     MULTI: "bg-green-700"
   }[type];
 
-  $: canAfford = $gameModel.saveData.resources.money >= cost;
-  $: level = $gameModel.saveData.upgrades[id].level || 0;
+  $: canAfford = $gameManager.saveData.resources.money >= cost;
+  $: level = $gameManager.saveData.upgrades[id].level || 0;
   let cost = upgrade?.getCost() || 0;
 
   $: glintClass = [

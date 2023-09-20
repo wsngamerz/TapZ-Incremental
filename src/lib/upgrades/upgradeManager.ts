@@ -1,18 +1,18 @@
 import type { Upgrade } from '$lib/upgrades/upgrade';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
-import type { GameModel } from '$lib/savedata';
 import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
+import type { GameManager } from '$lib/gameManager';
 
 export class UpgradeManager {
 	private upgrades: Upgrade[] = [];
-	private readonly gameManager: GameModel;
+	private readonly gameManager: GameManager;
 
-	constructor(gameManager: GameModel) {
+	constructor(gameManager: GameManager) {
 		this.gameManager = gameManager;
 	}
 
 	public registerUpgrade(upgrade: Upgrade) {
-		upgrade.gameModel = this.gameManager;
+		upgrade.gameManager = this.gameManager;
 		this.upgrades.push(upgrade);
 	}
 

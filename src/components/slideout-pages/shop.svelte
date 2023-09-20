@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { gameModel } from "$lib/store.js";
+  import { gameManager } from "$lib/store.js";
 
   import Button from "../ui/button.svelte";
   import Layout from "./layout.svelte";
@@ -7,7 +7,7 @@
   import { UpgradeType } from "$lib/upgrades/upgradeType";
 
   const handleSellAll = () => {
-    $gameModel.sellBrains();
+    $gameManager.sellBrains();
   };
 
   let currentBuy = 1;
@@ -44,13 +44,13 @@
 
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
     {#if currentDisplay === "all" || currentDisplay === "dpc"}
-      {#each $gameModel.upgradeManager.getUpgradesByType(UpgradeType.DPC) as upgrade}
+      {#each $gameManager.upgradeManager.getUpgradesByType(UpgradeType.DPC) as upgrade}
         <ShopItem id="{upgrade.id}" />
       {/each}
     {/if}
 
     {#if currentDisplay === "all" || currentDisplay === "dps"}
-      {#each $gameModel.upgradeManager.getUpgradesByType(UpgradeType.DPS) as upgrade}
+      {#each $gameManager.upgradeManager.getUpgradesByType(UpgradeType.DPS) as upgrade}
         <ShopItem id="{upgrade.id}" />
       {/each}
     {/if}

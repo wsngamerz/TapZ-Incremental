@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { gameModel, updateGameModel } from "$lib/store";
+  import { gameManager, updateGameManager } from "$lib/store";
   import { startGame } from "$lib/game";
 
   import Slideout from "../../components/slideout.svelte";
@@ -10,12 +10,12 @@
   let damageIndicators: HTMLElement;
 
   const clickHandler = (event: MouseEvent) => {
-    const damage = $gameModel.attack();
+    const damage = $gameManager.attack();
     if (damage > 0) {
-      $gameModel.click();
+      $gameManager.click();
       damageIndicator(event.clientX, event.clientY, damage);
     }
-    updateGameModel();
+    updateGameManager();
   };
 
   const damageIndicator = (x: number, y: number, damage: number) => {
