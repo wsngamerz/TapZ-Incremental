@@ -3,7 +3,7 @@ import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 import { SaveData } from '$lib/savedata';
 import { UpgradeManager } from '$lib/upgrades/upgradeManager';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
-import { ZOMBIE_HEALTH } from '$lib/data';
+import { KILL_EXPERIENCE, MAX_EXPERIENCE, ZOMBIE_HEALTH } from '$lib/data';
 import type { PlayerUpgrade } from '$lib/upgrades/playerUpgrade';
 
 export class GameManager {
@@ -56,15 +56,15 @@ export class GameManager {
 
 	public onKill() {
 		this.saveData.resources.brains += 1;
-		this.saveData.experience += 1;
+		this.saveData.experience += KILL_EXPERIENCE(this.saveData.level);
 		this.saveData.stats.kills += 1;
 	}
 
 	public levelUp() {
 		console.log('level up');
 		this.saveData.experience = 0;
-		this.saveData.maxExperience += 1;
 		this.saveData.level += 1;
+		this.saveData.maxExperience += MAX_EXPERIENCE(this.saveData.level);
 		this.saveData.zombie.maxHealth = ZOMBIE_HEALTH(this.saveData.level);
 
 		this.save();
