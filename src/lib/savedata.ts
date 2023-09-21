@@ -18,8 +18,7 @@ class Stats {
 
 class UpgradeRecord {
 	public level: number = 0;
-
-	// TODO: ability to add additional data to upgrades
+	public enhancements: Record<string, boolean> = {};
 }
 
 export class SaveData {

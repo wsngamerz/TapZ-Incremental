@@ -1,8 +1,5 @@
-import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
-
 import { gameManager, updateGameManager } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, VERSION } from '$lib/data';
-import { UpgradeType } from '$lib/upgrades/upgradeType';
 import type { GameManager } from '$lib/gameManager';
 import UPGRADES from '$lib/upgrades';
 
@@ -22,14 +19,10 @@ export function startGame() {
 	// register upgrades
 	UPGRADES.forEach((upgrade) => gameManagerInstance.upgradeManager.registerUpgrade(upgrade));
 
-	// check that the user has at least level 1 in the lowest dpc upgrade
-	let lowestDpcUpgrade = (
-		gameManagerInstance.upgradeManager.getUpgradesByType(UpgradeType.DPC) as DpcUpgrade[]
-	).sort((a, b) => a.dpc - b.dpc)[0];
-
-	if (gameManagerInstance.saveData.upgrades[lowestDpcUpgrade.id].level < 1) {
-		gameManagerInstance.saveData.upgrades[lowestDpcUpgrade.id].level = 1;
-		console.log('set lowest dpc upgrade to level 1');
+	// check that the user has at least level 1 in the player upgrade
+	if (gameManagerInstance.saveData.upgrades.player.level < 1) {
+		gameManagerInstance.saveData.upgrades.player.level = 1;
+		console.log('set player dpc upgrade to level 1');
 	}
 
 	updateGameManager();

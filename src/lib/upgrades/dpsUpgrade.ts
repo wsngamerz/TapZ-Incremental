@@ -37,4 +37,6 @@ export class DpsUpgrade extends Upgrade {
 	public getTotalDps(): number {
 		return this.getCount() * this.dps;
 	}
+
+	initialised(): void {}
 }

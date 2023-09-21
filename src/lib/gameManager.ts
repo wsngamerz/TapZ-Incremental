@@ -1,10 +1,10 @@
-import type { DpcUpgrade } from '$lib/upgrades/dpcUpgrade';
 import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 
 import { SaveData } from '$lib/savedata';
 import { UpgradeManager } from '$lib/upgrades/upgradeManager';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
 import { ZOMBIE_HEALTH } from '$lib/data';
+import type { PlayerUpgrade } from '$lib/upgrades/playerUpgrade';
 
 export class GameManager {
 	public saveData: SaveData;
@@ -15,10 +15,7 @@ export class GameManager {
 	}
 
 	public getDpc(): number {
-		return this.upgradeManager
-			.getUpgradesByType(UpgradeType.DPC)
-			.map((upgrade) => (upgrade as DpcUpgrade).getTotalDPC())
-			.reduce((a, b) => a + b, 0);
+		return (this.upgradeManager.getUpgradeById('player') as PlayerUpgrade).getDpc();
 	}
 
 	public getDps(): number {

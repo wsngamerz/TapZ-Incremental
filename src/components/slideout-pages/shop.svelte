@@ -42,16 +42,16 @@
     </div>
   </div>
 
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+  <div class="grid md:grid-cols-2 gap-2">
     {#if currentDisplay === "all" || currentDisplay === "dpc"}
       {#each $gameManager.upgradeManager.getUpgradesByType(UpgradeType.DPC) as upgrade}
-        <ShopItem id="{upgrade.id}" />
+        <ShopItem upgrade="{upgrade}" />
       {/each}
     {/if}
 
     {#if currentDisplay === "all" || currentDisplay === "dps"}
       {#each $gameManager.upgradeManager.getUpgradesByType(UpgradeType.DPS) as upgrade}
-        <ShopItem id="{upgrade.id}" />
+        <ShopItem upgrade="{upgrade}" />
       {/each}
     {/if}
 

@@ -31,6 +31,8 @@ export abstract class Upgrade {
 		this.costMultiplier = costMultiplier;
 	}
 
+	abstract initialised(): void;
+
 	get gameManager(): GameManager {
 		if (!this._gameManager) throw new Error('GameManager is not set');
 
@@ -43,9 +45,12 @@ export abstract class Upgrade {
 		// create the upgrade data if it doesn't exist
 		if (!this.gameManager.saveData.upgrades[this.id]) {
 			this.gameManager.saveData.upgrades[this.id] = {
-				level: 0
+				level: 0,
+				enhancements: {}
 			};
 		}
+
+		if (this.initialised) this.initialised();
 	}
 
 	public getCount(): number {
