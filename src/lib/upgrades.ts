@@ -47,13 +47,13 @@ const UPGRADES: Upgrade[] = [
 		PersonStandingIcon,
 		'+1 dmg/click',
 		10,
-		1.5,
+		1.35,
 		1,
 		PLAYER_UPGRADES
 	),
 
-	new DpsUpgrade('malitia', 'Malitia', SwordsIcon, '+2 dmg/s', 50, 1.5, 2),
-	new DpsUpgrade('turret', 'Turret', CurrencyIcon, '+5 dmg/s', 100, 1.5, 5)
+	new DpsUpgrade('malitia', 'Malitia', SwordsIcon, '+2 dmg/s', 50, 1.3, 2),
+	new DpsUpgrade('turret', 'Turret', CurrencyIcon, '+5 dmg/s', 100, 1.3, 5)
 ];
 
 export default UPGRADES;
