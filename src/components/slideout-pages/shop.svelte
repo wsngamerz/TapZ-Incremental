@@ -30,7 +30,7 @@
   <span slot="title">Shop</span>
 
   <div slot="extra" class="flex flex-col gap-2 min-w-[250px]">
-    <Button type="green" on:click={handleSellAll}>Sell all brains</Button>
+    <Button type="green" on:click={handleSellAll} disabled={$gameManager.saveData.resources.brains === 0}>Sell all brains</Button>
 
     <div class="grid grid-cols-2 gap-2">
       <Button on:click={handleDisplayToggle}>
