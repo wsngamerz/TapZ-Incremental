@@ -1,7 +1,7 @@
 <script lang="ts">
   import NavButton from "../components/nav-button.svelte";
 
-  import { AwardIcon, GlobeIcon, SettingsIcon, ShareIcon, ShieldIcon } from "lucide-svelte";
+  import { GlobeIcon, ShareIcon } from "lucide-svelte";
   import { VERSION } from "$lib/data";
 </script>
 
@@ -15,11 +15,8 @@
     <a href="/game" class="bg-green-700 px-12 py-3 rounded-sm font-black">Play</a>
   </div>
 
-  <nav class="bg-gray-900 flex gap-2 p-2 justify-center overflow-x-auto">
+  <nav class="bg-gray-900 grid grid-cols-2 sm:flex gap-2 p-2 justify-center">
     <NavButton icon="{ShareIcon}" href="/share" text="Share" />
-    <NavButton icon="{AwardIcon}" href="/medals" text="Medals" />
-    <NavButton icon="{ShieldIcon}" href="/ranking" text="Ranking" />
-    <NavButton icon="{SettingsIcon}" href="/settings" text="Settings" />
     <NavButton icon="{GlobeIcon}" href="https://williamneild.com" text="Website" />
   </nav>
 </main>
