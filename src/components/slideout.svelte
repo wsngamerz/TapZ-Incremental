@@ -2,7 +2,6 @@
   import {
     BarChartIcon,
     ChevronDownIcon,
-    MedalIcon,
     SettingsIcon,
     ShoppingCartIcon,
     TrophyIcon
@@ -49,9 +48,9 @@
       <TabButton on:click={() => setActiveTab(Tabs.Achievements)}
                  active={activeTab === Tabs.Achievements}
                  icon={TrophyIcon} />
-      <TabButton on:click={() => setActiveTab(Tabs.Leaderboards)}
-                 active={activeTab === Tabs.Leaderboards}
-                 icon={MedalIcon} />
+<!--      <TabButton on:click={() => setActiveTab(Tabs.Leaderboards)}-->
+<!--                 active={activeTab === Tabs.Leaderboards}-->
+<!--                 icon={MedalIcon} />-->
       <TabButton on:click={() => setActiveTab(Tabs.Stats)}
                  active={activeTab === Tabs.Stats}
                  icon={BarChartIcon} />
@@ -59,12 +58,14 @@
                  active={activeTab === Tabs.Settings}
                  icon={SettingsIcon} />
 
-      <button on:click={toggleSlideout} class="bg-gray-700 rounded rounded-b-none px-2 py-1">
-        <ChevronDownIcon class={`text-gray-300 transition-transform duration-200 ease-in-out ${!slideoutOpen && "rotate-180"}`}/>
-      </button>
+      <div class="flex-grow flex justify-end">
+        <button on:click={toggleSlideout} class="bg-gray-700 rounded rounded-b-none px-2 py-1">
+          <ChevronDownIcon class={`text-gray-300 transition-transform duration-200 ease-in-out ${!slideoutOpen && "rotate-180"}`}/>
+        </button>
+      </div>
     </div>
 
-    <div class="bg-gray-700 p-2 h-96">
+    <div class="bg-gray-700 p-2 h-[min(50vh,32rem)]">
       {#if activeTab === Tabs.Shop}
         <ShopScreen />
       {:else if activeTab === Tabs.Achievements}
