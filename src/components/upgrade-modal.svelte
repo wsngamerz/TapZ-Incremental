@@ -23,12 +23,12 @@
   <span slot="header">{upgrade.name}</span>
 
   <div class="space-y-2">
-    <div class="flex gap-2 bg-gray-600 p-2 rounded-lg">
-      <div class="inline-block p-2 bg-gray-800 rounded-lg">
+    <div class="flex flex-wrap gap-2 bg-gray-600 p-2 rounded-lg">
+      <div class="inline-block p-2 bg-gray-800 rounded-lg order-1">
         <svelte:component this={upgrade.icon} class={`w-32 h-32 ${upgradeTypeStyles} rounded p-1`} />
       </div>
 
-      <div class="flex-grow text-gray-300">
+      <div class="min-w-[450px] flex-grow text-gray-300 order-last md:order-2">
         <p>Level: <span>{upgrade.getCount()}</span></p>
         {#if isPlayerUpgrade}
           <p>Base DPC: <span>{upgrade.dpc} (+{upgrade.getBaseDpc() - upgrade.dpc})</span></p>
@@ -39,7 +39,7 @@
         <p>{upgrade.description}</p>
       </div>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col order-3 flex-grow md:flex-grow-0">
         <Button type="yellow"
                 on:click={() => upgrade.buy()}
                 disabled="{$gameManager.saveData.resources.money < upgrade.getCost()}">
@@ -59,7 +59,7 @@
         {#if upgrade.items.length === 0}
           <p class="text-gray-400">No items available</p>
         {:else}
-          <div class="grid gap-2 grid-cols-1 lg:grid-cols-2">
+          <div class="grid gap-2 grid-cols-1 md:grid-cols-2">
             {#each upgrade.items as playerUpgrade}
               <div class={`flex gap-2 bg-gray-800 p-2 rounded ${playerUpgrade.has() && "bg-opacity-70"}`}>
                 <svelte:component this={playerUpgrade.icon} class="w-16 h-16 bg-gray-900 p-2 rounded" />
