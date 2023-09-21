@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { VERSION } from "$lib/data";
+  import { gameManager } from "$lib/store.js";
+
   import { BrainIcon, CoinsIcon, CrossIcon, ShieldIcon } from "lucide-svelte";
   import Progress from "./ui/progress.svelte";
-  import { gameManager } from "$lib/store.js";
 
   $: healthPercentage = $gameManager.saveData.zombie.health / $gameManager.saveData.zombie.maxHealth * 100;
   $: experiencePercentage = $gameManager.saveData.experience / $gameManager.saveData.maxExperience * 100;
@@ -25,4 +27,6 @@
             value={healthPercentage}
             colour="red"
             content={healthContent} />
+
+  <span class="absolute text-gray-600 text-xs">TapZ {VERSION}</span>
 </header>
