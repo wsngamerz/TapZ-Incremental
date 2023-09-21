@@ -18,7 +18,7 @@ const PLAYER_UPGRADES: PlayerUpgradeItem[] = [
 		'gloves',
 		'Boxing Gloves',
 		GrabIcon,
-		'+1 dmg/level',
+		'+1 base dpc',
 		200,
 		(dpc: number) => dpc + 1
 	),
@@ -26,7 +26,7 @@ const PLAYER_UPGRADES: PlayerUpgradeItem[] = [
 		'utensils',
 		'Kitchen Utensils',
 		UtensilsIcon,
-		'+3 dmg/level',
+		'+3 base dpc',
 		500,
 		(dpc: number) => dpc + 3
 	),
@@ -34,7 +34,7 @@ const PLAYER_UPGRADES: PlayerUpgradeItem[] = [
 		'sword',
 		'Spicy Sword',
 		SwordIcon,
-		'+4 dmg/level',
+		'+4 base dpc',
 		2500,
 		(dpc: number) => dpc + 5
 	)
