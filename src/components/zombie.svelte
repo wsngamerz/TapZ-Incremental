@@ -28,7 +28,7 @@
 </script>
 
 <div role="button" tabindex="0"
-     on:click on:keypress={e => e.key === "Enter" && e.target?.click()}
+     on:pointerdown on:keypress={e => e.key === "Enter" && e.target?.click()}
      class="transition duration-200 hover:ease-out ease-in hover:scale-110"
      on:mouseup={e => e.preventDefault()}>
   <div bind:this={zombie} class="zombie" />

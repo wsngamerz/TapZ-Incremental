@@ -9,7 +9,7 @@
 
   let damageIndicators: HTMLElement;
 
-  const clickHandler = (event: MouseEvent) => {
+  const pointerHandler = (event: PointerEvent) => {
     const damage = $gameManager.attack();
     if (damage > 0)
       damageIndicator(event.clientX, event.clientY, damage);
@@ -37,7 +37,7 @@
   <Header />
 
   <main class="flex-grow flex items-center justify-center overflow-hidden">
-    <Zombie on:click={clickHandler} />
+    <Zombie on:pointerdown={pointerHandler} />
   </main>
 
   <Slideout />
