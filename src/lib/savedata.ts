@@ -1,4 +1,4 @@
-import { SAVEDATA_KEY } from '$lib/data';
+import { MAX_EXPERIENCE, SAVEDATA_KEY, ZOMBIE_HEALTH } from '$lib/data';
 
 class Resources {
 	public money: number = 0;
@@ -7,7 +7,7 @@ class Resources {
 
 class Zombie {
 	public health: number = 10;
-	public maxHealth: number = 10;
+	public maxHealth: number = ZOMBIE_HEALTH(1);
 }
 
 class Stats {
@@ -30,7 +30,7 @@ export class SaveData {
 
 	public level: number = 1;
 	public experience: number = 0;
-	public maxExperience: number = 10;
+	public maxExperience: number = MAX_EXPERIENCE(1);
 
 	public savedAt: number = 0;
 
