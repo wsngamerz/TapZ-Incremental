@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Acme', sans-serif;
+    overflow: hidden;
+    touch-action: pan-x pan-y;
+}
+
+@keyframes zombie-sprite {
+    to {
+        background-position: -2048px;
+    }
+}
+
+@keyframes zombie-dead {
+    from {
+        transform: translate(0, 0) rotate(0deg) scale(0.65);
+    }
+    to {
+        transform: translate(400px, 120vh) rotate(90deg) scale(0.2);
+    }
+}
+
+@keyframes damage-indicator {
+    from {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(10vw, -25vh) scale(0.25);
+        opacity: 0;
+    }
+}
+
+.zombie-container {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+
+    @apply transition duration-200 hover:ease-out ease-in hover:scale-110 select-none;
+}
+
+.zombie {
+    width: 512px;
+    height: 512px;
+    background: url("/zombie_sprites.png");
+    background-size: cover;
+    animation: zombie-sprite 2s steps(4) infinite;
+
+    @apply transition-transform duration-200 ease-in-out;
+    @apply scale-50 md:scale-[.65] lg:scale-75;
+}
+
+.zombie.dead {
+    @apply grayscale transition-all duration-100;
+    animation: zombie-dead .75s ease-in-out;
+    animation-iteration-count: 1;
+    background-position: -2048px;
+}
+
+.damage-indicator {
+    @apply text-gray-100;
+    @apply block fixed select-none font-bold text-4xl;
+    @apply transition-all duration-500 ease-in-out;
+
+    filter: drop-shadow(-0.5px 0 0 black) drop-shadow(.5px 0 0 black) drop-shadow(0 -0.5px 0 black) drop-shadow(0 .5px 0 black);
+
+    top: var(--y);
+    left: var(--x);
+
+    animation: damage-indicator 1.1s linear;
+}
+
+.slideout {
+    @apply absolute bottom-12 w-full;
+    @apply transition-transform duration-200 ease-in-out;
+    @apply translate-y-full;
+}
+
+.slideout-open {
+    @apply translate-y-12;
+}
+
+/*
+    Upgrade Glints
+*/
+
+.upgrade-glint {
+    @apply relative m-0.5;
+}
+
+.upgrade-glint > * {
+    @apply relative z-10;
+}
+
+.upgrade-glint:before, .upgrade-glint:after {
+    @apply rounded-md absolute -left-0.5 -top-0.5;
+    content: '';
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: upgrade-glint 5s ease-in-out infinite;
+}
+
+@keyframes upgrade-glint {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.upgrade-glint.rare:before,
+.upgrade-glint.rare:after {
+    background: linear-gradient(45deg, #1d4ed8, #0ea5e9, #38bdf8, #0ea5e9, #1d4ed8);
+    background-size: 200%;
+}
+
+.upgrade-glint.epic:before,
+.upgrade-glint.epic:after {
+    background: linear-gradient(45deg, #581c87, #6d28d9, #8b5cf6, #6d28d9, #581c87);
+    background-size: 200%;
+}
+
+.upgrade-glint.legendary:before,
+.upgrade-glint.legendary:after {
+    background: linear-gradient(45deg, #f97316, #f59e0b, #eab308, #fef9c3, #eab308, #f59e0b, #f97316);
+    background-size: 200%;
+}
