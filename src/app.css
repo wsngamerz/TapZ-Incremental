@@ -18,10 +18,10 @@ html, body {
 
 @keyframes zombie-dead {
     from {
-        transform: translate(0, 0) rotate(0deg) scale(1);
+        transform: translate(0, 0) rotate(0deg) scale(0.65);
     }
     to {
-        transform: translate(20vw, 120vh) rotate(90deg) scale(0.25);
+        transform: translate(400px, 120vh) rotate(90deg) scale(0.2);
     }
 }
 
@@ -52,7 +52,7 @@ html, body {
     animation: zombie-sprite 2s steps(4) infinite;
 
     @apply transition-transform duration-200 ease-in-out;
-    @apply scale-50 md:scale-[.65] lg:scale-90;
+    @apply scale-50 md:scale-[.65] lg:scale-75;
 }
 
 .zombie.dead {
