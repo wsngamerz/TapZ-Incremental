@@ -1,4 +1,4 @@
-export const VERSION = 'v2.0.0 ALPHA 9';
+export const VERSION = 'v2.0.0 ALPHA 10';
 export const TICK_INTERVAL = 1000 / 5;
 export const AUTOSAVE_INTERVAL = 1000 * 60;
 export const RESPAWN_COOLDOWN = 1000 / 4;
