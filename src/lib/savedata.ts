@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { MAX_EXPERIENCE, SAVEDATA_KEY, ZOMBIE_HEALTH } from '$lib/data';
 
 class Resources {
@@ -61,6 +62,9 @@ export class SaveData {
 	}
 
 	public static load(): SaveData {
+		// If we are not in a browser (i.e. SSR), return a new SaveData object
+		if (!browser) return new SaveData();
+
 		try {
 			// If there is no save data, return a new SaveData object
 			if (localStorage.getItem(SAVEDATA_KEY) === null) return new SaveData();
