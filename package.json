@@ -25,8 +25,8 @@
     "@babel/preset-env": "^7.14.1",
     "babel-loader": "^8.2.2",
     "serve": "^11.3.2",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.7.0"
+    "webpack": "^5.88.2",
+    "webpack-cli": "^4.10.0"
   },
   "browserslist": "> 0.25%, not dead",
   "dependencies": {
