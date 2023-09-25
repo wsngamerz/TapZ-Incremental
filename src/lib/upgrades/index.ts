@@ -61,7 +61,7 @@ const PLAYER_UPGRADES: PlayerUpgradeItem[] = [
 	)
 ];
 
-const UPGRADES: Upgrade[] = [
+export const UPGRADES: Upgrade[] = [
 	new PlayerUpgrade(
 		'player',
 		'Player',
@@ -120,5 +120,3 @@ const UPGRADES: Upgrade[] = [
 		50
 	)
 ];
-
-export default UPGRADES;

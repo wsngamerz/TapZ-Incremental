@@ -1,7 +1,7 @@
 import { gameManager, updateGameManager } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, VERSION } from '$lib/data';
 import type { GameManager } from '$lib/gameManager';
-import UPGRADES from '$lib/upgrades';
+import { UPGRADES } from '$lib/upgrades';
 
 let gameManagerInstance: GameManager;
 gameManager.subscribe((m) => (gameManagerInstance = m));
