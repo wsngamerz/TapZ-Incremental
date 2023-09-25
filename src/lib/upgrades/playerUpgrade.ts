@@ -23,8 +23,6 @@ export class PlayerUpgrade extends Upgrade {
 	}
 
 	initialised(): void {
-		console.log('initialised');
-		console.log(this.items);
 		this.items.forEach((item) => {
 			item.gameManager = this.gameManager;
 		});
