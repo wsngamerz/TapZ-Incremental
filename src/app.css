@@ -10,6 +10,15 @@ html, body {
     touch-action: pan-x pan-y;
 }
 
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes zombie-sprite {
     to {
         background-position: -2048px;
@@ -35,6 +44,11 @@ html, body {
         transform: translate(10vw, -25vh) scale(0.25);
         opacity: 0;
     }
+}
+
+.game-window {
+    @apply relative flex flex-col w-full h-full max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto;
+    @apply transition-opacity duration-200 ease-in-out;
 }
 
 .zombie-container {
