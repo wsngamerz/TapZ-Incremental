@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { gameManager, updateGameManager } from "$lib/store";
+  import { formatNumber } from "$lib/utils";
   import { startGame } from "$lib/game";
 
   import Slideout from "../../components/slideout.svelte";
@@ -22,7 +23,7 @@
     indicator.classList.add("damage-indicator");
     indicator.style.setProperty("--x", `${x}px`);
     indicator.style.setProperty("--y", `${y}px`);
-    indicator.innerText = `-${damage}`;
+    indicator.innerText = `-${formatNumber(damage)}`;
     damageIndicators.appendChild(indicator);
 
     setTimeout(() => indicator.remove(), 1_000);

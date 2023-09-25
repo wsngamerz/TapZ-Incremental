@@ -6,6 +6,7 @@
   import { UpgradeType } from "$lib/upgrades/upgradeType";
   import { PlayerUpgrade } from "$lib/upgrades/playerUpgrade";
   import { gameManager } from "$lib/store";
+  import { formatNumber } from "$lib/utils";
 
   export let showModal = false;
   export let upgrade: Upgrade;
@@ -29,10 +30,10 @@
       </div>
 
       <div class="min-w-[450px] flex-grow text-gray-300 order-last md:order-2">
-        <p>Level: <span>{upgrade.getCount()}</span></p>
+        <p>Level: <span>{formatNumber(upgrade.getCount())}</span></p>
         {#if isPlayerUpgrade}
-          <p>Base DPC: <span>{upgrade.dpc} (+{upgrade.getBaseDpc() - upgrade.dpc})</span></p>
-          <p>Total DPC: <span>{upgrade.getDpc()}</span></p>
+          <p>Base DPC: <span>{formatNumber(upgrade.dpc)} (+{formatNumber(upgrade.getBaseDpc() - upgrade.dpc)})</span></p>
+          <p>Total DPC: <span>{formatNumber(upgrade.getDpc())}</span></p>
         {/if}
 
         <h3 class="text-white text-lg pt-2">Description</h3>
@@ -43,11 +44,11 @@
         <Button type="yellow"
                 on:click={() => upgrade.buy()}
                 disabled="{$gameManager.saveData.resources.money < upgrade.getCost()}">
-          Upgrade £{upgrade.getCost()}
+          Upgrade £{formatNumber(upgrade.getCost())}
         </Button>
 
         {#if isPlayerUpgrade}
-          <span class="text-sm text-gray-300 py-1">Increases damage by +{upgrade.getBaseDpc()}</span>
+          <span class="text-sm text-gray-300 py-1">Increases damage by +{formatNumber(upgrade.getBaseDpc())}</span>
         {/if}
       </div>
     </div>
@@ -78,7 +79,7 @@
                     <Button type="yellow"
                             on:click={() => playerUpgrade.buy()}
                             disabled="{$gameManager.saveData.resources.money < playerUpgrade.cost}">
-                      Buy £{playerUpgrade.cost}
+                      Buy £{formatNumber(playerUpgrade.cost)}
                     </Button>
                   {/if}
                 </div>

@@ -5,6 +5,7 @@
   import Layout from "./layout.svelte";
   import ShopItem from "../shop-item.svelte";
   import { UpgradeType } from "$lib/upgrades/upgradeType";
+  import { formatNumber } from "$lib/utils";
 
   const handleSellAll = () => {
     $gameManager.sellBrains();
@@ -30,7 +31,7 @@
   <span slot="title">Shop</span>
 
   <div slot="extra" class="flex flex-col gap-2 min-w-[250px]">
-    <Button type="green" on:click={handleSellAll} disabled={$gameManager.saveData.resources.brains === 0}>Sell all brains for £{$gameManager.brainsValue()}</Button>
+    <Button type="green" on:click={handleSellAll} disabled={$gameManager.saveData.resources.brains === 0}>Sell all brains for £{formatNumber($gameManager.brainsValue())}</Button>
 
     <div class="grid grid-cols-2 gap-2">
       <Button on:click={handleDisplayToggle}>
@@ -38,7 +39,7 @@
             Display: {currentDisplay}
         </span>
       </Button>
-      <Button on:click={handleBuyCountToggle}>Buy: {(currentBuy === -1 ? "MAX" : `x${currentBuy}`)}</Button>
+      <Button on:click={handleBuyCountToggle}>Buy: {(currentBuy === -1 ? "MAX" : `x${formatNumber(currentBuy)}`)}</Button>
     </div>
   </div>
 

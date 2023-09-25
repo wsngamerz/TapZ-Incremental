@@ -6,6 +6,7 @@
 
   import Button from "./ui/button.svelte";
   import UpgradeModal from "./upgrade-modal.svelte";
+  import { formatNumber } from "$lib/utils.js";
 
   export let upgrade: Upgrade;
 
@@ -62,7 +63,7 @@
     <div class="flex-grow text-gray-500 text-sm">
       <div class="flex justify-between">
         <h2 class="text-gray-200">{name}</h2>
-        <span>Level: {level}</span>
+        <span>Level: {formatNumber(level)}</span>
       </div>
       <h3>{extra}</h3>
 
@@ -77,7 +78,7 @@
           {/if}
         </div>
 
-        <Button type="yellow" disabled="{!canAfford}" on:click={buyItem}>£{cost}</Button>
+        <Button type="yellow" disabled="{!canAfford}" on:click={buyItem}>£{formatNumber(cost)}</Button>
       </div>
     </div>
   </div>
