@@ -1,5 +1,6 @@
 import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
 
+import AchievementManager from '$lib/achievements/achievementManager';
 import { SaveData } from '$lib/savedata';
 import { UpgradeManager } from '$lib/upgrades/upgradeManager';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
@@ -9,6 +10,7 @@ import type { PlayerUpgrade } from '$lib/upgrades/playerUpgrade';
 export class GameManager {
 	public saveData: SaveData;
 	public upgradeManager = new UpgradeManager(this);
+	public achievementManager = new AchievementManager(this);
 
 	constructor() {
 		this.saveData = SaveData.load();

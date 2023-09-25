@@ -2,6 +2,7 @@ import { gameManager, updateGameManager } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, VERSION } from '$lib/data';
 import type { GameManager } from '$lib/gameManager';
 import { UPGRADES } from '$lib/upgrades';
+import { ACHIEVEMENTS } from '$lib/achievements';
 
 let gameManagerInstance: GameManager;
 gameManager.subscribe((m) => (gameManagerInstance = m));
@@ -16,8 +17,10 @@ export function startGame() {
 	console.log('autosave interval', AUTOSAVE_INTERVAL);
 	console.log('version', VERSION);
 
-	// register upgrades
 	UPGRADES.forEach((upgrade) => gameManagerInstance.upgradeManager.registerUpgrade(upgrade));
+	ACHIEVEMENTS.forEach((achievement) =>
+		gameManagerInstance.achievementManager.registerAchievement(achievement)
+	);
 
 	// check that the user has at least level 1 in the player upgrade
 	if (gameManagerInstance.saveData.upgrades.player.level < 1) {
