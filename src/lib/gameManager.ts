@@ -73,10 +73,14 @@ export default class GameManager {
 	}
 
 	public sellBrains() {
-		this.saveData.resources.money += this.saveData.resources.brains * 5;
+		this.saveData.resources.money += this.brainsValue();
 		this.saveData.resources.brains = 0;
 
 		this.save();
+	}
+
+	public brainsValue(): number {
+		return this.saveData.resources.brains * 5;
 	}
 
 	public spendMoney(amount: number): boolean {
