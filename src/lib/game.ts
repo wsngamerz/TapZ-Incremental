@@ -1,6 +1,7 @@
+import type GameManager from '$lib/gameManager';
+
 import { gameManager, updateGameManager } from '$lib/store';
 import { AUTOSAVE_INTERVAL, RESPAWN_COOLDOWN, TICK_INTERVAL, VERSION } from '$lib/data';
-import type { GameManager } from '$lib/gameManager';
 import { UPGRADES } from '$lib/upgrades';
 import { ACHIEVEMENTS } from '$lib/achievements';
 

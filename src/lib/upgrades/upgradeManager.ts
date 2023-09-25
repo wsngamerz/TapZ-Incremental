@@ -1,7 +1,7 @@
 import type { Upgrade } from '$lib/upgrades/upgrade';
 import { UpgradeType } from '$lib/upgrades/upgradeType';
 import type { DpsUpgrade } from '$lib/upgrades/dpsUpgrade';
-import type { GameManager } from '$lib/gameManager';
+import type GameManager from '$lib/gameManager';
 
 export class UpgradeManager {
 	private upgrades: Upgrade[] = [];

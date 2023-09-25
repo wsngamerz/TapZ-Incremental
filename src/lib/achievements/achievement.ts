@@ -1,4 +1,4 @@
-import type { GameManager } from '$lib/gameManager';
+import type GameManager from '$lib/gameManager';
 import { getReflected } from '$lib/utils';
 
 export default class Achievement {

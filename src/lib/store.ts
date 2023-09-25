@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { GameManager } from '$lib/gameManager';
+import GameManager from '$lib/gameManager';
 
 export const gameManager = writable(new GameManager());
 

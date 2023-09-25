@@ -7,7 +7,7 @@ import { UpgradeType } from '$lib/upgrades/upgradeType';
 import { KILL_EXPERIENCE, MAX_EXPERIENCE, ZOMBIE_HEALTH } from '$lib/data';
 import type { PlayerUpgrade } from '$lib/upgrades/playerUpgrade';
 
-export class GameManager {
+export default class GameManager {
 	public saveData: SaveData;
 	public upgradeManager = new UpgradeManager(this);
 	public achievementManager = new AchievementManager(this);

@@ -1,6 +1,6 @@
 import { updateGameManager } from '$lib/store';
+import type GameManager from '$lib/gameManager';
 import type { UpgradeType } from '$lib/upgrades/upgradeType';
-import type { GameManager } from '$lib/gameManager';
 
 export abstract class Upgrade {
 	public id: string;

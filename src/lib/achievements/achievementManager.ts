@@ -1,5 +1,5 @@
 import type Achievement from '$lib/achievements/achievement';
-import type { GameManager } from '$lib/gameManager';
+import type GameManager from '$lib/gameManager';
 
 export default class AchievementManager {
 	private achievements: Achievement[] = [];

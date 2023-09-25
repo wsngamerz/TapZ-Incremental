@@ -1,4 +1,4 @@
-import type { GameManager } from '$lib/gameManager';
+import type GameManager from '$lib/gameManager';
 import { updateGameManager } from '$lib/store';
 
 export class PlayerUpgradeItem {
