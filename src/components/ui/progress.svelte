@@ -31,7 +31,7 @@
     <div class="{variants[colour]} h-full rounded-sm transition-[width] duration-75 ease-out" style="width: {value}%"></div>
 
     {#if content}
-      <div class="absolute rounded mx-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-lg">
+      <div class="w-full text-center absolute rounded mx-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-md leading-tight">
         {content}
       </div>
     {/if}
